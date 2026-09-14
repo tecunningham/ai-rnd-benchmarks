@@ -5,6 +5,7 @@ project:
 
 website:
   title: "AI R&D benchmarks in model cards"
+  site-url: https://tecunningham.github.io/ai-rnd-benchmarks/
   repo-url: https://github.com/tecunningham/ai-rnd-benchmarks
   repo-actions: [source]
   page-footer: "Data: data/ai_rd_benchmarks.csv. Every cell carries a source and a confidence flag."
