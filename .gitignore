@@ -1,0 +1,16 @@
+_book/
+.quarto/
+_freeze/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+
+/.quarto/
+
+# Quarto render intermediates (moved to _book/ when a render completes)
+*.quarto_ipynb
+chapters/*.html
+chapters/*_files/
+index.html
+index_files/
+site_libs/

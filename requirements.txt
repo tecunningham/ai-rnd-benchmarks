@@ -1,0 +1,8 @@
+# Python deps for `quarto render` (see .claude/hooks/session-start.sh).
+numpy
+pandas
+matplotlib
+jupyter
+ipykernel
+nbformat
+nbclient

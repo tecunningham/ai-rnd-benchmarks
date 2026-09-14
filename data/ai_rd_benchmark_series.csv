@@ -1,0 +1,49 @@
+lab,series,ceiling,direction,human_ref,human_ref_label,threshold,threshold_label,category,overview,notes,deprecated_date,deprecated_note,human_time
+gdm,RE-Bench (METR): human-normalized average,,higher,1,"human expert, 8 h (1.0)",,,research,no,Human-normalized: 1.0 = the best human 8-hour attempt. Unbounded.,2026-08,Gemini 3.7 Flash FSF report assesses ML R&D on the internal GRB benchmark instead.,8 h
+gdm,RE-Bench (METR): Optimize LLM Foundry,,lower,94,human reference solution (94 s),,,research,no,Runtime in seconds; lower is better.,,,8 h
+gdm,GRB (GDM internal research engineering benchmark),100,higher,,,90,CCL rule-out threshold (90% pass@1),research,yes,,,,
+gdm,MLE-Bench,100,higher,,,,,research,yes,Medal rate as printed in the Gemini 3.6 Flash card.,,,
+gdm,SWE-bench Verified,100,higher,,,,,swe,yes,,2026-05,Gemini 3.5 Flash card reports SWE-Bench Pro instead of SWE-bench Verified.,
+gdm,SWE-Bench Pro,100,higher,,,,,swe,yes,,,,
+gdm,DeepSWE v1.1,100,higher,,,,,swe,yes,,,,
+gdm,FrontierCode 1.1 Main,100,higher,,,,,swe,yes,,,,
+gdm,Terminal-Bench,100,higher,,,,,terminal,yes,Applies to every version split.,,,
+openai,Internal Research Debugging Eval,100,higher,,,,,research,yes,Mean rubric score.,,,
+openai,OpenAI-Proof Q&A,100,higher,,,,,research,yes,,,,
+openai,"MLE-bench: MLE-bench (75 competitions, AIDE)",100,higher,,,,,research,yes,Percent of competitions with a bronze medal or better.,2025-07,Replaced by the 30-competition subset from the ChatGPT agent card.,
+openai,MLE-bench: MLE-bench-30,100,higher,,,,,research,yes,,2026-07,Replaced by MLE-Bench Revised (72 problems) with GPT-5.6.,
+openai,MLE-bench: MLE-Bench Revised,100,higher,,,,,research,yes,Mean reward as a percentile against reference solutions.,,,
+openai,PaperBench,100,higher,41.4,"ML PhDs, 48 h (PaperBench paper, not the card)",,,research,yes,The human baseline is from the PaperBench paper's 48-hour PhD study; OpenAI's cards do not restate it.,2025-07,Replaced by the 10-paper subset from the ChatGPT agent card.,48 h
+openai,PaperBench: PaperBench-10,100,higher,,,,,research,yes,,,,
+openai,OpenAI PRs,100,higher,,,,,swe,yes,,,,
+openai,SWE-Lancer IC SWE Diamond,100,higher,,,,,swe,yes,,,,
+openai,SWE-bench Verified,100,higher,,,,,swe,yes,,,,
+openai,SWE-Bench Pro,100,higher,,,,,swe,yes,,,,
+openai,Monorepo-Bench,100,higher,,,,,swe,yes,,,,
+openai,Terminal-Bench,100,higher,,,,,terminal,yes,,,,
+openai,Agentic tasks (autonomy suite),100,higher,,,,,terminal,yes,,2025-04,Not in the o3 / o4-mini card or later.,
+openai,OpenAI Research Engineer interviews: coding,100,higher,,,,,knowledge,yes,,2025-07,ChatGPT agent card: coding set retired as saturated.,
+openai,OpenAI Research Engineer interviews: multiple choice,100,higher,,,,,knowledge,yes,,2025-08,Not in the GPT-5 card or later.,
+anthropic,Internal AI Research Evaluation Suite 1: Kernel optimization,,higher,300,about 40 expert-hours (300x),100,task threshold (100x),research,no,Speedup; unbounded. Card: 4x about 1 h; 200x about 8 h; 300x about 40 h.,2026-09,"Fable 5.1 / Mythos 5.1 card: Suite 1 not run, 'no longer a significant component' of the determination.",40 h
+anthropic,Internal AI Research Evaluation Suite 1: LLM training,,higher,4,"expert reference solution (4x, 4 to 8 h)",,,research,no,Speedup; unbounded.,2026-09,"Fable 5.1 / Mythos 5.1 card: Suite 1 not run, 'no longer a significant component' of the determination.",4 to 8 h
+anthropic,Internal AI Research Evaluation Suite 1: Text-based RL,1,higher,0.9,about 8 human-hours (0.9),,,research,yes,,2026-09,"Fable 5.1 / Mythos 5.1 card: Suite 1 not run, 'no longer a significant component' of the determination.",8 h
+anthropic,Internal AI Research Evaluation Suite 1: Quadruped RL (threshold 1 scale),,higher,1,human baseline (1.0),,,research,no,Score normalised so the human baseline is 1.0; unbounded above.,2025-11,Rescaled from the Opus 4.5 card (threshold 12).,not stated
+anthropic,Internal AI Research Evaluation Suite 1: Quadruped RL (threshold 12 scale),,higher,12,about 4 human-hours (12),,,research,no,Rescaled from Opus 4.5 on; unbounded.,2026-09,"Fable 5.1 / Mythos 5.1 card: Suite 1 not run, 'no longer a significant component' of the determination.",4 h
+anthropic,Internal AI Research Evaluation Suite 1: Novel compiler,100,higher,90,about 40 human-hours (90% of complex tests),,,research,yes,,2026-09,"Fable 5.1 / Mythos 5.1 card: Suite 1 not run, 'no longer a significant component' of the determination.",40 h
+anthropic,Internal AI Research Evaluation Suite 1: Time-series forecasting,,lower,5.3,"about 40 h baseline (MSE 5.3, hard variant)",,,research,no,Minimum MSE; lower is better.,2026-09,"Fable 5.1 / Mythos 5.1 card: Suite 1 not run, 'no longer a significant component' of the determination.",40 h
+anthropic,Internal AI Research Evaluation Suite 2,1,higher,,,0.6,rule-out threshold (0.6),research,yes,Weighted average over tasks.,2026-04,Opus 4.7 card: did not run; not reported afterwards.,
+anthropic,RE-Bench (METR): 4-task modified subset run by Anthropic,,higher,1,expert human (1.0),,,research,no,,,,8 h
+anthropic,SWE-bench Verified,100,higher,,,,,swe,yes,,2026-09,"Fable 5.1 card reports SWE-Bench Pro, Multilingual and Multimodal instead.",
+anthropic,SWE-bench Verified: hard subset (RSP checkpoint),,higher,,,,,swe,no,Count of problems solved out of 42 (2025) or 45 (from Sonnet 4.5); the RSP checkpoint is 50%.,,,
+anthropic,SWE-Bench Pro,100,higher,,,,,swe,yes,,,,
+anthropic,Internal agentic coding evaluation,100,higher,,,,,swe,yes,,,,
+anthropic,Terminal-Bench,100,higher,,,,,terminal,yes,Applies to every version split.,2025-11,Terminal-Bench 2.0 from the Opus 4.5 card.,
+anthropic,Terminal-Bench-Science,100,higher,,,,,terminal,yes,,,,
+anthropic,FrontierBench v0.1 (Terminal-Bench successor),100,higher,,,,,terminal,yes,,,,
+anthropic,Terminal-Bench v2.0,100,higher,,,,,terminal,yes,,2026-05,Terminal-Bench 2.1 from the Opus 4.8 card.,
+anthropic,Terminal-Bench v2.1,100,higher,,,,,terminal,yes,,2026-07,Opus 5 card reports FrontierBench v0.1 (Terminal-Bench successor) instead.,
+gdm,Terminal-Bench v2.0,100,higher,,,,,terminal,yes,,2026-05,Terminal-Bench 2.1 only from the Gemini 3.5 Flash card.,
+openai,METR external evaluation: 50% time horizon,,higher,,,,,external,no,"Hours of human task time at which the model succeeds half the time, from METR's reports as cited by the cards; no human reference, so indexed to the first frontier card in the unbounded figure.",,,
+anthropic,Internal AI R&D productivity survey,,higher,,,,,research,no,"Median or mean percent productivity uplift reported by surveyed staff; no external reference, indexed to the first survey.",,,
+anthropic,METR data deduplication (RSP checkpoint),,higher,,,,,research,no,Trials above the F1 threshold out of about 30 to 46; indexed to the first card.,,,
+anthropic,METR general autonomy time horizon,,higher,,,,,external,no,Minutes; single card.,,,

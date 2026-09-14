@@ -1,0 +1,22 @@
+/* Benchmark-by-model tables: many columns, so scroll sideways with a sticky benchmark column. */
+.benchmarks {
+  overflow-x: auto;
+}
+.benchmarks table {
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+.benchmarks table th,
+.benchmarks table td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.3rem 0.4rem;
+  min-width: 7rem;
+}
+.benchmarks table td:first-child,
+.benchmarks table th:first-child {
+  min-width: 11rem;
+  position: sticky;
+  left: 0;
+  background: var(--bs-body-bg, #fff);
+}

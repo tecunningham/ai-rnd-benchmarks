@@ -1,0 +1,27 @@
+project:
+  type: website
+  execute-dir: project
+  output-dir: _site
+
+website:
+  title: "AI R&D benchmarks in model cards"
+  repo-url: https://github.com/tecunningham/ai-rnd-benchmarks
+  repo-actions: [source]
+  page-footer: "Data: data/ai_rd_benchmarks.csv. Every cell carries a source and a confidence flag."
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 2
+    code-fold: true
+    fig-width: 8
+    fig-height: 5
+
+execute:
+  echo: false
+  warning: false
+  freeze: auto
+
+jupyter: python3
