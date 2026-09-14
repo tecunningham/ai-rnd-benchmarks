@@ -28,6 +28,13 @@ show_cross_shared()
 show_cross_research()
 ```
 
+## Unbounded evaluations, all labs on one log axis
+
+```{python}
+#| fig-cap: "Every unbounded evaluation (speedups, human-normalized scores, time horizons, lower-is-better errors) as a multiple on a log axis, coloured by lab. Solid lines are divided by the card's human reference, so 1x is the reference reached and the label says what the reference is; dashed lines have no reference and are indexed to their first card. Anthropic reports by far the most such metrics; its kernel-optimization and LLM-training speedups pass their expert references in 2025 and 2026, then Suite 1 is dropped. OpenAI's only unbounded series is METR's time horizon; DeepMind's is RE-Bench."
+show_cross_unbounded()
+```
+
 ## Reading across the three
 
 Each lab measures a different thing under the AI R&D heading. DeepMind reports a single

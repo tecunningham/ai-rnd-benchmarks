@@ -412,18 +412,13 @@ def _multiple(y, _pos=None):
     return f"{y:g}\u00d7"
 
 
-def unbounded_overview(df: pd.DataFrame, lab: str, title: str | None = None):
-    """One lab's unbounded metrics (no ceiling) on a log axis of multiples, in the bounded
-    overview's style. A series with a card-stated human reference is divided by it (reference
-    divided by score when lower is better), so 1x is the reference reached; a series without one is
-    indexed to its first reported value and drawn dashed. Colour is the benchmark category; the
-    label at each line's end names the series and what 1x means for it."""
-    plots.style()
-    meta = series_meta()
-    d = numeric_series(df)
-    latest_card = df["card_date"].max()
+def _unbounded_rows(d: pd.DataFrame, lab: str, meta: pd.DataFrame) -> list:
+    """(series, points with a `ratio` column, meta, what 1x means, indexed?) for every unbounded
+    series of one lab in `d` (the output of `numeric_series`). A series with a card-stated human
+    reference is divided by it (reference divided by score when lower is better); one without is
+    indexed to its first reported value."""
     rows = []
-    for s, g in d.groupby("series"):
+    for s, g in d[d["lab"] == lab].groupby("series"):
         m = meta_for(meta, lab, s)
         if m is None or pd.notna(m["ceiling"]):
             continue
@@ -442,6 +437,39 @@ def unbounded_overview(df: pd.DataFrame, lab: str, title: str | None = None):
             what = f"indexed to {_short(base['model'].iloc[0])} = {first:g}"
             indexed = True
         rows.append((s, base.assign(ratio=ratio.values), m, what, indexed))
+    return rows
+
+
+def _end_labels_log(ax, ends, lo, hi, x0, x1, gap_frac: float = 0.036):
+    """Right-hand labels for a log axis: (x, y, text, colour) per line end, nudged apart in log space."""
+    ends = sorted(ends, key=lambda e: e[1])
+    ys = [np.log10(e[1]) for e in ends]
+    gap = (np.log10(hi) - np.log10(lo)) * gap_frac
+    for i in range(1, len(ys)):
+        if ys[i] - ys[i - 1] < gap:
+            ys[i] = ys[i - 1] + gap
+    top = np.log10(hi) - gap
+    over = ys[-1] - top if ys and ys[-1] > top else 0
+    ys = [y - over for y in ys]
+    span = (x1 - x0).days or 1
+    xlab = x1 + pd.Timedelta(days=int(span * 0.07))
+    for (xd, y, name, c), yl in zip(ends, ys):
+        ax.plot([xd, xlab], [y, 10 ** yl], color=c, lw=0.6, alpha=0.6, zorder=1, clip_on=False)
+        ax.annotate(name, (xlab, 10 ** yl), xytext=(3, 0), textcoords="offset points", va="center", fontsize=6.8,
+                    color=plots.INK2, annotation_clip=False)
+
+
+def unbounded_overview(df: pd.DataFrame, lab: str, title: str | None = None):
+    """One lab's unbounded metrics (no ceiling) on a log axis of multiples, in the bounded
+    overview's style. A series with a card-stated human reference is divided by it (reference
+    divided by score when lower is better), so 1x is the reference reached; a series without one is
+    indexed to its first reported value and drawn dashed. Colour is the benchmark category; the
+    label at each line's end names the series and what 1x means for it."""
+    plots.style()
+    meta = series_meta()
+    d = numeric_series(df)
+    latest_card = df["card_date"].max()
+    rows = _unbounded_rows(d, lab, meta)
     fig, ax = plt.subplots(figsize=(10, 6.6))
     if not rows:
         plots._empty(ax, "No unbounded series recorded"); return fig
@@ -464,21 +492,7 @@ def unbounded_overview(df: pd.DataFrame, lab: str, title: str | None = None):
     ax.yaxis.set_minor_formatter(plt.matplotlib.ticker.NullFormatter())
     ax.annotate("human reference reached (1\u00d7)", (x0, 1), xytext=(2, -9), textcoords="offset points", fontsize=7,
                 color=HUMAN_REF_COLOR)
-    ends.sort(key=lambda e: e[1])
-    ys = [np.log10(e[1]) for e in ends]
-    gap = (np.log10(hi) - np.log10(lo)) * 0.036
-    for i in range(1, len(ys)):
-        if ys[i] - ys[i - 1] < gap:
-            ys[i] = ys[i - 1] + gap
-    top = np.log10(hi) - gap
-    over = ys[-1] - top if ys[-1] > top else 0
-    ys = [y - over for y in ys]
-    span = (x1 - x0).days or 1
-    xlab = x1 + pd.Timedelta(days=int(span * 0.07))
-    for (xd, y, name, c), yl in zip(ends, ys):
-        ax.plot([xd, xlab], [y, 10 ** yl], color=c, lw=0.6, alpha=0.6, zorder=1, clip_on=False)
-        ax.annotate(name, (xlab, 10 ** yl), xytext=(3, 0), textcoords="offset points", va="center", fontsize=6.8,
-                    color=plots.INK2, annotation_clip=False)
+    _end_labels_log(ax, ends, lo, hi, x0, x1)
     ax.set_xlim(x0 - pd.Timedelta(days=30), x1 + pd.Timedelta(days=45))
     ax.set_ylabel("Score as a multiple (log)")
     ax.xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator(bymonth=[1, 7]))
@@ -727,4 +741,55 @@ def cross_lab_research(df: pd.DataFrame | None = None, min_points: int = 2):
     ax.legend(handles=handles, loc="lower left", fontsize=8)
     ax.set_title("All three labs: bounded AI-research evaluations, as percent of their ceilings", pad=10)
     fig.subplots_adjust(left=0.07, right=0.66, top=0.92, bottom=0.08)
+    return fig
+
+
+def cross_lab_unbounded(df: pd.DataFrame | None = None):
+    """Every lab's unbounded evaluations on one log axis of multiples, coloured by lab. Same
+    normalisation as the per-lab figure: solid lines are divided by the card's human reference, so
+    1x is the reference reached; dashed lines have no reference and are indexed to their first card.
+    Multiples are only comparable within a series, so read this as 'how far past its own human
+    reference each lab has pushed', not as a ranking."""
+    plots.style()
+    df = load_all_frontier() if df is None else df
+    meta = series_meta()
+    d = numeric_series(df)
+    latest = df.groupby("lab")["card_date"].max()
+    rows = [(lab, *r) for lab in LAB_ORDER for r in _unbounded_rows(d, lab, meta)]
+    fig, ax = plt.subplots(figsize=(10, 6.6))
+    if not rows:
+        plots._empty(ax, "No unbounded series recorded"); return fig
+    ax.axhline(1, color=HUMAN_REF_COLOR, ls=(0, (1.5, 2.5)), lw=1.4, zorder=1)
+    ends, retired = [], 0
+    for lab, s, b, m, what, indexed in sorted(rows, key=lambda r: r[2]["card_date"].min()):
+        c = LAB_COLORS[lab]
+        ax.plot(b["card_date"], b["ratio"], color=c, lw=1.6, ls=(0, (3, 2)) if indexed else "-", zorder=2)
+        ax.scatter(b["card_date"], b["ratio"], s=16, c=c, edgecolors=plots.SURFACE, linewidths=0.8, zorder=3)
+        last = b.iloc[-1]
+        if _retire_mark(ax, m, last["card_date"], last["ratio"], latest[lab]):
+            retired += 1
+        ends.append((last["card_date"], float(last["ratio"]), f"{LABS[lab]}: {short_name(s)} ({what})", c))
+    allr = pd.concat([b["ratio"] for _, _, b, _, _, _ in rows])
+    x0, x1 = d["card_date"].min(), d["card_date"].max()
+    lo, hi = min(allr.min() / 1.8, 0.5), max(allr.max() * 2.5, 2)
+    ax.set_yscale("log"); ax.set_ylim(lo, hi)
+    ax.yaxis.set_major_formatter(plt.matplotlib.ticker.FuncFormatter(_multiple))
+    ax.yaxis.set_minor_formatter(plt.matplotlib.ticker.NullFormatter())
+    ax.annotate("human reference reached (1\u00d7)", (x0, 1), xytext=(2, -9), textcoords="offset points", fontsize=7,
+                color=HUMAN_REF_COLOR)
+    _end_labels_log(ax, ends, lo, hi, x0, x1, gap_frac=0.034)
+    ax.set_xlim(x0 - pd.Timedelta(days=30), x1 + pd.Timedelta(days=45))
+    ax.set_ylabel("Score as a multiple (log)")
+    ax.xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator(bymonth=[1, 7]))
+    ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter("%b %Y"))
+    present = {lab for lab, *_ in rows}
+    handles = [plt.Line2D([], [], color=LAB_COLORS[l], lw=2, label=LABS[l]) for l in LAB_ORDER if l in present]
+    handles.append(plt.Line2D([], [], color=plots.INK2, lw=1.6, label="solid: 1\u00d7 = card's human reference"))
+    handles.append(plt.Line2D([], [], color=plots.INK2, lw=1.6, ls=(0, (3, 2)), label="dashed: no human reference; 1\u00d7 = first card"))
+    if retired:
+        handles.append(plt.Line2D([], [], color=plots.INK, marker="x", ls="none", markersize=7, markeredgewidth=1.4,
+                                  label="last reported value; the lab's later cards drop it"))
+    ax.legend(handles=handles, loc="lower left", fontsize=7.5)
+    ax.set_title("All three labs: unbounded AI R&D evaluations, as multiples of their references", pad=10)
+    fig.subplots_adjust(left=0.07, right=0.62, top=0.92, bottom=0.08)
     return fig

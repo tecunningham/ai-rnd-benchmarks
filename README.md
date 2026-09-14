@@ -12,7 +12,7 @@ Rendered site: https://tecunningham.github.io/ai-rnd-benchmarks/
 
 | path | what |
 |---|---|
-| `index.qmd` | across the labs: shared-benchmark panels and every lab's research evaluations on one axis |
+| `index.qmd` | across the labs: shared-benchmark panels, every lab's research evaluations on one axis, every lab's unbounded evaluations on one log axis |
 | `openai.qmd`, `anthropic.qmd`, `gdm.qmd` | one page per lab: bounded overview, unbounded overview, small multiples, table, cards |
 | `method.qmd` | provenance, how to read the figures, the frontier rule |
 | `src/site.py` | the `show_*` helpers the pages call |

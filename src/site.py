@@ -43,6 +43,10 @@ def show_cross_research():
     benchmarks.cross_lab_research(); plt.show()
 
 
+def show_cross_unbounded():
+    benchmarks.cross_lab_unbounded(); plt.show()
+
+
 def show_cards(lab):
     t = benchmarks.cards(benchmarks.load_frontier(lab))
     t["card"] = t.apply(lambda r: f"[{r['card_title']}]({r['card_url']})" if r["card_url"] else r["card_title"], axis=1)
