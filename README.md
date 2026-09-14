@@ -20,6 +20,9 @@ Rendered site: https://tecunningham.github.io/ai-rnd-benchmarks/
 | `data/ai_rd_benchmark_series.csv` | per-series metadata: ceiling, direction, human reference, threshold, category, retirement |
 | `data/notes/ai-rd-benchmarks.md` | collection and verification notes, card by card |
 | `src/benchmarks.py` | loading, the frontier rule, tables and every figure |
+| `cards/<lab>/` | every cited card, report and post, as fetched (PDF or HTML) plus its extracted text; `cards/index.csv` maps URLs to files |
+| `scripts/fetch_cards.py` | downloads the documents cited in the data CSV into `cards/` and extracts their text |
+| `scripts/annotate_sources.py` | locates each row in its document (page) and fills the `quote` column for qualitative rows |
 | `src/plots.py` | shared matplotlib style |
 
 ## Render
@@ -37,6 +40,7 @@ GitHub Actions).
 ## Conventions
 
 - Scores are as the lab reports them and are not comparable across labs.
+- Every table cell links to its source, opened at the right page of the local copy of the card; qualitative cells quote the card's own words.
 - Cells carry provenance marks: none = read from the card, `*` = launch post, `†` = search-result
   excerpt, `‡` = memory.
 - Only cards on the evaluation frontier are shown: a card that improves on at most a quarter of the

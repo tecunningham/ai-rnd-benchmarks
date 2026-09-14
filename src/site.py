@@ -50,7 +50,8 @@ def show_cross_unbounded():
 def show_cards(lab):
     t = benchmarks.cards(benchmarks.load_frontier(lab))
     t["card"] = t.apply(lambda r: f"[{r['card_title']}]({r['card_url']})" if r["card_url"] else r["card_title"], axis=1)
-    display(Markdown(benchmarks.to_markdown(t[["model", "card_date", "card"]].set_index("model").rename_axis("Model"))))
+    t["local copy"] = t["local_copy"].map(lambda f: f"[{f.rsplit('/', 1)[-1]}]({f})" if f else "")
+    display(Markdown(benchmarks.to_markdown(t[["model", "card_date", "card", "local copy"]].set_index("model").rename_axis("Model"))))
     om = benchmarks.omitted(lab)
     if len(om):
         items = "; ".join(f"{r.model} ({r.card_date:%b %Y}: better on {r.improved} of {r.shared} shared evaluations)" for r in om.itertuples())

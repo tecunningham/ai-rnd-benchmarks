@@ -57,14 +57,50 @@ def load(lab: str | None = None, frontier_only: bool = False) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
+QUOTE_CHARS = 180  # a qualitative cell shows this much of the card's wording; the full quote is in the tooltip
+
+
+def _href(r) -> str:
+    """Link target for one row: the local copy of the source (PDF opened at the page the number is
+    on) when the document was downloaded into cards/, else the original URL."""
+    f = r.get("source_file", "")
+    if f:
+        return f + (f"#page={r['page']}" if r.get("page", "") and f.endswith(".pdf") else "")
+    return r["source_url"]
+
+
+def _esc(s: str) -> str:
+    return s.replace("&", "&amp;").replace('"', "&quot;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _clip(s: str, n: int = QUOTE_CHARS) -> str:
+    if len(s) <= n:
+        return s
+    cut = s[:n].rsplit(" ", 1)[0]
+    return cut.rstrip(" ,;:.…") + " …"
+
+
 def _cell(rows: pd.DataFrame) -> str:
+    """One table cell: every row for this benchmark and model, each linked to its source. A numeric
+    score is shown as printed; a qualitative result shows the card's own words (the `quote`
+    column), clipped, with the full quote and the source page in the tooltip."""
     parts = []
     for _, r in rows.sort_values("conditions").iterrows():
-        s = r["score_text"] or r["score"]
-        if not s:
-            continue
+        href = _href(r)
+        where = ("p. " + r["page"] + " of " if r.get("page", "") else "") + (r["card_title"] or r["source_url"])
+        if r["score"] or not r.get("quote", ""):
+            s = r["score_text"] or r["score"]
+            if not s:
+                continue
+            title = where
+            text = _esc(s)
+        else:
+            q = r["quote"]
+            title = q + " — " + where
+            text = "“" + _esc(_clip(q)) + "”"
+        s = f'<a href="{_esc(href)}" title="{_esc(title)}">{text}</a>' if href else text
         if r["conditions"]:
-            s = f"{s} ({r['conditions']})"
+            s = f"{s} ({_esc(r['conditions'])})"
         parts.append(s + CONFIDENCE_MARK.get(r["confidence"], ""))
     return "<br>".join(parts)
 
@@ -100,9 +136,11 @@ def wide(df: pd.DataFrame, families: list[str] | None = None) -> pd.DataFrame:
 
 def cards(df: pd.DataFrame) -> pd.DataFrame:
     """One line per model: card date, title, URL."""
+    files = dict(zip(df["source_url"], df.get("source_file", pd.Series("", index=df.index))))
     t = (df.groupby("model", sort=False)
            .agg(card_date=("card_date", "min"), card_title=("card_title", "first"), card_url=("card_url", "first"))
            .reset_index())
+    t["local_copy"] = t["card_url"].map(lambda u: files.get(u, "") or "")
     t = t.sort_values("card_date")
     t["card_date"] = t["card_date"].dt.strftime("%Y-%m")
     return t.reset_index(drop=True)

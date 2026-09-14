@@ -19,6 +19,16 @@ Scores are as the lab reports them and are not comparable across labs: each lab 
 scaffold, time budget, attempt count and problem subset, and internal suites are only defined
 inside one lab. Conditions that change the number are given in parentheses inside the cell.
 
+## Links and quotes in the tables
+
+Every cell in the benchmark tables links to its source. Where the source is a card or report that
+was downloaded into the repository (`cards/<lab>/`, indexed in `cards/index.csv`), the link opens the
+local copy at the page the number or statement is on, so a claim can be checked in one click; where
+the source is a web page that could not be archived (a launch post behind a bot wall, a social-media
+post), the link goes to the original URL. Cells that report a qualitative result rather than a number
+show the card's own words, clipped to a line, with the full quotation in the tooltip; the full text is
+in the `quote` column of the data file.
+
 ## Reading the figures
 
 The figures are built for reading saturation. Every bounded metric is drawn on its full range with
