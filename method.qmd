@@ -1,0 +1,58 @@
+---
+title: "Method and data"
+---
+
+## Sources and provenance
+
+The long-form data with a source and a confidence flag on every row is `data/ai_rd_benchmarks.csv`.
+Provenance marks in the table cells: no mark means the number was read from the card itself (or from
+the METR report the card cites); **\*** means it was read from the lab's launch post because the
+card does not give it; **†** means it was read from a search-result excerpt of a write-up and not
+found in any primary document; **‡** means it was recalled from memory and not checked. Almost every
+cell was verified against the card on 2026-09-13; the handful still marked † or ‡ are launch-blog
+figures (SWE-bench Verified for the Codex models, Terminal-Bench for OpenAI models) that no card
+contains. Where a later card re-runs an earlier model and gets a different number, the cell keeps
+the model's own card value and the notes column records the re-run. The card-by-card verification
+record is `data/notes/ai-rd-benchmarks.md`.
+
+Scores are as the lab reports them and are not comparable across labs: each lab uses its own
+scaffold, time budget, attempt count and problem subset, and internal suites are only defined
+inside one lab. Conditions that change the number are given in parentheses inside the cell.
+
+## Reading the figures
+
+The figures are built for reading saturation. Every bounded metric is drawn on its full range with
+the ceiling as a solid line; a human reference point stated by the card (an expert solution, a
+threshold the card expresses in human-hours) is a red dotted line; a rule-out threshold not tied to
+human performance is a grey dashed line. A black cross sits on a series' last reported value when
+the lab's later cards no longer report it, whether because it was retired as saturated, replaced by
+a harder version, or dropped from the determination; the documented reason, where the card gives
+one, is in the series file. Card names run along the top of each lab's overview at their dates.
+
+Each lab page has, in order: one overview with all of its bounded evaluations on the same 0 to 100
+percent axis, so the order in which benchmarks saturate and get replaced is visible; one overview
+of its unbounded metrics (speedups, human-normalized scores above 1, time horizons, lower-is-better
+errors) on a log axis of multiples, where a series with a card-stated human reference is divided by
+it, so 1x is the reference reached, and a series with no reference (METR's time horizons,
+Anthropic's staff-survey uplift) is indexed to its first card and drawn dashed; small multiples with
+one panel per evaluation; the benchmark-by-model table; and the list of cards. Ceilings,
+directions, reference values and retirement dates are in `data/ai_rd_benchmark_series.csv`.
+
+## Which cards are shown
+
+Only cards on the evaluation frontier are shown. A card that improves on at most a quarter of the
+evaluations it shares with earlier cards (given at least three shared) adds no frontier
+information and is left out of the figures and tables; each lab page names the cards this removes,
+and their rows stay in the CSV. Smaller siblings released alongside a frontier model (Sonnet 4,
+Haiku 4.5, the Codex addenda, Gemini Flash-Lite) are flagged in the CSV and also left out.
+
+## Files
+
+| path | what |
+|---|---|
+| `data/ai_rd_benchmarks.csv` | one row per score: lab, model, card, benchmark, conditions, score, source, confidence |
+| `data/ai_rd_benchmark_series.csv` | per-series metadata: ceiling, direction, human reference, threshold, category, retirement |
+| `data/notes/ai-rd-benchmarks.md` | collection and verification notes, card by card |
+| `src/benchmarks.py` | loading, the frontier rule, tables and every figure |
+
+Source: [github.com/tecunningham/ai-rnd-benchmarks](https://github.com/tecunningham/ai-rnd-benchmarks).

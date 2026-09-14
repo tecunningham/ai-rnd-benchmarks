@@ -1,0 +1,51 @@
+---
+title: "Google DeepMind"
+---
+
+DeepMind's Frontier Safety Framework has a Machine Learning R&D critical capability level. Through
+Gemini 3.1 Pro it was evaluated on five of METR's seven RE-Bench tasks, reported as a human-normalized
+average within a 32-hour budget; the Gemini 3.7 Flash FSF report switches to an internal research
+engineering benchmark (GRB, 74 tasks, 2-hour timeout) with a 90 percent pass@1 rule-out threshold.
+Flash cards defer the determination to the most capable Pro model of the time.
+
+```{python}
+#| echo: false
+from src.site import *  # noqa
+```
+
+## Bounded evaluations
+
+```{python}
+#| fig-cap: "Every bounded evaluation on one 0 to 100 percent axis. The internal GRB benchmark replaces RE-Bench from the Gemini 3.7 Flash report. A black cross marks the last reported value of a series later cards drop; card names run along the top."
+show_overview("gdm")
+```
+
+## Unbounded evaluations
+
+```{python}
+#| fig-cap: "Every unbounded evaluation as a multiple. RE-Bench's human-normalized average is already a multiple of the best 8-hour human attempt; Optimize LLM Foundry is the human runtime divided by the model's."
+show_unbounded("gdm")
+```
+
+## Each evaluation over time
+
+```{python}
+#| fig-cap: "Numeric scores over card date, one panel per benchmark series. Same marks as on the OpenAI page."
+show_series("gdm")
+```
+
+## Table
+
+::: {.benchmarks .column-screen-inset}
+
+```{python}
+show_table("gdm", caption="Google DeepMind: AI R&D and agentic-coding scores by model card. {#tbl-gdm}")
+```
+
+:::
+
+## Cards
+
+```{python}
+show_cards("gdm")
+```

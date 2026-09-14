@@ -1,0 +1,52 @@
+---
+title: "OpenAI"
+---
+
+OpenAI's Preparedness Framework tracks "AI Self-improvement" (earlier "Model autonomy") with a
+mix of public and internal evaluations: SWE-bench Verified on a 477-problem subset, SWE-Lancer,
+internal pull-request replication (OpenAI PRs), MLE-bench (full set with pass@10 in the o1 era, a
+30-competition subset with pass@1 from mid-2025, a revised 72-problem set from GPT-5.6), PaperBench,
+research-engineer interview questions, OpenAI-Proof Q&A, an internal research debugging eval and
+Monorepo-Bench. The High threshold is worded as "a performant mid-career research engineer".
+
+```{python}
+#| echo: false
+from src.site import *  # noqa
+```
+
+## Bounded evaluations
+
+```{python}
+#| fig-cap: "Every bounded evaluation on one 0 to 100 percent axis. The research-engineer coding interview saturated first (retired after ChatGPT agent); MLE-bench was revised once the 30-competition subset climbed; OpenAI-Proof Q&A stays near the floor. A black cross marks the last reported value of a series later cards drop; card names run along the top."
+show_overview("openai")
+```
+
+## Unbounded evaluations
+
+```{python}
+#| fig-cap: "Every unbounded evaluation as a multiple, on a log axis. METR's 50 percent time horizon has no human reference, so it is indexed to the first frontier card and drawn dashed."
+show_unbounded("openai")
+```
+
+## Each evaluation over time
+
+```{python}
+#| fig-cap: "Numeric scores over card date, one panel per benchmark series. Bounded metrics show their full range with the ceiling as a solid line; red dotted is a human reference stated by the card, grey dashed a rule-out threshold. Filled points are read from the card or launch post; light-filled points are unverified; hollow points are the same model under another condition. MLE-bench appears twice because the o1-era cards used the full competition set and pass@10, later cards a 30-competition subset."
+show_series("openai")
+```
+
+## Table
+
+::: {.benchmarks .column-screen-inset}
+
+```{python}
+show_table("openai", caption="OpenAI: AI self-improvement and agentic-coding scores by system card. {#tbl-openai}")
+```
+
+:::
+
+## Cards
+
+```{python}
+show_cards("openai")
+```

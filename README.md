@@ -2,7 +2,7 @@
 
 The AI R&D evaluation scores that OpenAI, Anthropic and Google DeepMind report in their model and
 system cards, collected in one long-form CSV with a source and a confidence flag on every row, and
-rendered as a Quarto page: per lab, a saturation overview of every bounded evaluation on one 0 to
+rendered as a Quarto site with a sidebar: two cross-lab figures, then per lab, a saturation overview of every bounded evaluation on one 0 to
 100 percent axis, a log-axis overview of the unbounded ones as multiples of the card's human
 reference, one small panel per evaluation over time, and a benchmark-by-model table.
 
@@ -12,7 +12,10 @@ Rendered site: https://tecunningham.github.io/ai-rnd-benchmarks/
 
 | path | what |
 |---|---|
-| `index.qmd` | the page: prose, figures and tables, executed from the CSVs at render time |
+| `index.qmd` | across the labs: shared-benchmark panels and every lab's research evaluations on one axis |
+| `openai.qmd`, `anthropic.qmd`, `gdm.qmd` | one page per lab: bounded overview, unbounded overview, small multiples, table, cards |
+| `method.qmd` | provenance, how to read the figures, the frontier rule |
+| `src/site.py` | the `show_*` helpers the pages call |
 | `data/ai_rd_benchmarks.csv` | one row per score (lab, model, card, benchmark, conditions, score, source, confidence) |
 | `data/ai_rd_benchmark_series.csv` | per-series metadata: ceiling, direction, human reference, threshold, category, retirement |
 | `data/notes/ai-rd-benchmarks.md` | collection and verification notes, card by card |
@@ -26,7 +29,7 @@ pip install -r requirements.txt
 quarto render
 ```
 
-`freeze: auto` caches executed cells under `_freeze/`; delete that directory (or edit `index.qmd`)
+`freeze: auto` caches executed cells under `_freeze/`; delete that directory (or edit the page)
 to force re-execution after a data change. The GitHub Actions workflow in `.github/workflows/`
 renders on every push to `main` and deploys to GitHub Pages (repository Settings, Pages, Source =
 GitHub Actions).

@@ -1,0 +1,53 @@
+---
+title: "Anthropic"
+---
+
+Anthropic's Responsible Scaling Policy defines AI R&D capability thresholds (AI R&D-4 through Opus
+4.6, an "automated AI R&D" threshold from Mythos Preview on) and reports SWE-bench Verified plus a
+hard subset used as an RSP checkpoint, two internal AI research evaluation suites with thresholds
+stated in human-expert hours, a subset of METR's RE-Bench, staff surveys, and from 2026 an internal
+acceleration measure built on a fork of Epoch's Capabilities Index. From Opus 4.8 the card says the
+task suites are no longer load-bearing for the determination, and the Fable 5.1 / Mythos 5.1 card
+did not run Suite 1 at all.
+
+```{python}
+#| echo: false
+from src.site import *  # noqa
+```
+
+## Bounded evaluations
+
+```{python}
+#| fig-cap: "Every bounded evaluation on one 0 to 100 percent axis. Text-based RL and SWE-bench Verified approach the ceiling; the novel compiler's complex tests and Suite 2 do not, and from Opus 4.8 the card stops treating the task suites as load-bearing. A black cross marks the last reported value of a series later cards drop; card names run along the top."
+show_overview("anthropic")
+```
+
+## Unbounded evaluations
+
+```{python}
+#| fig-cap: "Every unbounded evaluation as a multiple, on a log axis. Solid lines are divided by the card's human reference (1x = the reference reached; the label gives the reference value and the human time it represents); dashed lines have no reference and are indexed to their first card."
+show_unbounded("anthropic")
+```
+
+## Each evaluation over time
+
+```{python}
+#| fig-cap: "Numeric scores over card date, one panel per benchmark series. Same marks as on the OpenAI page. Terminal-Bench is split by version; the quadruped task is split at its rescale."
+show_series("anthropic")
+```
+
+## Table
+
+::: {.benchmarks .column-screen-inset}
+
+```{python}
+show_table("anthropic", caption="Anthropic: AI R&D and agentic-coding scores by system card. {#tbl-anthropic}")
+```
+
+:::
+
+## Cards
+
+```{python}
+show_cards("anthropic")
+```

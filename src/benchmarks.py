@@ -573,3 +573,158 @@ def load_frontier(lab: str | None = None) -> pd.DataFrame:
 def omitted(lab: str) -> pd.DataFrame:
     dom = dominance(load(lab, frontier_only=True), lab)
     return dom[dom["dominated"]].reset_index(drop=True)
+
+
+# ----------------------------------------------------------------------------- across the three labs
+LAB_COLORS = {"openai": "#2a78d6", "anthropic": "#eb6834", "gdm": "#1baf7a"}
+LAB_ORDER = ["openai", "anthropic", "gdm"]
+
+# Benchmarks more than one lab reports, as (panel title, {lab: regex on the series name}, ceiling or None,
+# note). Versions and subsets are drawn as separate segments in the lab's colour.
+SHARED_PANELS = [
+    ("SWE-bench Verified", {l: r"^SWE-bench Verified$" for l in LAB_ORDER}, 100, "477-problem subset at OpenAI"),
+    ("SWE-Bench Pro", {l: r"^SWE-Bench Pro$" for l in LAB_ORDER}, 100, ""),
+    ("Terminal-Bench, every version", {l: r"^Terminal-Bench(?: v\d(?:\.\d)?)?$" for l in LAB_ORDER}, 100,
+     "a segment per version; OpenAI values are launch-post figures"),
+    ("MLE-bench, different subsets", {"openai": r"^MLE-bench: ", "gdm": r"^MLE-Bench$"}, 100,
+     "OpenAI: 75 competitions pass@10, then 30 pass@1, then 72 revised; GDM: medal rate"),
+    ("RE-Bench (METR), human-normalized", {"gdm": r"^RE-Bench \(METR\): human-normalized average$",
+                                          "anthropic": r"^RE-Bench \(METR\): 4-task"}, None,
+     "GDM: 5 of 7 tasks, 32 h budget; Anthropic: 4 modified tasks. 1.0 = best human 8-hour attempt"),
+]
+
+
+_SEGMENT_TAGS = {"MLE-bench: MLE-bench (75 competitions, AIDE)": "75 comp., pass@10",
+                 "MLE-bench: MLE-bench-30": "30 subset", "MLE-bench: MLE-Bench Revised": "revised (72)"}
+
+
+def load_all_frontier() -> pd.DataFrame:
+    return pd.concat([load_frontier(lab) for lab in LAB_ORDER], ignore_index=True)
+
+
+def _series_by_lab(df: pd.DataFrame) -> pd.DataFrame:
+    d = numeric_series(df)
+    return d.loc[d.groupby(["lab", "series", "model"])["score_num"].idxmin()].sort_values("card_date")
+
+
+def cross_lab_shared(df: pd.DataFrame | None = None, ncols: int = 3):
+    """Benchmarks reported by more than one lab, one panel each, lines coloured by lab. Bounded
+    panels show the full 0 to 100 range; the RE-Bench panel has the human baseline as a red dotted
+    line. Conditions differ between labs (subset, scaffold, budget), so read within a panel as
+    'who reports what, and where it sits against the ceiling', not as a ranking."""
+    plots.style()
+    df = load_all_frontier() if df is None else df
+    d = _series_by_lab(df)
+    nrows = int(np.ceil(len(SHARED_PANELS) / ncols))
+    fig, axes = plt.subplots(nrows, ncols, figsize=(3.6 * ncols, 3.1 * nrows), squeeze=False)
+    x0, x1 = d["card_date"].min(), d["card_date"].max()
+    pad = pd.Timedelta(days=45)
+    used = set()
+    for ax, (title, pats, ceiling, note) in zip(axes.flat, SHARED_PANELS):
+        ymax = 0
+        for lab in LAB_ORDER:
+            if lab not in pats:
+                continue
+            g = d[(d["lab"] == lab) & d["series"].str.contains(pats[lab], regex=True)]
+            if g.empty:
+                continue
+            used.add(lab)
+            c = LAB_COLORS[lab]
+            for s, seg in g.groupby("series", sort=False):
+                seg = seg.sort_values("card_date")
+                ax.plot(seg["card_date"], seg["score_num"], color=c, lw=1.6, alpha=0.9, zorder=2)
+                ax.scatter(seg["card_date"], seg["score_num"], s=16, c=c, edgecolors=plots.SURFACE, linewidths=0.8, zorder=3)
+                ymax = max(ymax, seg["score_num"].max())
+                if g["series"].nunique() > 1:
+                    tag = _SEGMENT_TAGS.get(s) or re.sub(r"^Terminal-Bench ?", "", s) or "v1"
+                    ax.annotate(tag, (seg["card_date"].iloc[0], seg["score_num"].iloc[0]), xytext=(3, 4),
+                                textcoords="offset points", fontsize=5.8, color=c, ha="left")
+        if ceiling:
+            ax.axhline(ceiling, color=plots.INK2, lw=0.8, zorder=1)
+            ax.set_ylim(0, ceiling * 1.06)
+        else:
+            ax.axhline(1, color=HUMAN_REF_COLOR, ls=(0, (1.5, 2.5)), lw=1.2, zorder=1)
+            ax.annotate("human baseline (1.0)", (0.02, 1), xycoords=("axes fraction", "data"), xytext=(0, -2),
+                        textcoords="offset points", va="top", fontsize=6.3, color=HUMAN_REF_COLOR)
+            ax.set_ylim(0, max(1.2, ymax * 1.15))
+        ax.set_xlim(x0 - pad, x1 + pad)
+        ax.set_title(title, fontsize=9)
+        if note:  # every panel's lines start low and left, so the top-left corner is free
+            ax.text(0.02, 0.93 if ceiling else 0.97, "\n".join(textwrap.wrap(note, 46)), transform=ax.transAxes,
+                    fontsize=5.8, color=plots.MUTED, va="top")
+        ax.xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator(bymonth=[1, 7]))
+        ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter("%b %y"))
+        ax.tick_params(labelsize=7.5)
+    for ax in axes.flat[len(SHARED_PANELS):]:
+        ax.axis("off")
+    handles = [plt.Line2D([], [], color=LAB_COLORS[l], lw=2, label=LABS[l]) for l in LAB_ORDER if l in used]
+    spare = axes.flat[len(SHARED_PANELS)] if len(SHARED_PANELS) < axes.size else axes.flat[0]
+    spare.legend(handles=handles, loc="center" if spare.axison is False else "lower right", fontsize=8.5,
+                 title="Score as the lab reports it", title_fontsize=8)
+    fig.suptitle("Benchmarks reported by more than one lab", x=0.01, ha="left", fontsize=12, fontweight="bold")
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
+    return fig
+
+
+def cross_lab_research(df: pd.DataFrame | None = None, min_points: int = 2):
+    """Every lab's bounded AI-research evaluations (the `research` category: internal task suites,
+    MLE-bench, PaperBench, research Q&A, GRB) on one 0 to 100 percent axis, coloured by lab, with
+    the lab's retirement crosses. The picture the three labs share: each internal research
+    evaluation climbs toward its ceiling within one to two years and is then replaced."""
+    plots.style()
+    df = load_all_frontier() if df is None else df
+    meta = series_meta()
+    d = numeric_series(df)
+    rows = []
+    for (lab, s), g in d.groupby(["lab", "series"]):
+        m = meta_for(meta, lab, s)
+        if m is None or m["overview"] != "yes" or m["category"] != "research" or pd.isna(m["ceiling"]) or m["direction"] != "higher":
+            continue
+        base = g.loc[g.groupby("model")["score_num"].idxmin()].sort_values("card_date")
+        if base["model"].nunique() < min_points:
+            continue
+        rows.append((base.assign(pct=base["score_num"] / m["ceiling"] * 100, lab=lab, series=s), m))
+    fig, ax = plt.subplots(figsize=(10, 6.2))
+    if not rows:
+        plots._empty(ax, "No bounded research series"); return fig
+    allb = pd.concat([b for b, _ in rows])
+    x0, x1 = allb["card_date"].min(), allb["card_date"].max()
+    latest = df.groupby("lab")["card_date"].max()
+    span = (x1 - x0).days or 1
+    ax.axhline(100, color=plots.INK2, lw=1, zorder=1)
+    ax.annotate("ceiling", (x0, 100), xytext=(2, -9), textcoords="offset points", fontsize=7, color=plots.INK2)
+    ends, retired = [], 0
+    for b, m in sorted(rows, key=lambda bm: bm[0]["card_date"].min()):
+        lab = b["lab"].iloc[0]; c = LAB_COLORS[lab]
+        ax.plot(b["card_date"], b["pct"], color=c, lw=1.6, alpha=0.9, zorder=2)
+        ax.scatter(b["card_date"], b["pct"], s=16, c=c, edgecolors=plots.SURFACE, linewidths=0.8, zorder=3)
+        last = b.iloc[-1]
+        if _retire_mark(ax, m, last["card_date"], last["pct"], latest[lab]):
+            retired += 1
+        ends.append((last["card_date"], last["pct"], f"{LABS[lab]}: {short_name(b['series'].iloc[0])}", c))
+    ends.sort(key=lambda e: e[1])
+    ys = [e[1] for e in ends]
+    gap = 3.8
+    for i in range(1, len(ys)):
+        if ys[i] - ys[i - 1] < gap:
+            ys[i] = ys[i - 1] + gap
+    over = ys[-1] - 104 if ys and ys[-1] > 104 else 0
+    ys = [y - over for y in ys]
+    xlab = x1 + pd.Timedelta(days=int(span * 0.07))
+    for (xd, y, name, c), yl in zip(ends, ys):
+        ax.plot([xd, xlab], [y, yl], color=c, lw=0.6, alpha=0.6, zorder=1, clip_on=False)
+        ax.annotate(name, (xlab, yl), xytext=(3, 0), textcoords="offset points", va="center", fontsize=6.8,
+                    color=plots.INK2, annotation_clip=False)
+    ax.set_ylim(0, 108)
+    ax.set_xlim(x0 - pd.Timedelta(days=30), x1 + pd.Timedelta(days=45))
+    ax.set_ylabel("Score as percent of the benchmark ceiling")
+    ax.xaxis.set_major_locator(plt.matplotlib.dates.MonthLocator(bymonth=[1, 7]))
+    ax.xaxis.set_major_formatter(plt.matplotlib.dates.DateFormatter("%b %Y"))
+    handles = [plt.Line2D([], [], color=LAB_COLORS[l], lw=2, label=LABS[l]) for l in LAB_ORDER if l in set(allb["lab"])]
+    if retired:
+        handles.append(plt.Line2D([], [], color=plots.INK, marker="x", ls="none", markersize=7, markeredgewidth=1.4,
+                                  label="last reported value; the lab's later cards drop it"))
+    ax.legend(handles=handles, loc="lower left", fontsize=8)
+    ax.set_title("All three labs: bounded AI-research evaluations, as percent of their ceilings", pad=10)
+    fig.subplots_adjust(left=0.07, right=0.66, top=0.92, bottom=0.08)
+    return fig

@@ -4,10 +4,24 @@ project:
   output-dir: _site
 
 website:
-  title: "AI R&D benchmarks in model cards"
+  title: "AI R&D benchmarks"
   site-url: https://tecunningham.github.io/ai-rnd-benchmarks/
   repo-url: https://github.com/tecunningham/ai-rnd-benchmarks
   repo-actions: [source]
+  page-navigation: true
+  sidebar:
+    style: docked
+    search: false
+    collapse-level: 2
+    contents:
+      - text: "Across the labs"
+        href: index.qmd
+      - section: "Per lab"
+        contents:
+          - openai.qmd
+          - anthropic.qmd
+          - gdm.qmd
+      - method.qmd
   page-footer: "Data: data/ai_rd_benchmarks.csv. Every cell carries a source and a confidence flag."
 
 format:
@@ -16,9 +30,14 @@ format:
     css: styles.css
     toc: true
     toc-depth: 2
+    toc-title: "On this page"
     code-fold: true
     fig-width: 8
     fig-height: 5
+    grid:
+      sidebar-width: 230px
+      body-width: 1000px
+      margin-width: 200px
 
 execute:
   echo: false
