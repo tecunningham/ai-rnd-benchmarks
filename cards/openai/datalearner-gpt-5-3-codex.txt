@@ -1,0 +1,383 @@
+GPT-5.3 Codex: Specs, Pricing, Benchmarks & Model Details | DataLearnerAI 
+ DataLearnerAI Toggle navigation menu Search blog 
+
+ Latest AI Insights 
+
+ Model Leaderboards 
+
+ Benchmarks 
+
+ Model Directory 
+
+ Model Comparison 
+
+ Resource Center 
+
+ Tools 
+
+ Language English 
+ 中 中文 EN English 
+
+ Search blog 
+ 中 EN 
+
+ Page navigation 
+ Page navigation
+
+ Model basics 
+ Open source & experience 
+ Official resources 
+ API details 
+ Benchmark Results 
+ Model relationships 
+ Common Comparisons 
+ Publisher 
+ Model Overview 
+ FAQ 
+ Model catalog GPT-5.3 Codex GP
+ GPT-5.3 Codex
+ Coding model Codex GPT-5.3 
+ GPT-5.3 Codex
+ Release date : 2026-02-05 Updated : 2026-07-17 Views : 2,496 
+
+ Live demo GitHub Hugging Face Compare 
+ Parameters 
+ No data
+
+ Context length 
+ 400K
+
+ Multilingual 
+ Supported
+
+ Reasoning ability 
+ 5 / 5 
+
+ GPT-5.3 Codex is a coding model from OpenAI, released on 2026-02-05. It accepts text and image input and returns text output. The recorded context window is 400K, and the recorded maximum output is 125K. Cataloged capabilities include Reasoning model, Multilingual, and Coding model. The model weights are proprietary and are not published for download. Use the linked references to confirm current access, licensing, and provider-specific limits.
+
+ Data sourced primarily from official releases (GitHub, Hugging Face, papers), then benchmark leaderboards, then third-party evaluators. Learn about our data methodology 
+ GPT-5.3 Codex 
+ Model basics
+
+ Reasoning traces
+ Supported
+
+ Thinking modes
+ Standard Mode (Default) Thinking Level · Medium (Default) Thinking Level · Low Thinking Level · High Thinking Level · Extra-High Thinking Level · Deep 
+
+ Context length
+ 400K tokens
+
+ Max output length
+ 125K tokens
+
+ Model type
+ Coding model
+
+ Modality (in / out)
+ Text, Image → Text
+
+ Release date
+ 2026-02-05
+
+ Model file size
+ No data
+
+ MoE architecture
+ No
+
+ Total params / Active params
+ No data / Not applicable
+
+ Knowledge cutoff
+ No data
+
+ GPT-5.3 Codex 
+ Open source & experience
+
+ Code license
+ Proprietary
+
+ Weights license
+ Proprietary
+
+ GitHub repo
+ N/A
+
+ Hugging Face
+ N/A
+
+ Live demo
+ chatgpt.com 
+
+ GPT-5.3 Codex 
+ Official resources
+
+ Paper
+ Paper 
+
+ DataLearnerAI blog
+ N/A
+
+ GPT-5.3 Codex 
+ API details
+
+ API speed
+ 4 / 5 
+
+ 💡 Default unit: $/1M tokens . If vendors use other units, follow their published pricing. 
+ Learn about pricing modes 
+ Standard 
+ Type Condition Input Output 
+ Text - $1.75 / 1M tokens $14.00 / 1M tokens 
+
+ Cache Pricing Prompt Cache 
+ Type TTL Write Read 
+ Text - — $0.175 / 1M tokens 
+
+ “—” means the modality is not billed in that direction, or the vendor has not published a price for it.
+
+ GPT-5.3 Codex 
+ Benchmark Results
+
+ GPT-5.3 Codex currently shows benchmark results led by Terminal Bench 2.0 (3 / 48, score 77.30), AA-LCR (11 / 170, score 83.30), Terminal Bench Hard (17 / 244, score 53). This page also consolidates core specs, context limits, and API pricing so you can evaluate the model from benchmark results and deployment constraints together.
+ Thinking All modes Normal Thinking 
+
+ Tool usage All modes With tools No tools 
+
+ General Knowledge
+ 4 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ LiveBench High 
+
+ 72.76
+ 24 / 117
+
+ LiveBench Deep 
+
+ 71.64
+ 31 / 117
+
+ HLE Extra-High 
+
+ 42.50
+ 109 / 563
+
+ CritPt Extra-High 
+
+ 16.90
+ 47 / 200
+
+ General Evaluation
+ 1 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ GPQA Diamond Extra-High 
+
+ 91.50
+ 61 / 462
+
+ Coding and Software Engineer
+ 5 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ Text Arena (Coding) Standard Mode 
+
+ 1406.65
+ 28 / 35
+
+ IC SWE-Lancer(Diamond) Extra-High 
+
+ 81.40
+ 1 / 8
+
+ WeirdML v2 Standard Mode Tools 
+
+ 79.30
+ 8 / 52
+
+ WeirdML v2 Extra-High Tools 
+
+ 79.30
+ 8 / 52
+
+ SWE-Bench Pro - Public Extra-High 
+
+ 56.80
+ 24 / 62
+
+ Agent Level Benchmark
+ 3 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ METR Time Horizons v1.1 Standard Mode Tools 
+
+ 349.53
+ 4 / 22
+
+ τ²-Bench - Telecom Extra-High Tools 
+
+ 86
+ 85 / 264
+
+ Terminal Bench Hard Extra-High Tools 
+
+ 53
+ 17 / 244
+
+ Instruction Following
+ 1 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ IF Bench Extra-High 
+
+ 75.40
+ 34 / 282
+
+ AI Agent - Tool Usage
+ 1 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ Terminal Bench 2.0 Extra-High Tools 
+
+ 77.30
+ 3 / 48
+
+ Long Context
+ 1 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ AA-LCR Extra-High 
+
+ 83.30
+ 11 / 170
+
+ Productivity Knowledge
+ 1 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ AA-Briefcase Extra-High Tools 
+
+ 866
+ 72 / 83
+
+ Multimodal Understanding
+ 1 evaluations 
+ Benchmark / mode
+
+ Score
+ Rank/total
+
+ MMMU-Pro Extra-High 
+
+ 78.50
+ 59 / 227
+
+ View benchmark analysis Compare with other models 
+
+ GPT-5.3 Codex 
+ Model relationships
+
+ Explore predecessors, competitors, and directly related models for GPT-5.3 Codex to understand its product lineage and alternatives.
+ Earlier version
+ Earlier version GPT-5.2-Codex 
+
+ Competitor
+ Competitor Claude Opus 4.6 
+ Competitor Gemini 3.0 Pro (Preview 11-2025) 
+
+ Compare with other models
+
+ Peer model GPT-5.3 Codex vs Claude Opus 4.6 12 benchmarks 
+ Peer model GPT-5.3 Codex vs Gemini 3.0 Pro (Preview 11-2025) 10 benchmarks 
+ Earlier version GPT-5.3 Codex vs GPT-5.2-Codex 9 benchmarks 
+ Want a custom combination? Open the compare tool 
+
+ GPT-5.3 Codex 
+ Publisher
+
+ OpenAI
+ View publisher details 
+
+ GPT-5.3 Codex 
+ Model Overview
+
+ GPT-5.3 Codex is a coding model from OpenAI, released on 2026-02-05.
+
+ It accepts text and image input and produces text output. Its cataloged capabilities include Reasoning model, Multilingual, and Coding model. The recorded context window is 400K, and the recorded maximum output is 125K.
+
+ The model weights are proprietary and are not published for download. The page records 3 API pricing rules from OpenAI; current provider pricing and conditions should be checked before deployment. The evaluation section contains 5 cataloged benchmark results with their recorded modes and scores. The page links 2 release, model-card, repository, or provider references for checking the underlying claims. Specifications, availability, and prices can change; undisclosed values are intentionally left unstated.
+
+ GPT-5.3 Codex 
+ FAQ
+
+ What is GPT-5.3 Codex?
+ GPT-5.3 Codex is a coding model from OpenAI, released on 2026-02-05. It accepts text and image input and returns text output. The recorded context window is 400K, and the recorded maximum output is 125K. Cataloged capabilities include Reasoning model, Multilingual, and Coding model. The model weights are proprietary and are not published for download. Use the linked references to confirm current access, licensing, and provider-specific limits.
+
+ What input and output modalities does GPT-5.3 Codex support?
+ The current model record lists text and image as input and text as output.
+
+ What are the main recorded specifications for GPT-5.3 Codex?
+ The recorded context window is 400K, and the recorded maximum output is 125K. Fields without a source-backed value remain undisclosed.
+
+ Does GPT-5.3 Codex have API pricing?
+ The page records 3 API pricing rules from OpenAI; current provider pricing and conditions should be checked before deployment.
+
+ Are benchmark results available for GPT-5.3 Codex?
+ The evaluation section contains 5 cataloged benchmark results with their recorded modes and scores. Compare only results that use the same benchmark version and evaluation mode.
+
+ Is GPT-5.3 Codex open source?
+ The model weights are proprietary and are not published for download. Review the linked license text before commercial or derivative use.
+
+ DataLearner on WeChat
+
+ Follow DataLearner on WeChat for AI model updates and research notes.
+
+ DataLearner AI 
+ A knowledge platform focused on LLM benchmarking, datasets, and practical instruction with continuously updated capability maps.
+
+ Products
+ Leaderboards 
+ Model comparison 
+ Datasets 
+
+ Resources
+ Tutorials 
+ Editorial 
+ Tool directory 
+
+ Company
+ About 
+ Privacy policy 
+ Data methodology 
+ Contact 
+
+ Links LLMLearner · Learn and choose LLMs in English 
+
+ © 2026 DataLearner AI . DataLearner curates industry data and case studies so researchers, enterprises, and developers can rely on trustworthy intelligence.
+ Privacy policy Terms of service

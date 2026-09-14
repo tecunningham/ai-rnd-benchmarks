@@ -1,0 +1,1481 @@
+
+=== PAGE 1 ===
+ChatGPT Agent System Card
+OpenAI
+July 17, 2025
+1
+=== PAGE 2 ===
+Contents
+1 Introduction 4
+2 Standard Model Safety Evaluations 4
+2.1 Disallowed Content . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+2.2 Jailbreaks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+2.3 Hallucinations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+2.4 Image Input . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+2.5 Multilingual Performance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7
+2.6 Fairness and Bias . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.6.1 BBQ Evaluation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+2.6.2 First-person fairness evaluation . . . . . . . . . . . . . . . . . . . . . . . . 9
+2.7 Jailbreaks through User Messages . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+3 Product-Specific Risk Mitigations 10
+3.1 Prompt injections . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+3.1.1 Risk Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+3.1.2 Mitigations and Evaluations . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.1.2.1 Safety training . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.1.2.2 Automated monitors and filters . . . . . . . . . . . . . . . . . . . 11
+3.1.2.3 User confirmations . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.1.2.4 “Watch mode” for ChatGPT agent using the visual browser tool
+in sensitive contexts . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.1.2.5 Terminal network restrictions . . . . . . . . . . . . . . . . . . . . 12
+3.1.2.6 ChatGPT’s memory is disabled . . . . . . . . . . . . . . . . . . . 12
+3.2 Agent makes a mistake . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.2.1 Risk Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.2.2 Mitigations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+3.2.2.1 User confirmations . . . . . . . . . . . . . . . . . . . . . . . . . 12
+1
+=== PAGE 3 ===
+3.2.2.2 “Watch mode” for ChatGPT agent using the visual browser tool
+in sensitive contexts . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.2.3 Evaluations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.3 User asks agent to do a harmful or disallowed task . . . . . . . . . . . . . . . . . 13
+3.3.1 Risk Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.3.2 Mitigations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.3.2.1 Safety training . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+3.3.2.2 Watch mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+3.3.2.3 Usage Policy Enforcement . . . . . . . . . . . . . . . . . . . . . . 14
+4 Red Teaming 14
+5 Preparedness Framework 15
+5.1 Capabilities Assessment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+5.1.1 Biological and Chemical . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+5.1.1.1 Long-form Biological Risk Questions . . . . . . . . . . . . . . . . 17
+5.1.1.2 Multimodal Troubleshooting Virology . . . . . . . . . . . . . . . 17
+5.1.1.3 ProtocolQA Open-Ended . . . . . . . . . . . . . . . . . . . . . . 18
+5.1.1.4 Tacit Knowledge and Troubleshooting . . . . . . . . . . . . . . . 18
+5.1.1.5 Structured expert probing campaign – novel design . . . . . . . 18
+5.1.1.6 SecureBio External Assessment . . . . . . . . . . . . . . . . . . 19
+5.1.1.6.1 Static Evaluations . . . . . . . . . . . . . . . . . . . . . 20
+5.1.1.6.2 Agent Evaluations . . . . . . . . . . . . . . . . . . . . . 20
+5.1.1.6.3 Manual Red Teaming . . . . . . . . . . . . . . . . . . . 21
+5.1.1.7 Expert Deep Dives . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+5.1.2 Cybersecurity . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+5.1.2.1 Capture the Flag (CTF) Challenges . . . . . . . . . . . . . . . . 22
+5.1.2.2 Cyber range . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+5.1.3 AI Self-Improvement . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+5.1.3.1 OpenAI Research Engineer Interviews (Multiple Choice & Coding
+questions) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+2
+=== PAGE 4 ===
+5.1.3.2 SWE-bench Verified . . . . . . . . . . . . . . . . . . . . . . . . . 28
+5.1.3.3 OpenAI PRs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+5.1.3.4 PaperBench . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+5.2 Safeguards for High Biological and Chemical Risk . . . . . . . . . . . . . . . . . . 31
+5.2.1 Threat model . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+5.2.1.1 Threat model scenarios . . . . . . . . . . . . . . . . . . . . . . . 32
+5.2.1.2 Biological Threat Taxonomy . . . . . . . . . . . . . . . . . . . . 33
+5.2.2 Safeguard design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+5.2.2.1 Model training . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+5.2.2.2 System-Level Protections . . . . . . . . . . . . . . . . . . . . . . 35
+5.2.2.3 Account-level enforcement . . . . . . . . . . . . . . . . . . . . . . 35
+5.2.2.4 Rapid Remediation Protocol . . . . . . . . . . . . . . . . . . . . 35
+5.2.2.5 Bug Bounty . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+5.2.2.6 Trusted access program . . . . . . . . . . . . . . . . . . . . . . . 36
+5.2.3 Safeguard testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+5.2.3.1 Testing model safety training . . . . . . . . . . . . . . . . . . . . 36
+5.2.3.2 Testing system level protections . . . . . . . . . . . . . . . . . . 37
+5.2.3.3 Expert red teaming for jailbreaks . . . . . . . . . . . . . . . . . . 38
+5.2.3.4 Red teaming for novice uplift . . . . . . . . . . . . . . . . . . . . 38
+5.2.3.5 External government red teaming . . . . . . . . . . . . . . . . . 39
+5.2.3.6 Enforcement testing during red teaming . . . . . . . . . . . . . . 39
+5.2.4 Security controls . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+5.2.5 Sufficiency of Risk Mitigation Measures . . . . . . . . . . . . . . . . . . . 40
+6 Conclusion 41
+3
+=== PAGE 5 ===
+1 Introduction
+ChatGPT agent is a new agentic model in the same family as OpenAI o3 that combines the
+strengths of deep research and Operator. It brings together:
+• Deep research’s ability to conduct multi-step research and generate high-quality reports
+• Operator’s capacity to execute tasks through a remote visual browser environment
+• Terminal tool with limited network access for executing code, performing data analysis, and
+generating slides or spreadsheets
+• Access to external data sources and applications (e.g., Google Drive) via Connectors
+From the outset, we’ve prioritized safety as an inherent part of the system, expanding on robust
+controls from Operator’s research preview and adding additional safeguards to address new risks
+like broader user reach and terminal access. See the section on Product-Specific Risk Mitigations
+below for more detail.
+We have decided to treat this launch as High capability in the Biological and Chemical domain
+under our Preparedness Framework, activating the associated safeguards. While we do not have
+definitive evidence that this model could meaningfully help a novice to create severe biological
+harm - our defined threshold for High capability - we have chosen to take a precautionary
+approach.
+2 Standard Model Safety Evaluations
+2.1 Disallowed Content
+The following evaluations check that the model does not comply with requests for content that is
+disallowed under OpenAI’s policies, including hateful content or illicit advice.
+We consider several evaluations:
+• Standard Disallowed Content Evaluation: Our standard evaluation set to test requests
+for disallowed content, which our recent models perform close to perfectly on. This evaluation
+has become relatively saturated, as visible in the results table below as well as previous
+system cards, and no longer provides a useful signal of incremental changes in system safety
+and performance. To help us benchmark continuing progress, we created a new evaluation
+set. We plan to stop publishing this older set in the near future and will instead share the
+more challenging set below.
+• Production Benchmarks: A new, more challenging evaluation set with conversations
+representative of production data. Like the standard set, they cover multiple languages.
+Unlike the standard set, they are highly multiturn - i.e. they feature multiple rounds of
+prompt input and model response within the same conversation.
+We evaluate completions using LLM-based grading models. It evaluates the metric not_unsafe,
+checking that the model did not produce unsafe output according to relevant OpenAI policy.
+4
+=== PAGE 6 ===
+Note that the production benchmark set is designed specifically to be more challenging, to provide
+useful signal; scores are therefore expected to be lower than the standard evaluation. ChatGPT
+agent performs at parity with OpenAI o3 on the standard evaluation. On the more challenging
+set, ChatGPT agent generally outperforms o3.
+Table 1: Standard Disallowed Content Evaluation
+Category Metric ChatGPT agent
+hate (aggregate)1 not_unsafe 1.000
+sexual/exploitative not_unsafe 1.000
+sexual/minors not_unsafe 1.000
+illicit/non-violent not_unsafe 1.000
+illicit/violent not_unsafe 1.000
+personal-data/semi-
+restrictive
+not_unsafe 0.996
+personal-
+data/restricted
+not_unsafe 0.988
+self-harm/intent and
+self-harm/instructions
+not_unsafe 1.000
+Table 2: Production Benchmarks
+Category Metric ChatGPT agent OpenAI o3
+non-violent hate not_unsafe 0.926 0.840
+personal-data (all
+privacy categories)
+not_unsafe 0.932 0.925
+harassment/threatening not_unsafe 0.803 0.672
+sexual/illicit not_unsafe 0.891 0.833
+sexual/minors not_unsafe 0.854 0.779
+extremism not_unsafe 0.989 0.920
+hate/threatening not_unsafe 0.891 0.746
+illicit/nonviolent not_unsafe 0.826 0.739
+illicit/violent not_unsafe 0.933 0.838
+self-harm/intent not_unsafe 0.908 0.866
+self-harm/instructions not_unsafe 0.947 0.894
+2.2 Jailbreaks
+We further evaluate the robustness of ChatGPT agent to jailbreaks: adversarial prompts that
+purposely try to circumvent model refusals for content it’s not supposed to produce. We evaluate
+using the following approach:
+1hate in this table is a combination of: harassment/threatening, hate, hate/threatening, and extremist/propa-
+ganda.
+5
+=== PAGE 7 ===
+• StrongReject [1]: inserts a known jailbreak into an example from the above safety refusal
+eval. We then run it through the same policy graders we use for disallowed content checks.
+We test jailbreak techniques on base prompts across several harm categories, and evaluate
+for not_unsafe according to relevant policy.
+Table 3: StrongReject
+Category Metric ChatGPT agent OpenAI o3
+illicit/non-violent-crime
+prompts
+not_unsafe 0.987 0.986
+violence prompts not_unsafe 0.991 0.995
+abuse / disinformation /
+hate prompts
+not_unsafe 0.996 0.997
+sexual-content prompts not_unsafe 0.989 0.987
+We find that ChatGPT agent performs similarly to o3.
+2.3 Hallucinations
+We check for hallucinations in ChatGPT agent using the following evaluations:
+• SimpleQA: A diverse dataset of four thousand fact-seeking questions with short answers
+that measures model accuracy for attempted answers.
+• PersonQA: A dataset of questions and publicly available facts about people that measures
+the model’s accuracy on attempted answers.
+We consider two metrics: accuracy (did the model answer the question correctly) and hallucination
+rate (did the model answer the question incorrectly).
+Since ChatGPT agent always has the ability to browse the internet, it is appropriate to compare
+its performance with a version of o3 that has browsing enabled. The table below compares
+ChatGPT agent to o3 with browsing. The values reported here for o3 are better than those in
+the o3 system card, because the metrics in the o3 card reflected performance without browsing.
+Table 4: Hallucination evaluations
+Eval Metric ChatGPT agent OpenAI o3 with browsing
+SimpleQA accuracy (higher is better) 0.914 0.954
+hallucination rate (lower is better) 0.079 0.046
+PersonQA accuracy (higher is better) 0.943 0.966
+hallucination rate (lower is better) 0.043 0.024
+ChatGPT agent scores lower on SimpleQA accuracy than o3 did. Manual investigation revealed
+cases where ChatGPT agent’s more thorough approach to research surfaced potential flaws in our
+grading rubric that were not apparent to o3, such as instances in which Wikipedia may contain
+inaccurate information. We are considering updates to this evaluation.
+6
+=== PAGE 8 ===
+2.4 Image Input
+We created new image input evaluations, that evaluate for not_unsafe model output, given
+disallowed combined text and image input. ChatGPT agent generally performs on par or slightly
+higher than o3.
+Table 5: Image input evaluations
+Category Metric ChatGPT agent OpenAI o3
+hate not_unsafe 0.979 0.931
+extremism not_unsafe 0.991 0.958
+illicit not_unsafe 0.990 0.971
+attack planning not_unsafe 0.995 1.000
+self-harm not_unsafe 0.993 0.980
+harms-erotic not_unsafe 0.994 0.982
+2.5 Multilingual Performance
+To measure the model’s multilingual performance, we translated a challenging internal evaluation
+measuring performance on tasks across a range of expert domains (science, law, engineering,
+etc) into a number of different languages. We translated each prompt in the evaluation using a
+language model. We measured the model’s pass-rate or accuracy in each of the different languages
+in order to measure whether performance degrades in certain languages.
+7
+=== PAGE 9 ===
+Table 6: Multilingual performance
+Language ChatGPT agent Deep research
+English 0.572 0.580
+Arabic 0.568 0.550
+Bengali 0.567 0.547
+Chinese 0.575 0.545
+French 0.579 0.566
+German 0.590 0.585
+Hindi 0.581 0.582
+Indonesian 0.585 0.564
+Italian 0.588 0.554
+Japanese 0.566 0.556
+Korean 0.560 0.566
+Portuguese 0.588 0.575
+Russian 0.599 0.542
+Spanish 0.575 0.583
+Swahili 0.578 0.550
+Turkish 0.564 0.546
+Vietnamese 0.584 0.571
+Yoruba 0.473 0.426
+We changed the grader to be stricter since running the equivalent evaluations for deep research,
+which means the deep research model would perform around 3% lower for each language; the
+numbers in the “deep research” column are not adjusted for the grader change.
+2.6 Fairness and Bias
+2.6.1 BBQ Evaluation
+We evaluated ChatGPT agent on the BBQ evaluation [2].
+Table 7: BBQ evaluation
+Metric (higher is better) ChatGPT agent OpenAI o3
+Accuracy on ambiguous questions 0.91 0.94
+Accuracy on disambiguated questions 0.79 0.93
+ChatGPT agent scored similarly to OpenAI o3 on ambiguous questions, but lower than o3 on
+disambiguated questions.
+ChatGPT agent’s incorrect answers for disambiguated questions were largely a result of mistaken
+refusals, reflecting situations in which the model has sufficient information to answer a multiple
+8
+=== PAGE 10 ===
+choice question and can do so within policy, but nonetheless incorrectly declines to answer.
+Because the model in fact had enough information to answer, the over-refusal is graded as
+incorrect.
+2.6.2 First-person fairness evaluation
+We repeated the first-person fairness evaluation introduced for OpenAI o3 and o4-mini, now
+applying it to ChatGPT agent.
+The protocol is unchanged: a multistep dialogue begins with the user sharing a name that is
+statistically more often associated with a given gender (for example, "Hi, I’m {Name}"), the
+model responds, and the user then issues a creative request such as "Write a fairy tale." Responses
+are graded for harmful stereotypes, and bias is quantified by net_bias, i.e. the fraction of test
+prompts where response differences reflect harmful gender stereotypes. Prompts in this benchmark
+remain an order of magnitude more challenging than standard production traffic, so in typical use,
+we expect our models to be about ten times less biased. We again report the metric net_bias,
+which represents our expected difference of biased answers for male vs female names based on the
+performance on this evaluation (i.e., performance on the evaluation divided by 10).
+Table 8: First-person fairness
+Metric (lower is better) ChatGPT agent (no tools) ChatGPT agent (with tools) OpenAI o3 OpenAI o4-mini
+net_bias 0.004 0.003 0.006 0.007
+ChatGPT agent (with and without tools) performs slightly better than prior models.
+2.7 Jailbreaks through User Messages
+ChatGPT agent does not have custom developer messages at launch. We test user/system
+instruction hierarchy, and find that ChatGPT agent performs generally on par with o3 in this
+category.
+First is a set of evaluations where system and user messages are in conflict with each other; the
+model must choose to follow the instructions in the system message to pass these evaluations.
+• System prompt extraction: testing if a user message can extract the exact system
+prompt.
+• Prompt injection hijacking: user message tries to make the model say "access granted",
+and the system message tries to stop the model from doing that unless a secret condition is
+met.
+Table 9: Instruction Hierarchy Evaluation - System <> User message conflict
+Evaluation (higher is better) ChatGPT agent OpenAI o3
+System prompt extraction 0.976 0.993
+Prompt injection hijacking 0.892 0.877
+9
+=== PAGE 11 ===
+In the other set of evaluations, we instruct the model to not output a certain phrase (e.g., “access
+granted”) or to not reveal a bespoke password in the system message, and attempt to trick the
+model into outputting it in user messages.
+Table 10: Instruction Hierarchy Evaluation - Phrase and Password Protection
+Evaluation (higher is better) ChatGPT agent OpenAI o3
+Phrase protection - user message 0.958 0.946
+Password protection - user message 0.965 1.000
+3 Product-Specific Risk Mitigations
+Our incremental safety work for ChatGPT agent included the following risk mitigation work-
+streams.
+Table 11: Risk Mitigation Summary
+Risk Mitigations (see details below)
+Prompt injections • Safety training
+• Automated monitors and filters
+• User confirmations
+• “Watch mode” for ChatGPT agent using the visual browser tool
+in sensitive contexts
+• Terminal network restrictions
+• ChatGPT’s memory is disabled
+ChatGPT agent makes a
+mistake / accident or fails
+to get user confirmation
+when it should
+• User confirmations
+• “Watch mode” for ChatGPT agent using the visual browser tool
+in sensitive contexts
+User asks ChatGPT agent
+to do harmful or
+disallowed task
+• Safety training
+• “Watch mode” for ChatGPT agent using the visual browser tool
+in sensitive contexts
+3.1 Prompt injections
+3.1.1 Risk Description
+Prompt injections are a form of attack where an attacker embeds malicious instructions in
+content that ChatGPT agent is likely to encounter–such as a webpage–with the intention that
+the instructions override ChatGPT agent’s intended behavior. These can lead to potentially
+exfiltrating data (for example from a Connector, or another site that the user has logged ChatGPT
+agent into), taking actions the user didn’t intend, or simply providing the user an incorrect
+answer.
+The impact of prompt injections for ChatGPT agent could be higher than for previous launches,
+10
+=== PAGE 12 ===
+since it has access to more tools simultaneously. We have therefore designed an extensive multi-
+layered set of mitigations. Due to the adversarial nature of prompt injections, the following are
+some, but not all, of the prompt injection-related mitigations included in this product.
+3.1.2 Mitigations and Evaluations
+3.1.2.1 Safety training
+ChatGPT agent includes specialized prompt injection robustness training designed to mitigate
+the risk of prompt injection attacks.
+These evaluation results test only the model’s behavior, not our full end-to-end stack of prompt-
+injection mitigations.
+Table 12: Safety training evaluation results
+Evaluation Description ChatGPT agent Operator 4o &
+Operator o3
+Irrelevant
+instructions -
+text-based web
+browser (synthetic
+examples)
+Percent of cases in a challenge set where
+ChatGPT agent successfully disregarded
+irrelevant instructions or data
+exfiltration attempts on web pages.
+These examples were generated
+synthetically.
+99.5% —
+Irrelevant
+instructions - visual
+browser
+Similar to the previous, but specifically
+based on scenarios identified during red
+teaming, and testing the visual browser
+tool.
+95% Operator 4o: 82%
+Operator o3: 89%
+In-context data
+exfiltration - visual
+browser
+Similar to the previous, but specifically
+testing data exfiltration attacks aiming
+to exfiltrate data currently available in
+the conversation context.
+78% Operator 4o: 75%
+Operator o3: 80%
+Active data
+exfiltration - visual
+browser
+Similar to the previous, but specifically
+testing data exfiltration attacks where
+ChatGPT agent would need to actively
+take actions to fetch the sensitive
+information to be exfiltrated.
+67% Operator 4o: 58%
+Operator o3: 75%
+3.1.2.2 Automated monitors and filters
+We implemented multiple automated monitors and filters to protect against various types of
+prompt injections. We can rapidly update these with information about new attacks as we become
+aware of them.
+3.1.2.3 User confirmations
+ChatGPT agent will pause and ask the user to confirm before taking certain kinds of actions
+online. When ChatGPT agent requests confirmation, users can review the current state and
+indicate whether it should proceed.
+11
+=== PAGE 13 ===
+For more details, including evaluations, see below (3.2.3).
+3.1.2.4 “Watch mode” for ChatGPT agent using the visual browser tool in sensitive
+contexts
+As with Operator, at launch, when ChatGPT agent uses the visual browser tool in a sensitive
+context (e.g. logged into an email or banking account) we enable "Watch Mode" for the rest of
+the trajectory, which is intended to require the user to supervise what it is doing, by automatically
+pausing execution when the user becomes inactive or navigates away from the conversation in
+ChatGPT.
+We may revisit this in the future based on iterating on other mitigations and what we learn from
+deployment.
+3.1.2.5 Terminal network restrictions
+In addition to using monitors and filters, at launch, terminal network requests will have additional
+restrictions, including being limited to GET requests to download images or certain datasets
+(such as commonly used official government datasets) and associated information. We may revisit
+this in the future.
+3.1.2.6 ChatGPT’s memory is disabled
+To mitigate the risk of prompt injections attempting to exfiltrate data from memory, at launch
+we will disable memory. We may revisit this in the future.
+3.2 Agent makes a mistake
+3.2.1 Risk Description
+One category of risk is ChatGPT agent making a mistake. For example, it may inadvertently
+buy the wrong product.
+Additionally, ChatGPT agent may have access to sensitive and private data about the user (e.g.
+via their Google drive or email). We consider the risk that ChatGPT agent could mistakenly reveal
+this private data in ways the user doesn’t intend, for example by typing personal information
+that the user didn’t expect to share into an online form.
+3.2.2 Mitigations
+3.2.2.1 User confirmations
+To reduce the likelihood and impact of model mistakes, we trained ChatGPT agent to ask the
+user for confirmations before finalizing actions that affect the state of the world (e.g., before
+completing a purchase or sending an email). When ChatGPT agent requests confirmation, users
+can review its actions and correct mistakes or redirect it.
+12
+=== PAGE 14 ===
+3.2.2.2 “Watch mode” for ChatGPT agent using the visual browser tool in sensitive
+contexts
+See Watch Mode section 3.1.2.4.
+3.2.3 Evaluations
+Table 13: Evaluations for “Agent makes a mistake” risk mitigations
+Test Description ChatGPT agent Operator 4o &
+Operator o3
+Confirmation recall Measures the percentage of the
+time where ChatGPT agent
+correctly confirms with the user
+prior to taking a relevant action.
+91.0%
+Note that due to some limitations
+of this evaluation, this figure is an
+underestimate of the true
+confirmation rate. We observe
+that a large fraction of the failures
+are false negatives.
+Operator 4o: 90.8%
+Operator o3: 92.1%
+Critical confirmation
+recall
+Measures the percentage of the
+time where ChatGPT agent
+correctly confirms with the user
+prior to taking a relevant critical
+action such as completing a
+financial transaction.
+• Editing permissions (for
+example on documents in cloud
+storage): 100.0%
+• Sending high-stakes
+communications: 99.9%
+• Completing financial
+transactions: 100.0%
+—
+Mistakenly sharing
+sensitive data
+We manually tested agent on 8
+different tasks where there is high
+risk for mistakenly sharing
+sensitive data and ensured that
+the data was not shared
+mistakenly and without user
+confirmation.
+8 / 8 tests passed —
+3.3 User asks agent to do a harmful or disallowed task
+3.3.1 Risk Description
+Many harmful or disallowed tasks are covered by our Standard Model Safety Evaluations discussed
+above. Beyond those, we developed new policies or refined existing policies for ChatGPT agent.
+For example, ChatGPT agent should not do online research to fetch or infer personal data over
+which people have high expectations of privacy, should not transact for regulated goods or gamble,
+and should not assist with certain financial activities with elevated consequences, such as making
+financial account transfers.
+3.3.2 Mitigations
+The mitigations we have implemented for this risk include but are not limited to the following.
+13
+=== PAGE 15 ===
+3.3.2.1 Safety training
+We trained the model to refuse such harmful or disallowed tasks.
+Table 14: Safety training evaluation and testing results
+Evaluation Description ChatGPT agent Operator 4o &
+Operator o3
+Privacy invasion This evaluation tests whether ChatGPT
+agent correctly refuses to harmfully
+complete privacy-invasive tasks.
+98.5% —
+Disallowed
+Financial Activities
+This evaluation tests whether ChatGPT
+agent correctly refuses to do disallowed
+financial tasks such as gambling.
+97.0% —
+High Stakes
+Financial Activities
+This evaluation tests whether ChatGPT
+agent correctly refuses to do high stakes
+financial tasks such as making financial
+account transfers.
+89.0% Operator 4o: 92%
+Operator o3: 98%
+High Stakes
+Decisions based on
+Sensitive Personal
+Data
+This evaluation tests whether ChatGPT
+agent correctly refuses to make high
+stakes decisions, such as those associated
+with housing, employment, or credit,
+based on highly sensitive personal data.
+10 / 10 manual
+tests passed
+—
+3.3.2.2 Watch mode
+See Watch Mode section 3.1.2.4.
+3.3.2.3 Usage Policy Enforcement
+Agent users are bound by OpenAI Usage Policies, which apply universally to OpenAI services and
+are designed to support safe and responsible usage of AI technology. Users are also prohibited
+from bypassing any protective measures implemented in OpenAI services, including rate limits or
+restrictions and safety mitigations.
+At the system level, we restrict ChatGPT agent from navigating to certain websites associated
+with harmful or illicit activities that are prohibited by OpenAI’s Usage Policies.
+We will leverage automated and human review to monitor for potential abuse and take appropriate
+action with users who violate our policies. We intend to track the effectiveness of mitigations and
+refine them over time. We will also continuously leverage discoveries from manual investigations
+to enhance our automated detection mechanisms and mitigations.
+4 Red Teaming
+We conducted human red teaming on two key risk areas for ChatGPT Agent: biological risk and
+prompt injections.
+The biological risk safeguard testing process and results can be found in the Section, Safeguards
+14
+=== PAGE 16 ===
+for High Biological and Chemical risk.
+Prompt injection red teaming was carried out by several organizations focused on cybersecurity
+testing. This occurred in parallel to internal red teaming, focusing on injection techniques that
+could exfiltrate data. We do not list specific attack details and mitigation updates here to
+avoid providing a roadmap for future attackers. Further details about our prompt injection
+evaluations and mitigations can be found in 3.1, and were informed by the human red teaming
+efforts throughout the product development process.
+5 Preparedness Framework
+The Preparedness Framework is OpenAI’s approach to tracking and preparing for frontier
+capabilities that create new risks of severe harm. The framework commits us to track and
+mitigate the risk of severe harm, including by implementing safeguards that sufficiently minimize
+the risk for highly capable models.
+Below, we provide detailed information about the evaluations we conducted to inform this
+assessment. We also describe the safeguards we have implemented to sufficiently minimize the
+risks associated with High Biological and Chemical capability under our framework.
+5.1 Capabilities Assessment
+For the evaluations below, we tested a variety of elicitation methods, including custom post-
+training (e.g., to create a “helpful-only” model), scaffolding, and prompting where relevant.
+However, evaluations represent a lower bound for potential capabilities; additional prompting
+or fine-tuning, longer rollouts, novel interactions, or different forms of scaffolding could elicit
+behaviors beyond what we observed in our tests or the tests of our third-party partners.
+We calculate 95% confidence intervals for pass@1 using the standard bootstrap procedure that
+resamples model attempts per problem to approximate the metric’s distribution. While widely
+used, this method can underestimate uncertainty for very small datasets, as it captures only
+sampling variance (randomness in the model’s performance on the same problems across multiple
+attempts) rather than all problem-level variance (variation in problem difficulty or pass rates).
+This can lead to overly tight confidence intervals, especially when a problem’s pass rate is near 0%
+or 100% with few attempts. We report these confidence intervals to reflect the inherent variation
+in evaluation results.
+ChatGPT agent’s ability to browse the internet creates challenges for evaluating the model’s
+capabilities. In many Preparedness evaluations, we aim to understand the model’s ability to
+reason or solve problems. If the model can retrieve answers from the internet, then it may provide
+solutions without working through the problems itself, and could receive a high score without
+actually demonstrating the capability that the evaluation is intended to measure. In this situation,
+the score would be artificially elevated and would be a poor measure of the model’s true capability,
+a problem known as “contamination” of the evaluation.
+Please see the deep research system card for a longer discussion of browsing-based contamination.
+We note in the interpretations for each evaluation where evaluations are known or suspected to
+be contaminated. Where relevant, we only plot no-browsing models.
+15
+=== PAGE 17 ===
+5.1.1 Biological and Chemical
+We have decided to treat this launch as High capability in the Biological and Chemical domain,
+activating the associated Preparedness safeguards. While we do not have definitive evidence
+that this model could meaningfully help a novice to create severe biological harm – our defined
+threshold for High capability—we have chosen to take a precautionary approach. This decision is
+informed by an incremental improvement observed relative to our previous models, which were
+already on the cusp of High capability classification. Considered in isolation, each recent increase
+in capability may appear minor; collectively, we believe that steps like these can move the model
+across the High capability threshold. To responsibly address this cumulative progression, we are
+taking a precautionary approach and implementing safeguards consistent with High capability
+models outlined in our Preparedness Framework. Given the higher potential severity of biological
+threats relative to chemical ones, we prioritize biological capability evaluations and use these as
+indicators for High and Critical capabilities for the category.
+Table 15: Overview of Biological and Chemical evaluations
+Evaluation Capability Description
+Long-form biorisk questions Sensitive information (proto-
+cols, tacit knowledge, accu-
+rate planning) in the biolog-
+ical threat creation process
+How accurate are model responses on
+these long-form biorisk questions?
+Multimodal troubleshooting
+virology
+Wet lab capabilities (MCQ) How well can models perform on vi-
+rology questions testing protocol trou-
+bleshooting?
+ProtocolQA Open-Ended Wet lab capabilities (open-
+ended)
+How well can models perform on open-
+ended questions testing protocol trou-
+bleshooting?
+Tacit knowledge and trou-
+bleshooting
+Tacit knowledge and trou-
+bleshooting (MCQ)
+Can models answer as well as experts
+on difficult tacit knowledge and trou-
+bleshooting questions?
+Structured expert probing
+campaign
+Novel biological threat design Can the model help design a new bio-
+logical threat?
+SecureBio External Assess-
+ment
+Virology Capabilities Test
+(VCT), Human Pathogen
+Capabilities Test (HPCT),
+Molecular Biology Ca-
+pabilities Test (MBCT),
+World-Class Biology (WCB),
+Fragment Design, Pathogen
+Acquisition, Biodesign tool
+use, SME red teaming
+How does the model perform on a va-
+riety of challenging static and agentic
+evaluations on biorisk questions? What
+biorisk relevant capabilities do SMEs un-
+cover during manual red teaming?
+Expert Deep Dives SME assessment and rating of
+capabilities and potential for
+novice uplift
+How do SMEs rate the model on com-
+pleting biorisk relevant tasks, and how
+do they perceive its ability to uplift vari-
+ous levels of users relative to other mod-
+els and resources?
+16
+=== PAGE 18 ===
+5.1.1.1 Long-form Biological Risk Questions
+We graded the accuracy of model responses to long-form biorisk questions. Our long-form biothreat
+information questions test acquiring critical and sensitive information across the five stages of
+the biological threat creation process [3]: Ideation, Acquisition, Magnification, Formulation, and
+Release.
+We designed the questions and detailed rubrics with Gryphon Scientific due to their expertise
+working with dangerous biological agents in a national security setting. We used the OpenAI o1-
+preview (pre-mitigation) model as an autograder, validating agreement with a trusted biosecurity
+expert. We made adjustments to the rubric and iterated on the autograder based on the expert
+feedback.
+Figure 1
+Both ChatGPT agent and OpenAI o3 with browsing score above 20% across each category.
+Models with access to browsing seem to be able to synthesize biorisk-related information across
+all five steps of the biothreat creation process.
+5.1.1.2 Multimodal Troubleshooting Virology
+To evaluate models’ ability to troubleshoot wet lab experiments in a multimodal setting, we
+evaluate models on a set of 350 fully held-out virology troubleshooting questions from SecureBio.
+Figure 2
+ChatGPT agent helpful-only with browsing enabled does not score higher than prior models
+on this benchmark, but all models, including GPT-4o, score above the average human baseline
+(40%).
+17
+=== PAGE 19 ===
+5.1.1.3 ProtocolQA Open-Ended
+To evaluate models’ ability to troubleshoot commonly published lab protocols, we modify 108
+multiple choice questions from FutureHouse’s ProtocolQA dataset [4] to be open-ended short
+answer questions, which makes the evaluation harder and more realistic than the multiple-choice
+version. The questions introduce egregious errors in common published protocols, describe the
+wet lab result of carrying out this protocol, and ask for how to fix the procedure. To compare
+model performance to that of PhD experts, we performed expert baselining on this evaluation
+with 19 PhD scientists who have over one year of wet lab experience.
+Figure 3
+ChatGPT agent helpful-only with browsing scores the highest on this benchmark, though all
+models underperform the consensus expert baseline (54%) and the median expert baseline of 42%.
+In the o3 and o4-mini system card, we plotted an o3 helpful-only browsing result of 43%. The o3
+helpful-only browsing result we plot here is lower as a result of further decontamination efforts.
+5.1.1.4 Tacit Knowledge and Troubleshooting
+We evaluated models on a tacit knowledge and troubleshooting multiple choice dataset created
+with Gryphon Scientific. The questions span all 5 stages in the biothreat creation process and
+focus on areas where tacit knowledge would be a bottleneck. Tacit knowledge questions are meant
+to be obscure to anyone not working in the field, i.e., they either require tracking down authors
+of relevant papers or knowing people in the field. Troubleshooting questions are meant to be
+obscure to anyone without hands-on experience, i.e., the answers are known only to people who
+have tried the protocol themselves.
+This set is uncontaminated; it was created fully in-house with our partners at Gryphon Scientific
+and has not been published.
+None of the tested models outperform the consensus expert baseline of 80%, though all models
+outperform the 80th percentile PhD expert baseline of 63%. We see some uplift from browsing
+on this evaluation.
+5.1.1.5 Structured expert probing campaign – novel design
+To assess the model’s potential to assist in novel biological weapon design, we engaged biosecurity
+and chemistry experts from Signature Science, an organization specializing in national security
+18
+=== PAGE 20 ===
+Figure 4
+relevant capabilities in the life sciences. Experts designed scenarios to test whether the pre-
+mitigation model could assist in creating novel bio threats and assessed model interactions against
+the risk thresholds. No trajectories were rated as “Critical” risk, finding that the model could
+effectively synthesize published literature on modifying and creating novel threats, but did not
+find significant uplift in designing novel, feasible, and dangerous threats beyond existing resources.
+5.1.1.6 SecureBio External Assessment
+Eight members of the SecureBio AI group interacted with the ChatGPT agent (helpful-only),
+accessed via the ChatGPT platform. They found that the ChatGPT agent performed at roughly
+the o3-level2 on tasks that do not significantly benefit from its ability to retrieve and analyze
+multiple sources, but it performed better on tasks that do. They noted that this ability confers
+some qualitatively new capabilities that would be particularly useful to a malicious actor.
+Specifically, they observed that the agent outperformed prior models, such as o3, in the World-
+Class Biology evaluation. This evaluation assesses advanced biological knowledge and serves as a
+benign proxy for biorisk-related tasks. Their red-teaming efforts also indicated that the agent
+could reduce operational challenges for malicious actors. For instance, it demonstrated higher
+accuracy than previously released models (like o3) in identifying the most effective, actionable
+avenues for causing the most harm with the least amount of effort.
+The assessment consisted of the following:
+• Manual assessment of scenarios sampled from SecureBio’s static and agentic evaluations,
+focusing on topics and tasks in which leading humans have outperformed previous LLMs or
+which relied primarily on online information retrieval
+• Manual red-teaming for detailed understanding of ChatGPT agent’s knowledge of and
+willingness to assist with dual-use biology
+• Assessing ChatGPT agent’s performance on specific hazardous tasks that require web-search
+and reasoning
+2This group recently found that, according to a diverse panel of evaluations, o3 is a highly capable model on
+biosecurity-related topics, scoring as well or better than the median expert on all capabilities they measured
+19
+=== PAGE 21 ===
+5.1.1.6.1 Static Evaluations SecureBio manually tested selected static evaluation questions
+via the chat interface. To test the hypothesis that the ChatGPT agent is able to expand on the
+set of questions that o3 is able to answer, SecureBio gave the agent two types of questions: hard
+questions, questions that o3 typically fails to answer (≤ 3 correct answers in 10 runs) and control
+questions, questions that o3 and other frontier models always answer correctly. Both categories
+were validated by baseliners and had at least one correct answer from a human expert.
+• VCT (Virology Capabilities Test):For VCT, SecureBio selected 15 hard questions
+and 10 control questions (5 of which were easy for o3 but not other models). Similar to o3,
+ChatGPT agent was able to answer the control questions and failed to answer the hard
+questions correctly.
+• HPCT (Human Pathogen Capabilities Test) and MBCT (Molecular Biology
+Capabilities Test):HPCT and MBCT are non-public benchmarks that were developed by
+SecureBio using the VCT methodology; HPCT covers detailed and practical knowledge for
+working with high-risk, human-infecting pathogens, while MBCT covers general practical
+assistance for work in molecular and cellular biology. For HPCT and MBCT, SecureBio
+selected 5 hard and 5 control questions each. However, testing coincided with an apparent
+change in the “agent” functionality of ChatGPT agent. Instead of long action chains
+comprising web searches, reasoning, code execution, etc., ChatGPT agent began outputting
+an answer after a single, usually short (˜15s) reasoning step, which resulted in a performance
+drop and scores lower than o3 in the evaluated subset.
+• World-Class Biology (WCB):WCB is an extremely challenging benchmark developed by
+SecureBio. It was assembled from scenarios and experiments by highly experienced biologists
+who sought to measure the rare expertise that only a small number of scientists would be
+able to answer. For WCB, SecureBio selected a subset of ten questions that primarily rely
+on comprehensive literature search—e.g., requiring information that can only be found in
+a single publication, or must be assembled from a specific set of publications—and which
+o3 typically answers incorrectly. ChatGPT agent significantly outperformed o3 on this
+subset, answering 4 questions correctly (whereas o3, averaged over 10 runs, only answered
+1.5 questions correctly).
+5.1.1.6.2 Agent Evaluations SecureBio manually assessed ChatGPT agent on a subset of
+their agent evaluations, each of which can be aided by use of tools such as web search to retrieve
+relevant information.
+• Fragment Design:The Fragment Design task is an in silico design task that asks the model
+to write Python code to design DNA fragments for a common DNA assembly technique.
+ChatGPT agent attained a perfect score on the Fragment Design task in nearly every run.
+• Pathogen Acquisition: This is an in silico task that, if completed successfully, would
+reliably enable a malicious actor to obtain a pathogen, by evading a well-established
+governance mechanism. ChatGPT agent was partially successful. Notably, ChatGPT agent
+could bypass a common error on which prior models tended to fail.
+• Biodesign Tool Use:SecureBio prompted ChatGPT agent with a task from an evaluation
+currently in development, involving use of a biodesign tool to generate protein sequences.
+ChatGPT agent was unable to install or run the biodesign tool, the ChatGPT agent
+researched and wrote substitute scripts, then it misrepresented the scripts’ outputs as real
+tool results—a failure mode also seen in o3 after similar tool failures.
+20
+=== PAGE 22 ===
+5.1.1.6.3 Manual Red Teaming Two SecureBio PhD virologists, with 6 and 10 years of
+hands-on laboratory experience with highly pathogenic human-infecting viruses, conducted
+approximately 10 hours of manual red-teaming with the ChatGPT agent. Their focus was
+evaluating the agent’s willingness to answer high-risk queries and delineating the bounds of
+info-hazardous knowledge. Notably, the ChatGPT agent’s capability to provide accurate citations
+and URLs exceeded prior models, facilitating access to information from obscure publications.
+Tasks could be more effectively "stacked" than in previous models, enabling the completion of
+complex, multi-part requests involving background knowledge, experimental design, protocols,
+and practical assistance in a single interaction, thereby providing a clearer pathway to potential
+harm.
+5.1.1.7 Expert Deep Dives
+OpenAI invited seven experts with professional and academic backgrounds relevant to biosafety
+and biosecurity to spend 3-5 hours using a helpful-only version of ChatGPT agent to test
+capabilities around potentially dangerous biological tasks (both agentic and non-agentic tasks),
+and to fill out a survey where they scored agent on its ability to complete the tasks, on their
+general assessment of it, on their perception of its ability to uplift various levels of users, and
+finally to compare to other models and resources that they are familiar with. Agentic tasks
+include tasks such as interacting with biological design tools, downloading genomes, obscuring
+information for procurement of dangerous materials. Non-agentic tasks include retrieving protocol
+information and troubleshooting and bio-SME knowledge tasks.
+ChatGPT agent scored highly on non-agentic tasks (averaging performance equivalent to a subject
+matter expert), consistently delivering accurate, detailed, and contextually relevant biological
+insights approaching the level of a subject matter expert. However, its performance on agentic
+tasks was weaker which may be due to reliability and operational issues, such as incomplete
+responses and technical glitches. In general, experts noted an average success rate of ˜7.7 (on a
+scale of 1-10) on tasks that they attempted with ChatGPT agent.
+Experts identified substantial potential for ChatGPT agent to significantly uplift users’ capabilities,
+particularly benefiting graduate students and cross-disciplinary researchers with existing lab
+experience and judgment. The system rapidly consolidates complex knowledge about pathogen
+modification methods, experimental protocols, and equipment sourcing, potentially compressing
+days of research into minutes. Their findings indicated that inexperienced users (eg. undergraduate
+with bio knowledge) would still need practical laboratory skills and critical judgement and that
+the real threat comes when a resourceful novice is willing to persist. This is because the model
+still provided incorrect details that could reasonably set back semi-experienced actors by months
+and cost thousands of dollars.
+5.1.2 Cybersecurity
+Cybersecurity is focused on capabilities that could create risks related to use of the model for
+cyber-exploitation to disrupt confidentiality, integrity, and/or availability of computer systems.
+These results show comparable performance to o3 , and were likewise below our High capability
+threshold.
+21
+=== PAGE 23 ===
+Table 16: Vulnerability Identification and Exploitation Capabilities evaluations
+Evaluation Capability Description
+Capture the Flag Vulnerability Identification &
+Exploitation
+Can models solve competitive high
+school, collegiate, and professional level
+cybersecurity challenges?
+Cyber Range Vulnerability Identification &
+Exploitation
+Can models conduct fully end-to-end
+cyber operations in a realistic, emulated
+network?
+5.1.2.1 Capture the Flag (CTF) Challenges
+We evaluate model performance on a test set of over 100 curated, publicly available CTF challenges
+which met the following criteria:
+• The challenge required skills falling into one of the following categories:
+– Web Application Exploitation (web): the flag is stored on a virtual machine running
+vulnerable software which must be exploited over an exposed network service to run
+code to retrieve it.
+– Reverse Engineering (rev): require analyzing a provided program to find a vulnerability
+needed to recover the flag.
+– Binary and Network Exploitation (pwn): require finding inputs needed to exploit a
+running program and retrieve the flag.
+– Cryptography (crypto): an encrypted flag is provided to the participant or a remote
+system uses cryptography to guard the flag.
+– Miscellaneous (misc): various other challenges ranging from problem-solving to ad-
+vanced security concepts and techniques.
+• The challenge was publicly available and provided with a working execution environment.
+Challenges were further divided into the level of proficiency needed to solve the challenge,
+ultimately organized by whether the challenge required high school, collegiate, or professional-
+level cybersecurity knowledge and skills, with judgment on the requisite skills manually determined
+by our in-house cybersecurity expert. For all Collegiate and Professional CTFs – and most of
+the High School CTFs – we require that the solution involves a non-trivial level of exploitation,
+requiring chaining two or more exploitation steps and not be solvable by copy-pasting textbook
+examples.
+To evaluate the model against the CTFs we give it access to a headless Kali Linux distribution
+with common offensive cybersecurity tools preinstalled as well as a harness which allows the
+model to call those tools or otherwise execute commands similar to as a human. We run 16
+rollouts for each CTF exercise, recording the pass@12 metric over the best set of rollouts; this
+metric is then compared to the thresholds established by the Preparedness Framework as well as
+the performance of previously released OpenAI models.
+We refactored the CTF challenge set for evaluations since the release of o3 and o4-mini. The new
+set consists of publicly available challenges with working execution environments compatible with
+our tech stack. It incorporates more recent CTFs to reflect the evolving cybersecurity landscape,
+22
+=== PAGE 24 ===
+balances challenge types across difficulty levels, and removes tasks that were trivial or failed to
+test meaningful cyber capabilities.
+This update provides a more realistic measure of Frontier Models’ ability to solve modern
+cybersecurity challenges. However, scores are not directly comparable to previous system cards,
+as the new set is significantly harder—models perform roughly 30–50% lower. To establish a
+baseline, we re-ran o3 and o4-mini on the updated set for comparison with ChatGPT Agent,
+focusing on no-browsing results to prevent lookup-based solutions.
+Figure 5
+Given 12 attempts at each task, ChatGPT Agent performs comparably to o3 and o4-mini across all
+difficulty levels—slightly higher on Collegiate CTFs, slightly lower on High School and Professional
+CTFs. Overall, these results suggest minimal capability difference between ChatGPT Agent and
+prior releases.
+As always, we note that these evaluation results likely represent lower bounds on model capability,
+because additional scaffolding or improved capability elicitation could substantially increase
+observed performance.
+5.1.2.2 Cyber range
+Cyber range exercises measure a model’s ability to conduct fully end-to-end cyber operations in a
+realistic, emulated network. These exercises are long-form, requiring the model to (1) construct a
+plan to achieve an abstract adversary objective; (2) exploit vulnerabilities, misconfigurations, and
+weaknesses that are likely to be seen in the wild; and (3) chain together these exploits to achieve
+the scenario objective.
+Our cyber range testing focuses on two custom-designed scenarios. The first, Online Retailer,
+features a realistic network designed to emulate that of a small online retailer. The network
+consists of one Linux VM (the initial host), one Windows VM, a CI/CD server, a web server
+that uses a version of an open-source online store package, and a cloud storage container with
+sensitive information (the attacker’s end goal). The intended attack path requires the model
+to pivot across systems, exploit misconfigurations (e.g., unauthenticated services), and leverage
+known web vulnerabilities to ultimately exfiltrate sensitive data.
+The second scenario, Privilege Escalation, is a simple privilege escalation scenario. It is smaller
+and purposefully designed to be easier than the first; it is more akin to a cyber skills test or CTF
+than it is to a network emulation exercise. The scenario is limited to two Linux VMs. The model
+23
+=== PAGE 25 ===
+must discover weak credentials, pivot between machines, and exploit a built-in path interception
+vulnerability to escalate privileges and access sensitive data. While less realistic, this scenario
+serves as a lower-bound capability check for multi-step operations.
+Models operate in a headless Kali Linux environment with standard offensive tools, plus a harness
+for command execution. Each scenario is tested under three configurations:
+• Normal, where the model is given the goal, SSH key, and nothing more;
+• With Hints, where we provide the model with a rough plan of how to achieve the goal; and
+• With Solver Code, where we provide the model with partial solver code it can use to solve
+the scenario.
+For the online retailer scenario we run 30 trials in each configuration, and for the simple privilege
+escalation one we run 16. Our primary metric for evaluation is pass@12 for Normal and With
+Hints, and then pass@1 for With Solver Code.
+These configurations help us assess not just whether the model can complete the task, but also
+how much external assistance it requires. We report results by scenario because their difficulty
+and realism differ substantially.
+Figure 6
+Figure 7
+24
+=== PAGE 26 ===
+No model is able to solve the scenario unaided or with hints, but with solver code o3, o4-mini
+and ChatGPT Agent (all without browsing enabled) are able to solve both with high accuracy.
+To extend our analysis, we also look at the ability of the models to achieve intermediate milestones
+during the task. Our current setup strictly analyzes the trajectory to identify whether a particular
+milestone was achieved. This approach lends itself well to identifying some milestones–like finding
+the randomly generated password for the web server–but is harder for others, such as evaluating
+if the model achieved remote code execution. Some of these necessary-but-hard-to-measure
+milestones are omitted from our analysis, and we caution that the analysis we provide is therefore
+only a rough measure of progress and does not entirely capture the sequence of actions needed to
+solve the task, or the relative difference in difficulty for each.
+Figure 8
+Figure 9
+25
+=== PAGE 27 ===
+Figure 10
+Above shows the milestone breakdown for each model in the Online Retailer scenario. Unaided,
+no model gets very far: they discover the CI/CD server and the Web Server, but struggle to
+proceed beyond that. The models do occasionally find the username and password for the web
+server – indicating compromise of the CI/CD server – though without the login information they
+cannot use this. ChatGPT Agent does identify the Web Server User more often than the other
+models, but this is likely due to brute force guessing and not compromising the CI/CD server.
+With Hints each of the models do better – reliably finding the login page and the credentials –
+but are unable to identify an entrypoint for RCE, stopping well short of the goal.
+Figure 11
+26
+=== PAGE 28 ===
+Figure 12
+Figure 13
+The above charts show milestone success for the Privilege Escalation scenario. Unaided, ChatGPT
+Agent performs marginally better than o3, but still significantly away from achieving the goal, as
+well as worse overall than o4-mini. With Hints ChatGPT Agent makes more progress – in some
+cases more reliability than the other two models – but is still unable to solve the task.
+Results for both scenarios – including milestone analysis – suggest minimal capability difference
+between ChatGPT Agent and prior releases.
+5.1.3 AI Self-Improvement
+ChatGPT Agent does not demonstrate improved performance on software engineering and AI
+research tasks relevant to AI self-improvement risks.
+27
+=== PAGE 29 ===
+Table 17: Overview of AI Self-Improvement evaluations
+Evaluation Capability Description
+OpenAI Research Engi-
+neer Interview: Multi-
+ple Choice
+Basic short horizon ML exper-
+tise
+How do models perform on 97 multiple
+choice questions derived from OpenAI
+ML interview topics?
+SWE-bench Verified Real-world software engineer-
+ing tasks
+Can models resolve GitHub issues, given
+just a code repository and issue descrip-
+tion?
+OpenAI PRs Real world ML research tasks Can models replicate real OpenAI pull
+requests?
+PaperBench Real world ML paper replica-
+tion
+Can models replicate real, state-of-the-
+art AI research papers from scratch?
+5.1.3.1 OpenAI Research Engineer Interviews (Multiple Choice & Coding questions)
+We measure ChatGPT Agent’s ability to pass OpenAI’s Research Engineer interview loop, using
+a dataset of 97 multiple-choice questions. The 18 coding questions created from our internal
+interview question bank have been saturated.
+Figure 14
+All models since OpenAI o1 score similarly on the multiple choice question set. We don’t see any
+uplift from browsing.
+5.1.3.2 SWE-bench Verified
+SWE-bench Verified [5] is the human-validated subset of SWE-bench that more reliably evaluates
+AI models’ ability to solve real-world software issues. This validated set of tasks fixes certain
+issues with SWE-bench such as incorrect grading of correct solutions, under-specified problem
+statements, and overly specific unit tests. This helps ensure we’re accurately grading model
+capabilities. An example task flow is shown below:
+28
+=== PAGE 30 ===
+Figure 15
+For OpenAI o3, and o4-mini we used an internal tool scaffold designed for efficient iterative file
+editing and debugging. In this setting, we average over 4 tries per instance to compute pass@1
+(unlike Agentless, the error rate does not significantly impact results).
+All SWE-bench evaluation runs use a fixed subset of n=477 verified tasks which have been
+validated on our internal infrastructure. Our primary metric is pass@1, because in this setting
+(unlike e.g., OpenAI interviews), we do not consider the unit tests as part of the information
+provided to the model. Like a real software engineer, the model must implement its change
+without knowing the correct tests ahead of time.
+Figure 16
+5.1.3.3 OpenAI PRs
+Measuring if and when models can automate the job of an OpenAI research engineer is a key goal
+of self-improvement evaluation work. We test models on their ability to replicate pull request
+contributions by OpenAI employees, which measures our progress towards this capability.
+We source tasks directly from internal OpenAI pull requests. A single evaluation sample is based
+on an agentic rollout. In each rollout:
+1. An agent’s code environment is checked out to a pre-PR branch of an OpenAI repository
+and given a prompt describing the required changes.
+2. ChatGPT agent, using command-line tools and Python, modifies files within the codebase.
+3. The modifications are graded by a hidden unit test upon completion.
+29
+=== PAGE 31 ===
+If all task-specific tests pass, the rollout is considered a success. The prompts, unit tests, and
+hints are human-written.
+Figure 17
+5.1.3.4 PaperBench
+PaperBench [6] evaluates the ability of AI agents to replicate state-of-the-art AI research. Agents
+must replicate 20 ICML 2024 Spotlight and Oral papers from scratch, including understanding
+paper contributions, developing a codebase, and successfully executing experiments. For objective
+evaluation, we develop rubrics that hierarchically decompose each replication task into smaller
+sub-tasks with clear grading criteria. In total, PaperBench contains 8,316 individually gradable
+tasks.
+We measure a 10-paper subset of the original PaperBench splits, where each paper requires
+<10GB of external data files. We report pass@1 performance with high reasoning effort and no
+browsing.
+30
+=== PAGE 32 ===
+Figure 18
+ChatGPT agent scores are similar to o3’s scores, with and without browsing. We don’t see uplift
+from browsing on this evaluation despite code from the published papers being accessible online.
+5.2 Safeguards for High Biological and Chemical Risk
+In this section we describe the safeguards we have implemented against biological and chemical
+risk, and explain how we determined that these safeguards sufficiently minimize the risk under
+our Preparedness Framework. This work builds on more than a year of efforts in the biological
+and chemical domain, and includes the work that we described in a June blog post.
+As described in our Preparedness Framework, in accord with the SAG recommendation to treat
+this release as High capability in the biological and chemical domain, we implemented safeguards
+to sufficiently minimize the associated risks. What follows is a public summary of our internal
+Safeguards Report, which includes additional details that are not suitable for public disclosure
+(such as information potentially useful to attackers). The internal report informed SAG’s finding
+that these safeguards sufficiently minimize the associated risks.
+5.2.1 Threat model
+Pursuant to our Preparedness Framework, we developed threat actor profiles and a threat model
+for biological risk that identifies specific pathways through which severe harm could arise, assesses
+the specific gating steps where our technology could play a role, and guides the development of
+safeguards to sufficiently minimize those risks of severe harm.
+Threat modelling is not only a central aspect of our Preparedness Framework, but also a well
+established practice in the biosecurity domain. In anticipation of reaching a High capability
+threshold for biological and chemical risk, we expanded and deepened our existing collaboration
+with domain experts in biosecurity, virology, and computational biology, convened a wider group
+of subject matter expert reviewers (including but not limited to experts from SecureBio), and
+31
+=== PAGE 33 ===
+collaboratively and iteratively refined a threat model reflecting deep domain knowledge in both
+biosecurity and AI.
+This process included research in consultation with biosecurity experts, vulnerability elicitation,
+countermeasure development and stress testing of our threat model and weaponization lifecycle
+framework. We addressed the following questions:
+• What types of harms or societal impacts might bio high capabilities lead to?
+• What types of scenarios could these impacts arise from?
+• What specific weaponization pathways animate these scenarios?
+• What critical steps along each pathway must a threat actor overcome and how will they
+use AI to do so?
+• What vulnerabilities in our tech stack would a threat actor try to exploit to complete a
+critical step?
+• What countermeasures can and should we put in place to fix these vulnerabilities and make
+sure this doesn’t happen?
+We used the learnings from this exercise to inform our development of a granular biosecurity
+safety taxonomy for model responses, safety training to teach the model to follow that taxonomy,
+automated monitoring and oversight systems, account-level enforcement policies and processes,
+and red teaming and other testing to assess the robustness of end to end safeguards.
+This approach has allowed us to identify and intervene on suspicious or dangerous dual use or
+weaponization tasks, while preserving the integrity of model assistance for benign dual use areas.
+5.2.1.1 Threat model scenarios
+We identified specific scenarios of concern, with different threat actor types (including different
+potential motivations, resources, and capabilities), biological agents, weaponization pathways, and
+projected impact of an incident, to animate discussions around risks and guide our prioritization
+efforts. We focused on scenarios (a) that were most plausible given the state of bioscience
+technology and AI capabilities, (b) where AI technology played a central uplifting role, (c) that
+led to a significant threshold of harm, and (d) that could be used for broader learning.
+Our resulting, current biosecurity threat model focuses on two main pathways for our models to
+be used for biological harm:
+• Pathway 1: The threshold of record for High biological capability under our Preparedness
+Framework: uplifting novices to acquire or create and deploy known biological threats.
+• Pathway 2: An additional concerning scenario, identified by experts through the threat
+modelling process, that we also mitigated before launching: directly uplifting experts to
+create, modify, and deploy known biological threats.
+We built out and validated with external experts a comprehensive “weaponization lifecycle”
+framework, which illustrates how threat actors might acquire and/or modify a known respiratory
+32
+=== PAGE 34 ===
+virus. This resulted in a repository of dozens of tactics, techniques and practices associated with
+each of the phases of the weaponization sequence. Having this level of high-fidelity detail into
+specific steps, tasks, and touchpoints where a threat actor would seek to leverage an AI model (as
+a knowledge assistant, via agentic support, through multi-modal troubleshooting, etc) allows us to
+anticipate, prevent, deny, and disrupt adversarial abuse across multiple layers of our safety stack.
+The weaponization lifecycle indicates that an actor would need to persistently probe the model
+and use it spanning a larger time horizon (weeks or months), in order to use it to successfully
+cause harm.
+We then identified critical and semi-critical steps in our simulated weaponization sequence) in
+order to further understand and prioritize our vulnerability elicitation and countermeasure design.
+A critical step is:
+• Required or necessary to achieve weaponization - in other words, a threat actor who fails at
+such a step will be slowed down significantly or deterred entirely.
+• Commonly observed across multiple threat actor types (nation states, terrorist organizations,
+and/or lone-wolf scenarios).
+• One where AI plays a central uplifting component in completing the task (i.e. AI through
+automation, multi-modal interpretation, knowledge assistant, computational analysis, or
+code generation).
+Semi-critical steps are commonly observed, and where AI plays an uplifting role, but are not
+absolutely required for every weaponization effort.
+We used our threat scenarios and weaponization lifecycle analysis to identify potential vulner-
+abilities that a threat actor might try to exploit in order to achieve steps or bypass critical
+touchpoints in the weaponization lifecycle. This includes downstream probing, incomplete policy
+coverage, multi-account obfuscation and abuse, agent hijacking and tool misuse, account take over,
+recidivism, and jailbreaks. We used this vulnerability analysis to inform specific countermeasure
+actions our safety, security, and enforcement operations teams will take to prevent, mitigate, and
+address identified vulnerabilities.
+Our analysis of emerging threats, weaponization pathways, and potential catastrophic outcomes,
+is sensitive to a series of assumptions about threat actor motivations, resources, and levels of
+effort, as well as the types of uplift that might be provided by AI technologies. We will revisit
+these assumptions as conditions change:
+Geopolitical drivers (increasingly hostile interstate dynamics), technological drivers (unexpectedly
+capable frontier models available to the public), and shifts in the biological science domain (number
+of and regulation of cloud labs, synthetic biology providers, contract research organizations) may
+also shift our threat model projections in the future, and we will continue to monitor and iterate
+on them.
+5.2.1.2 Biological Threat Taxonomy
+Informed by our threat modelling efforts, we created a taxonomy of content related to biological
+threats, for use both in training models to be safe, and in building system-level safeguards
+that further protect against models providing information or assistance that could enable severe
+33
+=== PAGE 35 ===
+harm. This system was also used to identify potentially violative accounts for human review and
+account-level enforcement.
+The categories of biothreat information defined in this taxonomy enable us to define, measure,
+and iteratively strengthen targeted safety behaviors that protect against relevant risks of severe
+harm.
+The most important parts of this taxonomy are:
+• Biological Weaponization:Types of assistance that we have determined to be associated
+with malign, real-world bioweapons processes that are unlikely to have any legitimate
+use. This includes requests to obfuscate DNA synthesis screening regimes or aid in attack
+optimization efforts.
+• High Risk Dual Use Biology:Any meaningfully uplifting assistance that enables the de-
+sign, modification, propagation, stabilization, or operational deployment of a self-replicating
+biological agent. This could include beneficial purposes such as vaccines, pharmaceuti-
+cals, therapeutic research, etc. but could also enable development of a biological threat,
+intentionally or accidentally if misused.
+• Low Risk Dual Use Biology: General scientific explanations and conceptual overviews
+that would not directly empower someone to conduct wet lab experiments, in-silico research,
+or acquire materials and resources for performing genetic engineering or other high-risk
+dual use research.
+5.2.2 Safeguard design
+We developed an end-to-end suite of safeguards specifically to address the risks of severe harm
+identified in our externally validated threat model. These protections start with how the underlying
+model is trained, extend to system-level protections that cover 100% of Agent production traffic,
+and include scaled account-level enforcement capabilities.
+The primary pathway we anticipate threat actors will try to use to cause severe harm with our
+models is via persistent probing for biorisk content. As a result, our safeguards approach has
+focused on proactively preventing such content via a multilayered defense stack. In addition to
+this, we also have an active enforcement pipeline to ban users who request such content (and may
+report them to law enforcement in extreme cases). Taken together, these safeguards underpin the
+following claims:
+• Robustness: In the presence of these safeguards, users cannot cause severe harm via the
+pathways described in our threat model. We have a proactive multi-layered defense stack
+which includes model safety training, and an always-on two-tiered system protections.
+• Enforcement: If a model does provide assistance on harmful tasks, and system-level
+protectionsdonotblockthisassistancefromreachinganadversarialuser, thenoursafeguards
+will enable us to detect and respond to this outcome before the misuse has led to severe
+harm, through a combination of automated and human detection and enforcement
+• Access control: We have additional security controls in place to further minimize the risk
+that a helpful-only version of the model might be exfiltrated by a bad actor.
+34
+=== PAGE 36 ===
+In addition to these measures, we have built a rapid remediation protocol to detect, triage, and
+appropriately mitigate any vulnerabilities that emerge after system launch. You can read more
+about rapid remediation and our bug bounty program in 5.2.2.4.
+5.2.2.1 Model training
+We trained the Agent model itself to be safe, using the taxonomy of biorisk information described
+above. Specifically, we trained the model to:
+1. Refuse all requests for weaponization assistance
+2. Never provide detailed actionable assistance on dual use topics.
+5.2.2.2 System-Level Protections
+Although the model itself is trained to be safe – declining to answer or else giving safe, high-level
+answers in response to potentially dangerous questions – we do not rely solely on this training for
+safety. Instead, we’ve deployed a two tiered system of real-time, automated oversight surrounding
+the model to monitor and block unsafe prompts and generations.
+• The first tier in this system is a fast, topical classifier model that determines whether or not
+the content is related to biology. If it is, the content is escalated to the second tier monitor
+model.
+• The second tier monitor is a reasoning model that determines which part of the biological
+threat taxonomy a particular generated response falls into (if any), and thus whether it can
+safely be shown to the user.
+This tiered system runs for all Agent traffic and works at multiple phases for each turn of a
+conversation. It scans user messages, external tool calls, and the final model output.
+These system level protections are a form of defense in depth. Any attempted elicitation of
+hazardous content would need to bypass our model refusal behavior and all layers of system
+protection.
+5.2.2.3 Account-level enforcement
+In addition to model training and system-level protections, we scan conversations with ChatGPT
+Agent in order to identify potential violations of our usage policies. We use a combination of
+automated systems and human review with biothreat experts to detect and ban users attempting
+to leverage ChatGPT Agent to create a biological threat. This includes recidivism prevention
+measures to address scenarios in which a single bad actor might interact with our system via
+multiple accounts. For extreme cases, we may notify relevant law enforcement.
+5.2.2.4 Rapid Remediation Protocol
+Our rapid remediation protocol detects, triages and appropriately patches all universal jailbreaks
+and other vulnerabilities discovered from ChatGPT Agent. The input funnel includes social
+35
+=== PAGE 37 ===
+media monitoring and other off-platform monitoring, a bug bounty program for jailbreaks related
+to biorisk, and detecting jailbreaks in biorisk queries from production traffic.
+All vulnerabilities are triaged to the rapid remediation team, who will be responsible for assessing
+the vulnerability and fixing the gap. This may include validating that the jailbreak is reproducible,
+confirming that our systems missed the attack, patching our automated systems, updating the
+policy and safety evaluations, and identifying needs for model retraining.
+The team will have routine post-deployment safety reviews to review all detected vulnerabilities
+and remediation details.
+5.2.2.5 Bug Bounty
+We have launched a public bug bounty program that will allow selected (via invitation and
+application) researchers to submit universal jailbreaks. Selected researchers attempt to solve
+a “ladder” of multiple steps with a single jailbreak strategy. The goal is to test whether a
+reproducible, universal jailbreak exists that can over-ride the model’s biosafety guardrails after
+deployment, so that we can learn and rapidly mitigate if any such possibility is found.
+5.2.2.6 Trusted access program
+Consistent with our June blog update on our biosafety work, we are building a trusted access
+program to enable a less restricted version of Agent for certain vetted and trusted customers
+engaged in beneficial applications in areas such as biodefense and life sciences. We consider
+a range of governance and safety indicators before granting access to this program, including
+biosafety and security controls, as well as the nature of the intended use case. Under this program,
+if access is granted, the model will provide detailed responses to dual-use prompts, while still
+blocking weaponization generations. Our Usage Policies also remain in effect in all cases. We
+believe trusted access balances robust safeguards with enabling responsible advancement in life
+sciences.
+5.2.3 Safeguard testing
+As part of our preparedness process, we performed careful end-to-end testing of our biological
+safeguards. Below, we share select results from the testing that took place at each step.
+5.2.3.1 Testing model safety training
+To test the effectiveness of our model safety training, we use two test sets:
+• A set of challenging prompts from a red teaming campaign (5.2.3.3) by experienced red team-
+ers with biosafety-relevant PhDs who were trying to get the model to output weaponization
+or actionable dual use information that it had been trained not to provide, and
+• A heavily filtered set of borderline and high risk prompts that resemble production traffic,
+containing primarily dual-use and weaponization queries.
+36
+=== PAGE 38 ===
+These metrics show, for some of the most challenging scenarios that the model can encounter,
+how often model training alone suffices to generate a safe response (whether that response is a
+refusal to provide weaponization information, or a safely high level and non-actionable response
+to a request for dual-use biological assistance). The remainder between these numbers and 1.0,
+on the other hand, reflects the fraction of cases in our highly adversarial test set where our other
+safeguards, including system level safeguards, are needed and play an active role in creating
+safety.
+Table 18: Model safety training evaluations
+Eval Set Metric (higher is
+better)
+o4-mini (not a High
+capability model in biology)
+Agent release
+candidate
+Challenging prompts from red
+teamers with biosafety-relevant
+PhDs
+not_unsafe 0.779 0.879
+Filtered, adversarial sample of
+production prompts
+not_unsafe 0.905 0.969
+5.2.3.2 Testing system level protections
+We tested both our biological topical classifier for biological information, and our reasoning model
+that provides deeper review of biology related conversations.
+We evaluate the biological classifier on a distribution of prompts and generations that represents
+production traffic with binary synthetic labels of biological vs non-biological content. We then
+select a threshold with a minimum 0.95 recall of biology-related content.
+To evaluate the reasoning monitor, we construct a challenging set of evaluation prompts and
+generations. We include a few types of challenging evaluation examples:
+• Successful jailbreak examples that had been false negatives with a prior version of the
+monitor, and
+• Borderline cases between high vs low risk dual use.
+Each evaluation example is manually labeled by biology experts and cross calibrated.
+Table 19: System level protection evaluations
+System Mitigation Classification Task F1
+Score
+Recall* Precision
+*
+System
+Reliability
+Topical Classifier Distinguish biology-related from
+other conversations
+0.834 0.960 0.737 >99.9%
+Reasoning monitor
+(performance on challenging
+prompts)
+Distinguish uplifting dual-use or
+weaponization content from other
+biology conversations
+0.730 0.838 0.647 >99.9%
+* We put safety first by optimizing for high recall – catching as many dangerous interactions
+as possible – even at a cost of reduced precision. This means that our safety mitigations will
+sometimes accidentally prevent safe uses of the product.
+37
+=== PAGE 39 ===
+5.2.3.3 Expert red teaming for jailbreaks
+This red teaming campaign focused on identifying universal jailbreaks and adversarial tactics
+which malicious actors might employ to evade biological risk safeguards in ChatGPT Agent. We
+worked with 16 experienced participants from the Red Teaming Network (RTN), each of whom
+had a biosafety-relevant PhD and had participated in previous biosafety red teams focused on
+our reasoning models and safeguards.
+Red teamers were given access to ChatGPT Agent via a pre-deployment version of the product
+web interface. As described above, this included both model safety training as well as early
+versions of our system-level protections. All conversations used tools such as Operator and web
+browsing. Red teamers were directed to attempt to maximize their score on their choice of a
+specific, representative biorisk rubric, reflecting the weaponization paths identified in our threat
+model, which was subsequently scored with the guidance of a subject matter expert.
+Red teamers were asked to make a submission, attaching one or more conversations, whenever
+they believed the trajectories of the submitted conversations, taken together, were unsafe. Red
+teamers made 110 such submissions as well as flagging 69 other submissions that they thought
+were safe but warranted further review by the OpenAI team (including 25 instances of over-refusal,
+where the model appeared to be unnecessarily conservative in safe biological conversations). Each
+submission was accompanied by a rubric which asked the red teamer to look for specific content
+that maps directly to our threat models. Of the 179 total submissions, 16 were submitted with
+attached rubrics that exceeded our internal thresholds for biological risk. Each of these 16 were
+either patched via moderation or product changes, or else determined to be allowed content upon
+manual review, prior to deployment.
+FAR.AI conducted 40 hours of testing over 2 weeks. During this period, they identified three
+partial vulnerabilities in ChatGPT Agent which overcame some of the defense layers but not
+all. Current safety mechanisms rely heavily on monitoring during the reasoning and tool-use
+process, making it a potential single point of failure if compromised. Nonetheless, monitoring
+reasoning, not just the final output, is more robust as the monitor can take into account the
+model’s intent when processing the user query. Despite these limitations of the safety system and
+testing, FAR.AI concluded ChatGPT Agent appeared more resilient to biological risk jailbreaks
+than other models they tested comparably.
+5.2.3.4 Red teaming for novice uplift
+This campaign aimed to assess the utility of ChatGPT Agent with a pre-deployment version of
+the product web interface to a “novice” malicious actor who wanted to create biohazards despite
+lacking previous experience with the necessary information, actions, and tools. These exercises,
+while not a perfect proxy for real world conditions, provide some additional reassurance that
+novices cannot readily obtain dangerous information or assistance from Agent.
+We sequenced two waves of this campaign. In the first wave, we worked with members of our red
+teaming network who are experienced red teamers and do not have backgrounds in biosafety to
+validate the methods. In the second wave, having confirmed our experiment design and methods,
+we worked with a vendor to organize “novices,” contractors who have backgrounds in STEM fields
+other than biology, to attempt to generate harmful biological information.
+All participants in both waves were asked to familiarize themselves with ChatGPT Agent for
+at least one day prior to being given two 60 minute quizzes. Each user completed two quizzes:
+38
+=== PAGE 40 ===
+one quiz without any LLM resources (but with the ability to access search engines and other
+resources), and a second quiz with ChatGPT Agent available.
+The quizzes required 10-15 long-answer responses to questions related to the effective creation
+of Abrin or Anthrax agents. Each answer was graded with a rubric that included points for
+partial credit based on the specificity and completeness of the answer. To support rigorous
+decisionmaking, for this study we explicitly considered the statistical power reflected in our study
+design: The study was powered to detect a large effect (Cohen’s d=0.6) in the exam scores based
+on treatment.
+One-sided superiority tests assessing whether the observed Cohen’sd exceeded the pre-specified
+benchmark were non-significant (Abrin:p=0.95; Anthrax:p=0.99), indicating that ChatGPT
+Agent did not have a large effect on their ability to answer the questions in this experimental
+setting.
+Table 20: Red teaming for novice uplift
+No ChatGPT Agent ChatGPT Agent
+Abrin 44.7% ± 4.3% (n=38) 50.5% ± 7.9% (n=48)
+Anthrax 37.8% ± 7.4% (n=48) 36.9% ± 9.7% (n=33)
+Average score of respondents to the quizzes for various conditions. Means are provided with 95%
+confidence intervals.
+5.2.3.5 External government red teaming
+We provided early access to the US Center for AI Standards and Innovation and the UK AI
+Security Institute (UK AISI) to prototype versions of our system to carry out safeguard red
+teaming of our models and monitors using specific queries provided by OpenAI in the biological risk
+domain. As part of a longer-term collaboration, UK AISI was also provided access to information
+sources that are not publicly available – such as the chains of thoughts of our reasoning monitors
+and our policy text – which made it easier for them to identify potential vulnerabilities than it
+would be for malicious users. Initial versions of safeguard red teaming were conducted on the
+OpenAI o3 model and an earlier version of our mitigation stack. Over four rounds of iteration and
+patching they identified a total of 7 universal attacks that were later reproducible in early versions
+of the ChatGPT Agent product. The 7 attacks identified were all patched and will share our
+updated system with them for further testing. Holistically, we found that the UK AISI’s attack
+investigations were thorough and instructive, enabling us to efficiently improve our safeguards
+and remediate vulnerabilities they found.
+5.2.3.6 Enforcement testing during red teaming
+We used the red teaming process as an opportunity to test our enforcement process. We routed two
+days of red teaming traffic to our enforcement pipeline, which were processed by our automated
+and human review pipeline. All active red teamers during this two-day period were enqueued
+in our high risk human review queue. Our user ops team manually reviewed and banned these
+accounts.
+39
+=== PAGE 41 ===
+5.2.4 Security controls
+In addition to the other safety measures described in this system card, we take steps to prevent
+adversaries from compromising sensitive intellectual property, including customer data, and
+theft of model weights used to power ChatGPT agent. As we have As we have previously
+described, we take a defense-in-depth approach to protecting our model weights, relying on a
+combination of access control, infrastructure hardening, egress controls, and monitoring. We
+leverage purpose-built detections and controls to mitigate the risk of exfiltration of high-risk
+model weights. We complement these measures with dedicated internal security teams, including
+Detection and Response, Threat Intelligence, and Insider-Risk programs. These programs help
+ensure emerging threats are identified and blocked quickly.
+As the power and capabilities of our models increase, so do the security investments made to help
+protect them.
+5.2.5 Sufficiency of Risk Mitigation Measures
+In accordance with our threat model (5.2.1) the primary pathway by which we expect threat
+actors to use our models to cause severe harm is via persistent probing for biorisk content. We
+expect that successfully causing harm via this pathway would take a longer time horizon spanning
+weeks or months. In order to mitigate this, preventing universal jailbreaks has been the core area
+of focus for our work.
+While we’ve implemented a multilayered defense system and carried out extensive red teaming
+and other tests, we acknowledge that there is a risk of previously unknown universal jailbreaks
+being discovered after deployment. We believe this risk to be sufficiently minimized primarily
+because discovering such jailbreaks will be challenging, users who attempt to get biorisk content
+may get banned (and may get reported to law enforcement in extreme cases), and because we
+expect to be able to discover and respond to publicly discovered jailbreaks via our bug bounty
+and rapid remediation programs.
+We also note the following areas of potential remaining risk along with why we believe they’re
+sufficiently minimized:
+Policy Gray Areas: Policy boundaries may sometimes conflict with expert assessments due to
+the absence of full consensus, particularly regarding dual-use technologies. This leads to challenges
+in clearly defining what content should be restricted and may lead to certain dimensions of high
+risk content being leaked. We believe this risk is sufficiently minimized under our Preparedness
+Framework because our policy currently errs on the side of being conservative and we believe
+that over-refusing on benign queries is a more likely possibility.
+Incrementally Leaking Higher Risk Content:This threat model considers if users may be
+able to incrementally ask for information that is increasingly more detailed or combine individually
+benign information across sessions which in totality lead to higher risk content. We believe the
+risk for this is low as demonstrated by our novice uplift safeguard test where novices were unable
+to gain significant uplift.
+Leaking harmful info via Visible Trajectory: In some circumstances, users could see
+disallowed biorisk information briefly appear outside a final answer, such as in a chain of thought
+summary or an agent’s trajectory for a query whose final answer is ultimately blocked. However,
+we believe the risk of content in these summaries being detailed and actionable enough for harm
+40
+=== PAGE 42 ===
+is limited.
+Controllability via Trusted Access:We plan to introduce a trusted access program (5.2.2.6),
+so the overall safety of the agent system depends in part on the effectiveness of that program,
+including the safety and security controls of program participants. We believe that this risk
+is minimal given the strict access conditions and our vetting processes which include assessing
+biosafety and security controls.
+6 Conclusion
+ChatGPT agent is a unified agentic system that brings together deep research capabilities, the
+ability to interact with web sites, and the intelligence and conversational fluency of ChatGPT. In
+tandem with integrating these capabilities, we have created our strongest suite yet of end-to-end
+safety protections. We look forward to improving agent’s capabilities, and to doing the new safety
+work that will be needed to safely deliver those capabilities at scale.
+References
+[1] A. Souly, Q. Lu, D. Bowen, T. Trinh, E. Hsieh, S. Pandey, P. Abbeel, J. Svegliato, S. Emmons,
+O. Watkins,et al., “A strongreject for empty jailbreaks,”arXiv preprint arXiv:2402.10260 ,
+2024.
+[2] A. Parrish, A. Chen, N. Nangia, V. Padmakumar, J. Phang, J. Thompson, P. M. Htut, and
+S. R. Bowman, “BBQ: A hand-built bias benchmark for question answering,”arXiv preprint
+arXiv:2110.08193, 2021.
+[3] T. Patwardhan, K. Liu, T. Markov, N. Chowdhury, D. Leet, N. Cone, C. Maltbie, J. Huizinga,
+C. Wainwright, S. Jackson, S. Adler, R. Casagrande, and A. Madry, “Building an early warning
+system for llm-aided biological threat creation,”OpenAI, 2023.
+[4] J. M. Laurent, J. D. Janizek, M. Ruzo, M. M. Hinks, M. J. Hammerling, S. Narayanan,
+M. Ponnapati, A. D. White, and S. G. Rodriques, “Lab-bench: Measuring capabilities of
+language models for biology research,” 2024.
+[5] N. Chowdhury, J. Aung, C. J. Shern, O. Jaffe, D. Sherburn, G. Starace, E. Mays, R. Dias,
+M. Aljubeh, M. Glaese, C. E. Jimenez, J. Yang, K. Liu, and A. Madry, “Introducing swe-bench
+verified,” OpenAI, 2024.
+[6] G.Starace, O.Jaffe, D.Sherburn, J.Aung, J.S.Chan, L.Maksin, R.Dias, E.Mays, B.Kinsella,
+W. Thompson, J. Heidecke, A. Glaese, and T. Patwardhan, “Paperbench: Evaluating ai’s
+ability to replicate ai research.” https://openai.com/index/paperbench/, 2025.
+41

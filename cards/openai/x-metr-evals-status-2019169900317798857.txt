@@ -1,0 +1,83 @@
+METR on X: "We estimate that GPT-5.2 with `high` (not `xhigh`) reasoning effort has a 50%-time-horizon of around 6.6 hrs (95% CI of 3 hr 20 min to 17 hr 30 min) on our expanded suite of software tasks. This is the highest estimate for a time horizon measurement we have reported to date." / X 
+
+ Post
+
+ Log in Sign up 
+
+ Post
+
+ Log in Sign up 
+
+ METR on X: "We estimate that GPT-5.2 with `high` (not `xhigh`) reasoning effort has a 50%-time-horizon of around 6.6 hrs (95% CI of 3 hr 20 min to 17 hr 30 min) on our expanded suite of software tasks. This is the highest estimate for a time horizon measurement we have reported to date."
+
+ METR 
+
+ @METR_Evals 
+
+ We estimate that GPT-5.2 with `high` (not `xhigh`) reasoning effort has a 50%-time-horizon of around 6.6 hrs (95% CI of 3 hr 20 min to 17 hr 30 min) on our expanded suite of software tasks. This is the highest estimate for a time horizon measurement we have reported to date. 
+
+ 10:03 PM · Feb 4, 2026 1.1M Views 
+
+ 77 
+ 175 
+ 1.6K 
+ 388 
+
+ Log in or sign up for X
+ See what’s happening and join the conversation
+ Continue with phone Continue with Apple Continue with Google 
+ or 
+ Log in with username or email 
+
+ Relevant people
+
+ METR @ METR_Evals Follow 
+
+ Trending now
+
+ Terms · Privacy · Cookies · Accessibility · US TIDA · Ads Info · More © 2026 X Corp. 
+
+ METR 
+
+ @METR_Evals 
+
+ We estimate that GPT-5.2 with `high` (not `xhigh`) reasoning effort has a 50%-time-horizon of around 6.6 hrs (95% CI of 3 hr 20 min to 17 hr 30 min) on our expanded suite of software tasks. This is the highest estimate for a time horizon measurement we have reported to date. 
+
+ 10:03 PM · Feb 4, 2026 1.1M Views 
+
+ 77 
+ 175 
+ 1.6K 
+ 388 
+
+ METR 
+
+ @METR_Evals 
+
+ Feb 4 
+
+ You can find details about our measurement methodology and time horizon estimates for other models on our website: 
+
+ Measuring AI Ability to Complete Long Software Tasks
+
+ From metr.org
+
+ 6 
+ 7 
+ 174 
+ 173K 
+
+ Lisan al Gaib 
+
+ @scaling01 
+
+ Feb 4 
+
+ why are you not testing xhigh or Pro?
+
+i thought this is about frontier performance? 
+
+ 10 
+
+ 115 
+ 14K

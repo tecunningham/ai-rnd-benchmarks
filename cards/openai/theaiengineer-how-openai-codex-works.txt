@@ -1,0 +1,170 @@
+How OpenAI Codex Works, the codex-1 Coding Agent 
+
+ Subscribe Sign in 
+
+ How OpenAI Codex Works
+ The cloud agent that runs your tests until they pass, in a sandbox with no internet
+
+ Paolo Perrone 
+ Jul 03, 2026 
+
+ 20
+
+ 2
+ 2
+
+ Share
+
+ 🧭 Part of the 🤖 Agents course 
+
+ OpenAI Codex is a cloud software engineering agent. You give it a coding task, and it spins up an isolated sandbox loaded with your repo, where a model called codex-1 edits the code and runs your tests in a loop until they pass. It returns a pull request with the full command log attached for review, before anything touches your main branch.
+ TL;DR 
+
+ Codex is a Mars rover for your codebase: 
+ You send it off and step back: Codex takes the whole task and works on its own. You don’t watch it type, the same way you can’t steer a Mars rover live from Earth. 
+
+ It works cut off from everything: each task runs in its own cloud sandbox with no internet. Like a rover on Mars, Codex can only use what you sent it with, and it can’t reach out for anything else. 
+
+ It keeps trying until the tests pass: codex-1, OpenAI’s o3 model tuned for coding, runs your test suite again and again, fixing what fails until everything passes. It clears 72.1% of real GitHub issues on the first try. 
+
+ It sends back a full report: you get the code changes plus a log of every command it ran, so you can check its work before anything ships. 
+
+ It’s only as good as what you send it: give it weak tests or vague instructions, and it will report success on code that is quietly wrong. 
+
+ 📬 The AI Engineer takes apart one production AI system every Friday, the architecture, the tradeoffs, and the parts the launch post skips. Subscribe and the next teardown lands in your inbox.
+
+ Subscribe 
+
+ What an Agentic Coder Actually Does 
+
+ Fourteen tickets sit in your queue, and every one of them is boring. A flaky integration test. A dependency three majors behind. A rename that touches forty files. A null check someone flagged in review last week. None of them needs your judgment. Each one still costs twenty minutes and drags you off the real work. You can hold exactly one in your head at a time. By the time the dependency bump is green, you have forgotten why you opened the test file, and the work that actually needs your brain has not moved since 9 a.m.
+ Hand that backlog to an agent and the shape of the work changes. An agentic coding tool does not autocomplete the next line while you type. It takes a whole task and runs its own loop. The agent reads the relevant files, forms a plan, edits the code, and runs something that gives feedback. It reads the failure, fixes it, and repeats until the feedback turns green. At the end it hands back a change a human can review. We walked through that loop in What is an AI Agent? , and coding is the same loop with an unusually sharp feedback signal, because a test either passes or it does not. 
+ Three questions decide whether an agent like this is useful or dangerous: (1) where it runs, (2) how it gets feedback, and (3) who approves the result. Codex answers all three differently from the coding assistants that live inside your editor. It runs in a throwaway cloud sandbox, takes its feedback from your own test suite, and stops at a pull request for a human to approve.
+ Before Codex: The Model OpenAI Killed 
+
+ Codex launched in 2025, but the name is much older. In August 2021, OpenAI shipped the first Codex, a version of GPT-3 fine-tuned on billions of lines of public code. It turned English into code, and it became the engine inside the first version of GitHub Copilot. Then GPT-4 arrived in March 2023, and OpenAI deprecated the standalone Codex model the same week. Code generation folded into the general-purpose models, and Copilot moved on to GPT-4 1 . 
+ For two years Codex was a retired API. OpenAI brought the name back in May 2025 for something the 2021 model could never have done. Where the original Codex predicted the next token of code in your editor, the 2025 version provisions a sandbox, executes your test suite, and opens a pull request.
+
+ By 2026, engineering teams at companies like Cisco and Nvidia were running Codex against their own codebases 2 . 
+ The Architecture 
+
+ Give Codex a task in ChatGPT or the cloud dashboard, and the first thing it does is build itself a sealed room to work in. Codex provisions an isolated container in the cloud and clones your repository into it, along with the dependencies you configured. Once the task starts, that container has no internet access. 
+ Inside the sandbox, codex-1 takes over. codex-1 is a version of OpenAI’s o3 reasoning model. OpenAI fine-tuned it with reinforcement learning on real software tasks. The tuning taught codex-1 to edit code, run tests, and fix its own failures the way an engineer preparing a pull request does. The reward is concrete: did the suite pass when the code actually ran? The sandbox checks that directly, a cleaner signal than any human rating of whether the code looks right. So codex-1 keeps iterating until the tests come back clean 3 . 
+ codex-1 reads the files it judges relevant and looks for an AGENTS.md. That file tells codex-1 how to run the tests, which conventions to follow, and how the project fits together. codex-1 edits the code, then runs your linter and test suite inside the container. When a test fails, codex-1 reads the output, edits the code, and reruns the suite. It keeps going until the suite passes or it runs out of room. On a Python service the loop looks mundane: codex-1 runs your pytest command, reads the traceback, patches the function, and runs pytest again. This is where AGENTS.md earns its keep. Spell out the test command and the conventions, and codex-1 gets more tasks right on the first pass. Leave it vague, and it wastes runs guessing 4 . 
+ When Codex finishes, you do not get a wall of generated code to trust on faith. You get a diff, plus the full terminal log of every command it ran and every test result it saw. Codex cites that log next to its changes, so a reviewer can trace exactly how a given line got there before approving the pull request.
+
+ Codex runs many tasks at once. Each one lives in its own container, so the agents never step on each other. You queue the flaky test, the dependency bump, and the forty-file rename together. Three sandboxes work in parallel while you go back to the problem that needs your head.
+ The training shows up in the benchmark. SWE-bench Verified scores a model on real GitHub issues, using hidden tests to grade each fix. codex-1 resolved 72.1% of them on the first attempt, and 83.8% across eight tries 5 . That put it a few points ahead of the base o3 model, which managed 69.7% on one attempt. In production you get one attempt per task, so the single-attempt 72.1% is the number that matters. OpenAI kept pushing the autonomy. A later version, GPT-5-Codex, ran on its own for more than seven hours on one large refactor. It fixed its own test failures the entire way, then delivered a working result. 
+ Hold that seven-hour figure loosely. It is the ceiling, and most Codex tasks finish in one to thirty minutes. The long run showed how far the agent can stay on task, and it says little about a typical job.
+ 🔁 Know an engineer still hand-running dependency bumps one ticket at a time? Send them this before their next sprint.
+
+ Share 
+
+ Three Decisions That Shaped Codex 
+
+ 1. One Sandbox Per Task, No Internet 
+
+ The decision: Codex runs every task in a throwaway cloud container with networking switched off, instead of on your laptop or in a long-lived shared environment. 
+ Isolation buys three things at once: 
+ Security. A model running shell commands can’t read your API keys, reach your production database, or touch the open internet to leak code. 
+
+ Reproducibility. Every run starts from the same clean copy of the repo, so if a result looks wrong, you can rerun the exact task and watch it happen again. 
+
+ Parallelism. Because each task gets its own container, dozens can run at the same time without interfering. 
+
+ What they gave up: the agent cannot pull a new package, hit a staging API, or look something up mid-task. You stage everything into the container before the run, which means a real setup step and a dependency config someone has to maintain. 
+ Where it breaks: the no-internet default is a gift for a self-contained service and a headache for a repo whose tests assume a live database or a third-party endpoint. Teams in that situation spend their first week building the container setup before Codex does a minute of useful work. 
+ 🏗️ Engineering Lesson: An agent that runs code will eventually run something it shouldn’t. Plan for that: hand it a throwaway container with no network and no secrets, and its behavior stops being a security problem. 
+ 2. A Model Trained to Fix Its Own Failures 
+
+ The decision: rather than prompt a general model to write code, OpenAI fine-tuned o3 with reinforcement learning specifically on the cycle of editing, running tests, and reacting to what broke. 
+ Why it matters: a model trained only to generate code optimizes for output that looks plausible. A model trained against real test outcomes optimizes for output that passes. codex-1’s edge over base o3 on SWE-bench came mostly from that iteration. On a single attempt the two models are close. codex-1 pulls ahead because it fixes its own failures and reruns the tests until they pass, something base o3 never learned to do 6 . 
+ What they gave up: the loop is only as good as the signal driving it. Reinforcement learning on tests teaches the model to satisfy tests, so a thin suite gives it almost nothing to optimize against. 
+ Where it breaks : a test suite can pass while the code is wrong, and Codex will declare victory on a green run that encodes the same bug the tests missed. Point it at a repo with thin test coverage and you get confident code with no real guardrail. The model is excellent at clearing the bar you set, and indifferent to the bar you forgot to set. 
+
+ 3. Stop at the Pull Request 
+
+ The decision : Codex ends a task by proposing a pull request with cited logs, then stops and waits for a human review. 
+ Why it matters : this is the bet that the safe unit of AI coding work is a reviewable change rather than an automatic commit. By surfacing the full command log and test output beside the diff, Codex keeps review fast enough that a human stays in the loop without becoming the bottleneck. The asynchronous shape is the point. You delegate, walk away, and come back to a pull request, the way you would with a junior teammate. 
+ What they gave up: speed to production. Codex does not close the loop end to end, so a human review gate still sits between the agent and your main branch. A team chasing full autonomy will feel that gate as friction. 
+ Where it breaks: the design assumes you actually read the diff. The failure mode is a reviewer who rubber-stamps a 400-line, tests-green pull request because it looks finished, which is exactly how a subtle bug ships with a clean audit trail stapled to it. We dug into that trap in Why AI Agents Keep Failing . 
+ The Honest Take 
+
+ Strip away the launch-day superlatives, and Codex is a strong asynchronous coding agent with two hard dependencies: your tests and your docs. Where a repo has a real suite and a clear AGENTS.md, Codex does a junior engineer’s worth of grunt work in parallel and shows its receipts. Where it does not, it produces fluent code you have to babysit anyway, which quietly cancels the whole reason you delegated.
+ It is also not the only one making this pitch. Cognition’s Devin sold the autonomous-teammate idea before Codex did. Windsurf and GitHub’s own agent mode chase the same goal. The in-editor pair-programmers we broke down in How Cursor Actually Works and How Claude Code Actually Works sit on the synchronous side of the same market. What sets Codex apart is how it works, more than which model it runs. Every task runs on its own, in the cloud, in the background, on OpenAI’s best models. 
+
+ The elephant is lock-in. codex-1 and its successors are OpenAI-only, so leaning on Codex means betting your coding workflow on a single model vendor and its pricing. And for a smaller team, what matters is which parts you could build yourself. The sandbox-and-test-loop is reproducible: OpenAI open-sourced the Codex CLI under Apache 2.0, so the local harness is free to study and run. What you cannot copy is codex-1's trained judgment for when a fix is done. The harness is plumbing; the model is the moat.
+ The One Thing to Remember 
+
+ For three years, AI help with code meant a faster autocomplete. Codex moves the unit of work up a level, from the keystroke to the pull request. The question worth asking now is whether a system can run your tests, show its work, and earn a review. The model writes the code. The system around it earns the trust: the sandbox, the test loop, and the review gate.
+
+ 💬 Would you let an agent open pull requests against your main repo, or is the review gate already your bottleneck? Tell me in the comments where you draw the line. 
+ Leave a comment 
+
+ FAQ 
+
+ What model does OpenAI Codex use? 
+ Codex runs on codex-1, a version of OpenAI’s o3 reasoning model fine-tuned with reinforcement learning on real software engineering tasks. The tuning teaches it to edit code, run tests, and fix its own failures until the suite passes. OpenAI has since shipped newer Codex models, including GPT-5-Codex, but the architecture holds steady: a frontier reasoning model driving a test-and-fix loop inside a sandbox. 
+ Is the 2025 Codex the same as the original Codex? 
+ No. The original Codex, launched in 2021, was a GPT-3 model fine-tuned on public code that autocompleted code and powered the first GitHub Copilot. OpenAI deprecated it in March 2023. The 2025 Codex shares only the name. It is a cloud agent that runs your tests and opens pull requests, rather than a single model predicting the next line of code. 
+ How is Codex different from Cursor or Claude Code? 
+ Codex is asynchronous and cloud-based. You hand it a task, it works in an isolated sandbox, and it returns a finished pull request you review later. The in-editor assistants are synchronous: they work alongside you in your editor or terminal while you watch and steer. Codex trades real-time control for the ability to run many tasks in parallel while you do something else. 
+ Can Codex access the internet while it runs? 
+ Not by default. Each Codex task runs in an isolated container, and once the task starts, that container has no network access. Everything it needs, your repository and its dependencies, must sit in the sandbox beforehand. The choice is a security one: it stops a model running shell commands from reaching your secrets or leaking code, at the cost of any task that needs a live external call. 
+ How long does a Codex task take? 
+ Most Codex tasks finish in one to thirty minutes, depending on how much code changes and how long the test suite runs. Complex jobs take longer. OpenAI reported watching a newer version, GPT-5-Codex, work autonomously for over seven hours on a single large refactor. That number is the extreme rather than the norm, useful mainly as a measure of how long the agent can stay on task. 
+ 🔜 Tuesday: What is LLM Observability? , your LLM is a black box, here’s how to put windows in it. 
+
+ 1 The Return of Codex AI as an Agent , Visual Studio Magazine (May 2025) 
+
+ 2 OpenAI Codex (AI agent) , Wikipedia (accessed June 2026) 
+
+ 3 Introducing Codex , OpenAI (May 2025) 
+
+ 4 OpenAI’s Codex wants to become your AI coworker , WorkOS (May 2025) 
+
+ 5 Introducing upgrades to Codex , OpenAI (September 2025) 
+
+ 6 Introducing Codex , OpenAI (May 2025) 
+
+ 20
+
+ 2
+ 2
+
+ Share
+
+ Previous Next 
+
+ Discussion about this post
+ Comments Restacks 
+
+ H. Floyd 
+
+ Jul 5 
+
+Liked by Paolo Perrone 
+
+ Paolo, excellent breakdown. 
+ The part I'd underline is the scaling effect: once Codex can run dozens of tasks in parallel, test coverage stops being a background quality issue and becomes the main control surface. 
+ A weak suite does not just miss one bad change; it lets many plausible-but-wrong changes arrive at review at once. The harder engineering problem may be less "can the agent write code?" and more "can our verification stack tell correct code from merely green code?" 
+
+ Reply
+
+ Share
+
+ 1 reply by Paolo Perrone 
+
+ 1 more comment... 
+
+ Top Latest Discussions 
+
+ No posts
+
+ Ready for more?
+
+ Subscribe 
+
+ © 2026 Paolo Perrone · Privacy ∙ Terms ∙ Collection notice 
+ Start your Substack Get the app 
+ Substack is the home for great culture
