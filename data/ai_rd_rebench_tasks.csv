@@ -1,0 +1,81 @@
+lab,model,time_budget,task,normalized_score,card,card_date,source_file,page,figure,confidence
+gdm,Gemini 2.5 Flash,45 minutes,Optimize a Kernel,1.18,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Optimize a Kernel,1.81,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Optimize a Kernel,1.89,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Optimize a Kernel,0.87,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Human,8 hours,Optimize a Kernel,1.65,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Scaling Law Experiment,0.17,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Scaling Law Experiment,0.02,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Scaling Law Experiment,0.18,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Scaling Law Experiment,0.55,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Human,8 hours,Scaling Law Experiment,0.61,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Restricted Architecture MLM,0.77,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Restricted Architecture MLM,0.4,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Restricted Architecture MLM,0.97,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Restricted Architecture MLM,0.53,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Human,8 hours,Restricted Architecture MLM,1.57,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Optimize LLM Foundry,0.6,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Optimize LLM Foundry,0.57,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Optimize LLM Foundry,0.96,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Optimize LLM Foundry,0.3,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Human,8 hours,Optimize LLM Foundry,0.85,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Fix Embedding,0.34,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Fix Embedding,0.41,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Fix Embedding,0.47,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Fix Embedding,0.15,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Human,8 hours,Fix Embedding,0.85,Gemini 2.5 Pro model card,2025-06,cards/gdm/gemini-2-5-pro-model-card.pdf,18,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Optimize a Kernel,1.17,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Optimize a Kernel,1.81,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Optimize a Kernel,1.89,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Optimize a Kernel,1.88,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Optimize a Kernel,0.87,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Human,8 hours,Optimize a Kernel,1.65,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Scaling Law Experiment,0.17,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Scaling Law Experiment,0.02,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Scaling Law Experiment,0.2,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Scaling Law Experiment,0.17,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Scaling Law Experiment,0.55,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Human,8 hours,Scaling Law Experiment,0.61,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Restricted Architecture MLM,0.76,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Restricted Architecture MLM,0.4,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Restricted Architecture MLM,0.98,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Restricted Architecture MLM,1.34,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Restricted Architecture MLM,0.53,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Human,8 hours,Restricted Architecture MLM,1.57,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Optimize LLM Foundry,0.6,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Optimize LLM Foundry,0.57,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Optimize LLM Foundry,0.98,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Optimize LLM Foundry,0.9,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Optimize LLM Foundry,0.3,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Human,8 hours,Optimize LLM Foundry,0.85,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Flash,45 minutes,Fix Embedding,0.34,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,45 minutes,Fix Embedding,0.41,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Pro,2 hours,Fix Embedding,0.47,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Fix Embedding,0.55,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Claude 3.5 Sonnet,30 minutes,Fix Embedding,0.15,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Human,8 hours,Fix Embedding,0.85,Gemini 2.5 Deep Think model card,2025-08,cards/gdm/gemini-2-5-deep-think-model-card.pdf,16,Figure 4,chart
+gdm,Gemini 2.5 Flash,2 hours,Optimize a Kernel,1.04,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Pro,45 minutes,Optimize a Kernel,1.82,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Optimize a Kernel,1.87,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 3 Pro,2 hours,Optimize a Kernel,1.92,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Human,8 hours,Optimize a Kernel,1.66,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Flash,2 hours,Scaling Law Experiment,0.21,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Pro,45 minutes,Scaling Law Experiment,0.02,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Scaling Law Experiment,0.17,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 3 Pro,2 hours,Scaling Law Experiment,0.36,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Human,8 hours,Scaling Law Experiment,0.61,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Flash,2 hours,Restricted Architecture MLM,0.87,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Pro,45 minutes,Restricted Architecture MLM,0.39,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Restricted Architecture MLM,1.34,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 3 Pro,2 hours,Restricted Architecture MLM,1.42,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Human,8 hours,Restricted Architecture MLM,1.57,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Flash,2 hours,Optimize LLM Foundry,0.84,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Pro,45 minutes,Optimize LLM Foundry,0.61,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Optimize LLM Foundry,0.9,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 3 Pro,2 hours,Optimize LLM Foundry,1.61,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Human,8 hours,Optimize LLM Foundry,0.85,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Flash,2 hours,Fix Embedding,0.31,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Pro,45 minutes,Fix Embedding,0.41,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 2.5 Deep Think,2 hours,Fix Embedding,0.54,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Gemini 3 Pro,2 hours,Fix Embedding,0.53,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart
+gdm,Human,8 hours,Fix Embedding,0.85,Gemini 3 Pro Frontier Safety Framework report,2025-11,cards/gdm/gemini-3-pro-fsf-report.pdf,16,Figure 5,chart

@@ -609,3 +609,16 @@ debugging 68.3, KernelGen 61.1, NanoGPT 16.6 (Astra card curve; 9.7 in its own c
 56.7; GPT-6 Astra KernelGen 66.7, NanoGPT 23.6, PostTrainBench 77.0. GPT-5.4 Thinking and GPT-5.5
 appear on the GPT-5.6 card's charts as comparison curves for KernelGen, NanoGPT and PostTrainBench,
 which their own cards do not report; those values were added as rows sourced to the GPT-5.6 card.
+
+The same pass for the other labs (2026-09-14): DeepMind's RE-Bench per-task bar charts (Gemini 2.5 Pro
+card Figure 4, 2.5 Deep Think card Figure 4, Gemini 3 Pro FSF report Figure 5) were digitised by
+`scripts/digitize_bars.py` into `data/ai_rd_rebench_tasks.csv` (80 bars). Cross-card check: Gemini 2.5
+Pro 45 min on Optimize a Kernel reads 1.81, 1.81, 1.82 across the three cards; the human 8-hour bar
+1.65, 1.65, 1.66. The Deep Think card's human-normalized average stays unfilled: the printed 2.5 Pro
+average (0.73) is neither the mean of its 45-minute bars (0.64) nor of its 2-hour bars (0.89), so the
+cards' average is not a function of the per-task bars. Anthropic: the Fable 5.1 card's CoBench figure
+(2.3.4.1.A, p37) prints its values as bar labels, Mythos 5 45.6%, Opus 5 59.6%, Mythos 5.1 57.6%; the
+row that said 'values in figure only' now carries 57.6 and the two comparison values were added as
+rows sourced to that card. The Claude 3.7 Sonnet card's Suite 1 figures (21 to 23) are histograms and
+box plots whose headline numbers (single run above 7x; RE-Bench subset average 0.2386) are already in
+the table.

@@ -63,6 +63,14 @@ appears on a chart (Astra's 78.05 percent on research debugging), the digitised 
 a tenth of a point. The scalar entered in the benchmark table for such rows is the highest point on
 the model's curve, marked **≈**.
 
+DeepMind's Gemini 2.5 Pro, 2.5 Deep Think and 3 Pro cards draw RE-Bench per task as grouped bar charts
+without printed values. `scripts/digitize_bars.py` reads them: it finds the gridlines, removes error
+bars and star markers by erosion, measures each bar and names it by its position in the group, which
+follows the legend. The result is `data/ai_rd_rebench_tasks.csv`, drawn on the DeepMind page; a bar
+that appears in more than one card reads the same to within 0.02. The Anthropic cards print their
+numbers; the one figure-only result, CoBench in the Fable 5.1 card, carries its values as bar labels
+and those are entered as reported.
+
 ## Which cards are shown
 
 Only cards on the evaluation frontier are shown. A card that improves on at most a quarter of the
@@ -77,6 +85,7 @@ Haiku 4.5, the Codex addenda, Gemini Flash-Lite) are flagged in the CSV and also
 |---|---|
 | `data/ai_rd_benchmarks.csv` | one row per score: lab, model, card, benchmark, conditions, score, source, confidence |
 | `data/ai_rd_benchmark_series.csv` | per-series metadata: ceiling, direction, human reference, threshold, category, retirement |
+| `data/ai_rd_rebench_tasks.csv` | RE-Bench normalised score per task and run, read off the bar charts in the DeepMind cards |
 | `data/ai_rd_scaling_curves.csv` | points read off the score-against-budget charts in the OpenAI cards (model, evaluation, budget measure, x, y, figure) |
 | `data/notes/ai-rd-benchmarks.md` | collection and verification notes, card by card |
 | `src/benchmarks.py` | loading, the frontier rule, tables and every figure |

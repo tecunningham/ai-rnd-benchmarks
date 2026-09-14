@@ -51,6 +51,10 @@ def show_scaling():
     benchmarks.scaling_curves(); plt.show()
 
 
+def show_rebench_tasks():
+    benchmarks.rebench_tasks(); plt.show()
+
+
 def show_cards(lab):
     t = benchmarks.cards(benchmarks.load_frontier(lab))
     t["card"] = t.apply(lambda r: f"[{r['card_title']}]({r['card_url']})" if r["card_url"] else r["card_title"], axis=1)

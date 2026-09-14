@@ -294,7 +294,8 @@ CATEGORY_COLORS = {"research": "#2a78d6", "swe": "#eb6834", "terminal": "#1baf7a
 CATEGORY_LABELS = {"research": "AI research tasks", "swe": "Software engineering", "terminal": "Terminal and agentic",
                    "knowledge": "Knowledge", "external": "External (METR)"}
 HUMAN_REF_COLOR = "#c8322b"
-_SHORT = [("Internal AI Research Evaluation Suite 1: ", "Suite 1 "), ("Internal AI Research Evaluation Suite 2", "Suite 2"),
+_SHORT = [("Internal AI R&D acceleration measure: CoBench (internal root-cause diagnosis on historical Anthropic infrastructure)", "CoBench"),
+          ("Internal AI Research Evaluation Suite 1: ", "Suite 1 "), ("Internal AI Research Evaluation Suite 2", "Suite 2"),
           ("OpenAI Research Engineer interviews: ", "RE interview "), ("MLE-bench: ", ""), ("PaperBench: ", ""),
           ("SWE-bench Verified: ", "SWE-V "), ("SWE-bench Verified", "SWE-bench Verified"), (" (RSP checkpoint)", ""),
           ("GRB (GDM internal research engineering benchmark)", "GRB (internal)"), ("SWE-Lancer IC SWE Diamond", "SWE-Lancer Diamond"),
@@ -920,4 +921,53 @@ def scaling_curves(path: Path | None = None):
     fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=8, bbox_to_anchor=(0.5, -0.005))
     fig.suptitle("OpenAI: AI self-improvement evaluations, score against budget, by model", x=0.01, ha="left", fontsize=12, fontweight="bold")
     fig.tight_layout(rect=(0, 0.04, 1, 0.965))
+    return fig
+
+
+# ----------------------------------------------------------------------------- RE-Bench by task (Google DeepMind)
+REBENCH_RUNS = [("Gemini 2.5 Flash", "45 minutes"), ("Gemini 2.5 Flash", "2 hours"), ("Gemini 2.5 Pro", "45 minutes"), ("Gemini 2.5 Pro", "2 hours"),
+                ("Gemini 2.5 Deep Think", "2 hours"), ("Gemini 3 Pro", "2 hours")]
+
+
+def rebench_tasks(path: Path | None = None):
+    """DeepMind's RE-Bench results task by task, as read off the bar charts in the Gemini 2.5 Pro,
+    2.5 Deep Think and 3 Pro cards (data/ai_rd_rebench_tasks.csv). One panel per task; each Gemini
+    run (model and time budget) is a hollow point in release order, the 8-hour human bar is the red
+    dotted line and DeepMind's own 30-minute Claude 3.5 Sonnet run a grey point. Where a run appears
+    in more than one card the latest card's reading is used; they agree to about 0.02."""
+    plots.style()
+    c = pd.read_csv(path or DATA / "ai_rd_rebench_tasks.csv")
+    c = c.sort_values("card_date").drop_duplicates(["model", "time_budget", "task"], keep="last")
+    tasks = [t for t in ["Optimize a Kernel", "Scaling Law Experiment", "Restricted Architecture MLM", "Optimize LLM Foundry", "Fix Embedding"]
+             if t in set(c["task"])]
+    fig, axes = plt.subplots(1, len(tasks), figsize=(2.3 * len(tasks), 3.9), sharey=True)
+    xs = list(range(len(REBENCH_RUNS)))
+    labels = [f"{_short(m)}\n{b.replace(' minutes', ' min').replace(' hours', ' h')}" for m, b in REBENCH_RUNS]
+    for ax, task in zip(axes, tasks):
+        sub = c[c["task"] == task].set_index(["model", "time_budget"])["normalized_score"]
+        ys = [sub.get(run, np.nan) for run in REBENCH_RUNS]
+        ok = [i for i, y in enumerate(ys) if pd.notna(y)]
+        ax.plot([xs[i] for i in ok], [ys[i] for i in ok], color=LAB_COLORS["gdm"], lw=1.4, zorder=2)
+        ax.scatter([xs[i] for i in ok], [ys[i] for i in ok], s=30, facecolors=plots.SURFACE, edgecolors=LAB_COLORS["gdm"], linewidths=1.3, zorder=3)
+        human = sub.get(("Human", "8 hours"), np.nan)
+        if pd.notna(human):
+            ax.axhline(human, color=HUMAN_REF_COLOR, ls=(0, (1.5, 2.5)), lw=1.2, zorder=1)
+            ax.annotate(f"human, 8 h ({human:.2f})", (0.02, human), xycoords=("axes fraction", "data"), xytext=(0, 2), textcoords="offset points",
+                        va="bottom", fontsize=6.3, color=HUMAN_REF_COLOR)
+        claude = sub.get(("Claude 3.5 Sonnet", "30 minutes"), np.nan)
+        if pd.notna(claude):
+            ax.scatter([-0.8], [claude], s=30, facecolors=plots.SURFACE, edgecolors=plots.MUTED, linewidths=1.3, zorder=3)
+            ax.annotate("3.5 Sonnet\n30 min", (-0.8, claude), xytext=(0, 7), textcoords="offset points", ha="center", va="bottom", fontsize=5.8, color=plots.MUTED)
+        ax.axhline(1.0, color=plots.AXIS, lw=0.8, zorder=1)
+        ax.set_title("\n".join(textwrap.wrap(task, 16)), fontsize=8.5)
+        ax.set_xticks(xs); ax.set_xticklabels(labels, fontsize=5.8, rotation=90)
+        ax.set_xlim(-1.4, len(xs) - 0.5); ax.set_ylim(0, 2.05)
+        ax.tick_params(axis="y", labelsize=7.5)
+    axes[0].set_ylabel("normalised score (1.0 = human reference solution)", fontsize=7.5)
+    handles = [plt.Line2D([], [], color=LAB_COLORS["gdm"], marker="o", markerfacecolor=plots.SURFACE, markeredgewidth=1.3, lw=1.4, markersize=6, label="Gemini run (model, time budget); hollow: read off the card's chart"),
+               plt.Line2D([], [], color=HUMAN_REF_COLOR, ls=(0, (1.5, 2.5)), lw=1.2, label="best human 8-hour attempt, as drawn in the card"),
+               plt.Line2D([], [], color=plots.MUTED, marker="o", markerfacecolor=plots.SURFACE, markeredgewidth=1.3, ls="none", markersize=6, label="Claude 3.5 Sonnet, 30 minutes, run by DeepMind")]
+    fig.legend(handles=handles, loc="lower center", ncol=3, fontsize=7.5, bbox_to_anchor=(0.5, -0.02))
+    fig.suptitle("Google DeepMind: RE-Bench by task, from the bar charts in the Gemini 2.5 Pro, 2.5 Deep Think and 3 Pro cards", x=0.01, ha="left", fontsize=11, fontweight="bold")
+    fig.tight_layout(rect=(0, 0.06, 1, 0.94))
     return fig

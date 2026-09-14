@@ -34,6 +34,13 @@ show_unbounded("gdm")
 show_series("gdm")
 ```
 
+## RE-Bench by task
+
+```{python}
+#| fig-cap: "RE-Bench task by task, read off the bar charts in the Gemini 2.5 Pro, 2.5 Deep Think and 3 Pro cards, which draw these values and never print them. Each hollow point is one Gemini run (model and time budget) in release order; the red dotted line is the best 8-hour human attempt as drawn in the card, and the grey point DeepMind's own 30-minute run of Claude 3.5 Sonnet. Gemini 3 Pro passes the human bar on Optimize a Kernel and Optimize LLM Foundry and approaches it on Restricted Architecture MLM; the Scaling Law Experiment stays far below. The cards' printed human-normalized averages use a 32-hour best-of-k aggregation that these per-task bars do not reproduce, so no average is derived from them."
+show_rebench_tasks()
+```
+
 ## Table
 
 ::: {.benchmarks .column-screen-inset}

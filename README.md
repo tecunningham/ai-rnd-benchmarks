@@ -24,6 +24,7 @@ Rendered site: https://tecunningham.github.io/ai-rnd-benchmarks/
 | `scripts/fetch_cards.py` | downloads the documents cited in the data CSV into `cards/` and extracts their text |
 | `scripts/annotate_sources.py` | locates each row in its document (page) and fills the `quote` column for qualitative rows |
 | `scripts/digitize_curves.py` | reads the score-against-budget charts in the OpenAI cards into `data/ai_rd_scaling_curves.csv` |
+| `scripts/digitize_bars.py` | reads the RE-Bench per-task bar charts in the DeepMind cards into `data/ai_rd_rebench_tasks.csv` |
 | `src/plots.py` | shared matplotlib style |
 
 ## Render
