@@ -41,6 +41,7 @@ format:
 
 execute:
   echo: false
+  fig-format: svg
   warning: false
   freeze: auto
 

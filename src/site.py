@@ -6,6 +6,14 @@ from IPython.display import Markdown, display
 
 from src import benchmarks
 
+# Quarto's `fig-format: svg` is applied through IPython.display.set_matplotlib_formats, which
+# IPython 8 removed, so Quarto silently falls back to 96-dpi PNG. Set the inline format directly.
+try:
+    from matplotlib_inline.backend_inline import set_matplotlib_formats
+    set_matplotlib_formats("svg")
+except Exception:  # pragma: no cover - older stacks still honour Quarto's own setup cell
+    pass
+
 
 def show_table(lab, caption=""):
     df = benchmarks.load_frontier(lab)
