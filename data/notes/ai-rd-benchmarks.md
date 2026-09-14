@@ -593,3 +593,19 @@ Queries that did not help: anything asking for RE-Bench per-task names ("Optimiz
 
 ---
 
+
+
+# Chart-read values (2026-09-14)
+
+The GPT-5.6 card (Figures 37 to 45) and the GPT-6 Astra card (Figures 52 to 55) report the Internal
+Research Debugging Eval, KernelGen 1P, NanoGPT and PostTrainBench Lite only as curves of score against
+API cost, simulated latency or output tokens. `scripts/digitize_curves.py` digitised every marker on
+those charts into `data/ai_rd_scaling_curves.csv` (167 points; card page crops rendered at 260 dpi,
+the Astra card's embedded PNGs). Check against printed values: Astra research debugging 78.1 read vs
+78.05 printed; GPT-5.5 research debugging 49.9 read vs 50.5 printed in its own card (the 5.6 card
+re-ran it). Rows that previously said "curves only; roughly N%" now carry the highest point on the
+model's curve as their score, with confidence `chart` (mark ≈, hollow markers): GPT-5.6 Sol research
+debugging 68.3, KernelGen 61.1, NanoGPT 16.6 (Astra card curve; 9.7 in its own card), PostTrainBench
+56.7; GPT-6 Astra KernelGen 66.7, NanoGPT 23.6, PostTrainBench 77.0. GPT-5.4 Thinking and GPT-5.5
+appear on the GPT-5.6 card's charts as comparison curves for KernelGen, NanoGPT and PostTrainBench,
+which their own cards do not report; those values were added as rows sourced to the GPT-5.6 card.

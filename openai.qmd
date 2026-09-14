@@ -7,7 +7,9 @@ mix of public and internal evaluations: SWE-bench Verified on a 477-problem subs
 internal pull-request replication (OpenAI PRs), MLE-bench (full set with pass@10 in the o1 era, a
 30-competition subset with pass@1 from mid-2025, a revised 72-problem set from GPT-5.6), PaperBench,
 research-engineer interview questions, OpenAI-Proof Q&A, an internal research debugging eval and
-Monorepo-Bench. The High threshold is worded as "a performant mid-career research engineer".
+Monorepo-Bench; the GPT-5.6 card revised the suite around the research debugging eval, KernelGen 1P,
+NanoGPT and PostTrainBench Lite, reported only as curves of score against budget. The High threshold
+is worded as "a performant mid-career research engineer".
 
 ```{python}
 #| echo: false
@@ -33,6 +35,13 @@ show_unbounded("openai")
 ```{python}
 #| fig-cap: "Numeric scores over card date, one panel per benchmark series. Bounded metrics show their full range with the ceiling as a solid line; red dotted is a human reference stated by the card, grey dashed a rule-out threshold. Filled points are read from the card or launch post; light-filled points are unverified; hollow points are the same model under another condition. MLE-bench appears twice because the o1-era cards used the full competition set and pass@10, later cards a 30-competition subset."
 show_series("openai")
+```
+
+## Score against budget
+
+```{python}
+#| fig-cap: "The four evaluations the GPT-5.6 and GPT-6 Astra cards report only as charts, redrawn from the charts: score against the budget the agent was given, one line per model. The GPT-5.6 card plots API cost and simulated latency for GPT-5.4, GPT-5.5 and the three GPT-5.6 variants; the Astra card plots output tokens for Astra and GPT-5.6 Sol. Every point is read off the card's chart, so markers are hollow; the scalar used in the other figures and the table is the highest point on a model's curve. Axes run to the ceiling, with NanoGPT's best human solution as the red line."
+show_scaling()
 ```
 
 ## Table

@@ -8,7 +8,10 @@ The long-form data with a source and a confidence flag on every row is `data/ai_
 Provenance marks in the table cells: no mark means the number was read from the card itself (or from
 the METR report the card cites); **\*** means it was read from the lab's launch post because the
 card does not give it; **†** means it was read from a search-result excerpt of a write-up and not
-found in any primary document; **‡** means it was recalled from memory and not checked. Almost every
+found in any primary document; **‡** means it was recalled from memory and not checked; **≈** means the
+card gives the result only as a chart and the number was read off the chart (the highest point on the
+model's curve, when the chart plots score against budget). Chart-read points are drawn hollow in every
+figure. Almost every
 cell was verified against the card on 2026-09-13; the handful still marked † or ‡ are launch-blog
 figures (SWE-bench Verified for the Codex models, Terminal-Bench for OpenAI models) that no card
 contains. Where a later card re-runs an earlier model and gets a different number, the cell keeps
@@ -48,6 +51,18 @@ Anthropic's staff-survey uplift) is indexed to its first card and drawn dashed; 
 one panel per evaluation; the benchmark-by-model table; and the list of cards. Ceilings,
 directions, reference values and retirement dates are in `data/ai_rd_benchmark_series.csv`.
 
+## Curves read from the cards
+
+OpenAI's GPT-5.6 and GPT-6 Astra cards report the research debugging eval, KernelGen 1P, NanoGPT and
+PostTrainBench Lite only as line charts of score against budget (API cost, simulated latency or output
+tokens), with no printed values. `scripts/digitize_curves.py` recovers the points: it finds each
+chart's axes and tick marks, finds the filled markers by their legend colour after removing the thin
+lines, and maps marker centres to data values. The result is `data/ai_rd_scaling_curves.csv`, drawn on
+the OpenAI page as one panel per evaluation and budget measure. Where a card prints a value that also
+appears on a chart (Astra's 78.05 percent on research debugging), the digitised value agrees to within
+a tenth of a point. The scalar entered in the benchmark table for such rows is the highest point on
+the model's curve, marked **≈**.
+
 ## Which cards are shown
 
 Only cards on the evaluation frontier are shown. A card that improves on at most a quarter of the
@@ -62,6 +77,7 @@ Haiku 4.5, the Codex addenda, Gemini Flash-Lite) are flagged in the CSV and also
 |---|---|
 | `data/ai_rd_benchmarks.csv` | one row per score: lab, model, card, benchmark, conditions, score, source, confidence |
 | `data/ai_rd_benchmark_series.csv` | per-series metadata: ceiling, direction, human reference, threshold, category, retirement |
+| `data/ai_rd_scaling_curves.csv` | points read off the score-against-budget charts in the OpenAI cards (model, evaluation, budget measure, x, y, figure) |
 | `data/notes/ai-rd-benchmarks.md` | collection and verification notes, card by card |
 | `src/benchmarks.py` | loading, the frontier rule, tables and every figure |
 

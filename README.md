@@ -23,6 +23,7 @@ Rendered site: https://tecunningham.github.io/ai-rnd-benchmarks/
 | `cards/<lab>/` | every cited card, report and post, as fetched (PDF or HTML) plus its extracted text; `cards/index.csv` maps URLs to files |
 | `scripts/fetch_cards.py` | downloads the documents cited in the data CSV into `cards/` and extracts their text |
 | `scripts/annotate_sources.py` | locates each row in its document (page) and fills the `quote` column for qualitative rows |
+| `scripts/digitize_curves.py` | reads the score-against-budget charts in the OpenAI cards into `data/ai_rd_scaling_curves.csv` |
 | `src/plots.py` | shared matplotlib style |
 
 ## Render
@@ -42,7 +43,7 @@ GitHub Actions).
 - Scores are as the lab reports them and are not comparable across labs.
 - Every table cell links to its source, opened at the right page of the local copy of the card; qualitative cells quote the card's own words.
 - Cells carry provenance marks: none = read from the card, `*` = launch post, `†` = search-result
-  excerpt, `‡` = memory.
+  excerpt, `‡` = memory, `≈` = read off a chart (highest point on the model's curve); chart-read points are hollow in the figures.
 - Only cards on the evaluation frontier are shown: a card that improves on at most a quarter of the
   evaluations it shares with earlier cards is left out of the figures and tables (its rows stay in the CSV).
 - A black cross sits on a series' last reported value when later cards stop reporting it.

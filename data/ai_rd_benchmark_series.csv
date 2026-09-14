@@ -47,3 +47,6 @@ openai,METR external evaluation: 50% time horizon,,higher,,,,,external,no,"Hours
 anthropic,Internal AI R&D productivity survey,,higher,,,,,research,no,"Median or mean percent productivity uplift reported by surveyed staff; no external reference, indexed to the first survey.",,,
 anthropic,METR data deduplication (RSP checkpoint),,higher,,,,,research,no,Trials above the F1 threshold out of about 30 to 46; indexed to the first card.,,,
 anthropic,METR general autonomy time horizon,,higher,,,,,external,no,Minutes; single card.,,,
+openai,KernelGen 1P,100,higher,,,,,research,yes,"Rubric score; the GPT-5.6 and GPT-6 Astra cards give curves against budget only, so every value is the highest point on a curve (confidence chart).",,,
+openai,NanoGPT,100,higher,72.38,best human solution (72.38%),,,research,yes,"Mean reward = fraction of baseline training time saved; curves only, highest point taken.",,,not stated
+openai,PostTrainBench Lite,100,higher,,,,,research,yes,"Mean reward normalised between the base and the instruction-tuned reference model; curves only, highest point taken.",,,

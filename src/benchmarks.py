@@ -21,7 +21,7 @@ LABS = {"gdm": "Google DeepMind", "openai": "OpenAI", "anthropic": "Anthropic"}
 # card cites); `announcement` = read from the lab's launch post, not the card; `snippet` = read from
 # a search-result excerpt of the card or of a write-up quoting it; `memory` = recalled without a
 # source check. Marks are appended to the cell.
-CONFIDENCE_MARK = {"reported": "", "announcement": "*", "snippet": "†", "memory": "‡"}
+CONFIDENCE_MARK = {"reported": "", "announcement": "*", "snippet": "†", "memory": "‡", "chart": "≈"}
 
 # Row order in the wide tables: AI R&D suites, then research-replication and competition suites,
 # then agentic-coding benchmarks, then the lab's own threshold determination.
@@ -243,10 +243,13 @@ def timeseries(df: pd.DataFrame, title: str | None = None, ncols: int = 3, min_p
         m = meta_for(meta, lab, s)
         ax.plot(base["card_date"], base["score_num"], color=c, lw=1.5, zorder=2)
         verified = base["confidence"].isin(["reported", "announcement"])
+        chart = base["confidence"] == "chart"
         ax.scatter(base["card_date"][verified], base["score_num"][verified], s=28, c=c, zorder=3,
                    edgecolors=plots.SURFACE, linewidths=1)
-        ax.scatter(base["card_date"][~verified], base["score_num"][~verified], s=28, c="#a9c8ee", zorder=3,
+        ax.scatter(base["card_date"][~verified & ~chart], base["score_num"][~verified & ~chart], s=28, c="#a9c8ee", zorder=3,
                    edgecolors=c, linewidths=1)
+        ax.scatter(base["card_date"][chart], base["score_num"][chart], s=30, facecolors=plots.SURFACE, zorder=3,
+                   edgecolors=c, linewidths=1.3)
         if not extra.empty:
             ax.scatter(extra["card_date"], extra["score_num"], s=26, facecolors="none", edgecolors=c, linewidths=1.2, zorder=3)
         _retire_mark(ax, m, base["card_date"].iloc[-1], base["score_num"].iloc[-1], latest_card)
@@ -375,6 +378,17 @@ def _card_labels(ax, df, x0, x1):
                     va="bottom", fontsize=6.3, color=plots.INK2, annotation_clip=False)
 
 
+def _chart_marks(ax, b: pd.DataFrame, ycol: str, colour: str) -> int:
+    """Redraw the points read off a chart (confidence `chart`) as hollow markers; returns how many."""
+    ch = b["confidence"] == "chart"
+    if ch.any():
+        ax.scatter(b["card_date"][ch], b[ycol][ch], s=24, facecolors=plots.SURFACE, edgecolors=colour, linewidths=1.3, zorder=4)
+    return int(ch.sum())
+
+
+CHART_LEGEND = "hollow: read off a chart in the card (no printed value)"
+
+
 def overview(df: pd.DataFrame, lab: str, title: str | None = None, min_points: int = 2):
     """Every bounded series of one lab on a single 0 to 100 percent axis, as percent of its ceiling.
 
@@ -400,7 +414,7 @@ def overview(df: pd.DataFrame, lab: str, title: str | None = None, min_points: i
     allb = pd.concat([b for b, _ in rows])
     x0, x1 = allb["card_date"].min(), allb["card_date"].max()
     latest_card = df["card_date"].max()
-    retired = 0
+    retired = charted = 0
     span = (x1 - x0).days or 1
     ax.axhline(100, color=plots.INK2, lw=1, zorder=1)
     ax.annotate("ceiling", (x0, 100), xytext=(2, -9), textcoords="offset points", fontsize=7, color=plots.INK2)
@@ -409,6 +423,7 @@ def overview(df: pd.DataFrame, lab: str, title: str | None = None, min_points: i
         c = CATEGORY_COLORS[b["category"].iloc[0]]
         ax.plot(b["card_date"], b["pct"], color=c, lw=1.6, alpha=0.9, zorder=2)
         ax.scatter(b["card_date"], b["pct"], s=16, c=c, edgecolors=plots.SURFACE, linewidths=0.8, zorder=3)
+        charted += _chart_marks(ax, b, "pct", c)
         last = b.iloc[-1]
         if _retire_mark(ax, m, last["card_date"], last["pct"], latest_card):
             retired += 1
@@ -438,6 +453,9 @@ def overview(df: pd.DataFrame, lab: str, title: str | None = None, min_points: i
     if retired:
         handles.append(plt.Line2D([], [], color=plots.INK, marker="x", ls="none", markersize=7, markeredgewidth=1.4,
                                   label="last reported value; later cards drop it"))
+    if charted:
+        handles.append(plt.Line2D([], [], color=plots.INK2, marker="o", ls="none", markersize=6, markerfacecolor=plots.SURFACE,
+                                  markeredgewidth=1.3, label=CHART_LEGEND))
     _card_labels(ax, df, x0, x1)
     ax.legend(handles=handles, loc="lower left", fontsize=8, title=None)
     ax.set_title(title or f"{LABS.get(lab, lab)}: every bounded AI R&D evaluation, as percent of its ceiling", pad=84)
@@ -745,11 +763,12 @@ def cross_lab_research(df: pd.DataFrame | None = None, min_points: int = 2):
     span = (x1 - x0).days or 1
     ax.axhline(100, color=plots.INK2, lw=1, zorder=1)
     ax.annotate("ceiling", (x0, 100), xytext=(2, -9), textcoords="offset points", fontsize=7, color=plots.INK2)
-    ends, retired = [], 0
+    ends, retired, charted = [], 0, 0
     for b, m in sorted(rows, key=lambda bm: bm[0]["card_date"].min()):
         lab = b["lab"].iloc[0]; c = LAB_COLORS[lab]
         ax.plot(b["card_date"], b["pct"], color=c, lw=1.6, alpha=0.9, zorder=2)
         ax.scatter(b["card_date"], b["pct"], s=16, c=c, edgecolors=plots.SURFACE, linewidths=0.8, zorder=3)
+        charted += _chart_marks(ax, b, "pct", c)
         last = b.iloc[-1]
         if _retire_mark(ax, m, last["card_date"], last["pct"], latest[lab]):
             retired += 1
@@ -776,6 +795,9 @@ def cross_lab_research(df: pd.DataFrame | None = None, min_points: int = 2):
     if retired:
         handles.append(plt.Line2D([], [], color=plots.INK, marker="x", ls="none", markersize=7, markeredgewidth=1.4,
                                   label="last reported value; the lab's later cards drop it"))
+    if charted:
+        handles.append(plt.Line2D([], [], color=plots.INK2, marker="o", ls="none", markersize=6, markerfacecolor=plots.SURFACE,
+                                  markeredgewidth=1.3, label=CHART_LEGEND))
     ax.legend(handles=handles, loc="lower left", fontsize=8)
     ax.set_title("All three labs: bounded AI-research evaluations, as percent of their ceilings", pad=10)
     fig.subplots_adjust(left=0.07, right=0.66, top=0.92, bottom=0.08)
@@ -830,4 +852,72 @@ def cross_lab_unbounded(df: pd.DataFrame | None = None):
     ax.legend(handles=handles, loc="lower left", fontsize=7.5)
     ax.set_title("All three labs: unbounded AI R&D evaluations, as multiples of their references", pad=10)
     fig.subplots_adjust(left=0.07, right=0.62, top=0.92, bottom=0.08)
+    return fig
+
+
+# ----------------------------------------------------------------------------- score against budget (OpenAI)
+MODEL_COLORS = {"GPT-5.4 Thinking": "#eda100", "GPT-5.5": "#eb6834", "GPT-5.6 Luna": "#a9c8ee", "GPT-5.6 Terra": "#6fa0e0",
+                "GPT-5.6 Sol": "#2a78d6", "GPT-6 Astra": "#4a3aa7"}
+BUDGET_KINDS = [("API cost", "API cost (USD)"), ("simulated latency", "simulated latency (minutes)"), ("output tokens", "output tokens")]
+CURVE_BENCHMARKS = ["Internal Research Debugging Eval", "KernelGen 1P", "NanoGPT", "PostTrainBench Lite"]
+
+
+def scaling_curves(path: Path | None = None):
+    """OpenAI's AI-self-improvement evaluations as the cards draw them: score against the budget an
+    agent was given, one line per model. One row per evaluation, one column per budget measure (the
+    GPT-5.6 card plots API cost and simulated latency; the GPT-6 Astra card plots output tokens).
+    Every point is read off the card's chart (data/ai_rd_scaling_curves.csv), so markers are hollow.
+    Axes run to the ceiling so the distance left to 100 percent, and to NanoGPT's best human
+    solution, is visible."""
+    plots.style()
+    meta = series_meta()
+    c = pd.read_csv(path or DATA / "ai_rd_scaling_curves.csv")
+    fig, axes = plt.subplots(len(CURVE_BENCHMARKS), len(BUDGET_KINDS), figsize=(10.5, 2.75 * len(CURVE_BENCHMARKS)), squeeze=False)
+    present = set()
+    for i, bench in enumerate(CURVE_BENCHMARKS):
+        m = meta_for(meta, "openai", bench)
+        for j, (kind, xlabel) in enumerate(BUDGET_KINDS):
+            ax = axes[i, j]
+            sub = c[(c["benchmark"] == bench) & (c["x_kind"] == kind)]
+            if sub.empty:
+                ax.set_xticks([]); ax.set_yticks([]); ax.grid(False)
+                for sp in ax.spines.values():
+                    sp.set_visible(False)
+                ax.text(0.5, 0.5, "not drawn against\n" + kind + " in the cards", ha="center", va="center", fontsize=7.5, color=plots.MUTED,
+                        transform=ax.transAxes)
+                continue
+            for model, col in MODEL_COLORS.items():
+                g = sub[sub["model"] == model].sort_values("x")
+                if g.empty:
+                    continue
+                present.add(model)
+                ax.plot(g["x"], g["y"], color=col, lw=1.5, zorder=2)
+                ax.scatter(g["x"], g["y"], s=22, facecolors=plots.SURFACE, edgecolors=col, linewidths=1.2, zorder=3)
+            ax.axhline(100, color=plots.INK2, lw=0.8, zorder=1)
+            if m is not None and pd.notna(m["human_ref"]):
+                ax.axhline(m["human_ref"], color=HUMAN_REF_COLOR, ls=(0, (1.5, 2.5)), lw=1.2, zorder=1)
+                ax.annotate(m["human_ref_label"], (0.98, m["human_ref"]), xycoords=("axes fraction", "data"), xytext=(0, 2),
+                            textcoords="offset points", ha="right", va="bottom", fontsize=6.3, color=HUMAN_REF_COLOR)
+            ax.set_ylim(0, 104)
+            ax.set_xlim(left=0)
+            if kind == "output tokens":
+                ax.xaxis.set_major_formatter(plt.matplotlib.ticker.FuncFormatter(lambda v, _p: f"{v/1000:g}K"))
+            elif kind == "API cost":
+                ax.xaxis.set_major_formatter(plt.matplotlib.ticker.FuncFormatter(lambda v, _p: f"${v:g}"))
+            ax.tick_params(labelsize=7.5)
+            if i == len(CURVE_BENCHMARKS) - 1 or c[(c["benchmark"] == CURVE_BENCHMARKS[min(i + 1, len(CURVE_BENCHMARKS) - 1)]) & (c["x_kind"] == kind)].empty:
+                ax.set_xlabel(xlabel, fontsize=8)
+            if j == 0:
+                ax.set_ylabel(sub["y_metric"].iloc[0], fontsize=8)
+        axes[i, 0].annotate(short_name(bench), (0, 1), xycoords="axes fraction", xytext=(0, 4), textcoords="offset points",
+                            fontsize=9.5, fontweight="bold", va="bottom", color=plots.INK)
+    for j, (kind, xlabel) in enumerate(BUDGET_KINDS):
+        card = "GPT-6 Astra card" if kind == "output tokens" else "GPT-5.6 card"
+        axes[0, j].set_title(f"against {xlabel}\n({card})", fontsize=8.5, color=plots.INK2, pad=22, fontweight="normal")
+    handles = [plt.Line2D([], [], color=MODEL_COLORS[k], lw=2, label=k) for k in MODEL_COLORS if k in present]
+    handles.append(plt.Line2D([], [], color=plots.INK2, marker="o", ls="none", markersize=6, markerfacecolor=plots.SURFACE,
+                              markeredgewidth=1.2, label="every point is read off the card's chart"))
+    fig.legend(handles=handles, loc="lower center", ncol=4, fontsize=8, bbox_to_anchor=(0.5, -0.005))
+    fig.suptitle("OpenAI: AI self-improvement evaluations, score against budget, by model", x=0.01, ha="left", fontsize=12, fontweight="bold")
+    fig.tight_layout(rect=(0, 0.04, 1, 0.965))
     return fig
