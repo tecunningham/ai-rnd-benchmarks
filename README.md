@@ -14,6 +14,7 @@ Rendered site: https://tecunningham.github.io/ai-rnd-benchmarks/
 |---|---|
 | `index.qmd` | across the labs: shared-benchmark panels, every lab's research evaluations on one axis, every lab's unbounded evaluations on one log axis |
 | `openai.qmd`, `anthropic.qmd`, `gdm.qmd` | one page per lab: bounded overview, unbounded overview, small multiples, table, cards |
+| `uplift.qmd` | Anthropic's self-reported researcher uplift against its capability index, and the ECI-to-compute mapping from Epoch data |
 | `method.qmd` | provenance, how to read the figures, the frontier rule |
 | `src/site.py` | the `show_*` helpers the pages call |
 | `data/ai_rd_benchmarks.csv` | one row per score (lab, model, card, benchmark, conditions, score, source, confidence) |
@@ -25,6 +26,8 @@ Rendered site: https://tecunningham.github.io/ai-rnd-benchmarks/
 | `scripts/annotate_sources.py` | locates each row in its document (page) and fills the `quote` column for qualitative rows |
 | `scripts/digitize_curves.py` | reads the score-against-budget charts in the OpenAI cards into `data/ai_rd_scaling_curves.csv` |
 | `scripts/digitize_bars.py` | reads the RE-Bench per-task bar charts in the DeepMind cards into `data/ai_rd_rebench_tasks.csv` |
+| `scripts/digitize_aeci.py` | reads every model's Anthropic ECI off the Fable 5.1 card's trajectory figure into `data/ai_rd_aeci.csv` |
+| `scripts/fetch_external.py` | downloads Epoch AI's ECI scores and notable-models compute estimates into `data/external/` |
 | `src/plots.py` | shared matplotlib style |
 
 ## Render

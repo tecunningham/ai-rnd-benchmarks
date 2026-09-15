@@ -971,3 +971,129 @@ def rebench_tasks(path: Path | None = None):
     fig.suptitle("Google DeepMind: RE-Bench by task, from the bar charts in the Gemini 2.5 Pro, 2.5 Deep Think and 3 Pro cards", x=0.01, ha="left", fontsize=11, fontweight="bold")
     fig.tight_layout(rect=(0, 0.06, 1, 0.94))
     return fig
+
+
+# ----------------------------------------------------------------------------- capability index vs self-reported uplift
+EXTERNAL = DATA / "external"
+
+
+def eci_compute_fit(confidence=("Confident", "Likely", "Speculative"), min_log_compute: float = 0.0):
+    """Cross-sectional fit of Epoch's public ECI on log10 training compute over the models that have
+    both (Epoch's ECI scores and notable-models compute estimates). Returns (a, b, sd, table): ECI =
+    a + b log10(C); sd is the residual standard deviation in ECI points. The fit pools models from
+    2023 to 2026, so it describes 'the training compute of models at this capability level', not the
+    compute a fixed recipe would need; algorithmic progress is inside the scatter."""
+    e = pd.read_csv(EXTERNAL / "epoch_eci_scores.csv")
+    n = pd.read_csv(EXTERNAL / "epoch_notable_ai_models.csv", low_memory=False)
+    n = n[n["Training compute (FLOP)"].notna()]
+    key = lambda x: re.sub(r"[^a-z0-9]+", "", str(x).lower())
+    n = n.assign(k=n["Model"].map(key)); e = e.assign(k=e["Model"].map(key))
+    j = e.merge(n[["k", "Training compute (FLOP)", "Confidence"]], on="k")
+    j = j[j["Confidence"].isin(confidence)].assign(logC=lambda d: np.log10(d["Training compute (FLOP)"]))
+    j = j[j["logC"] >= min_log_compute]
+    b, a = np.polyfit(j["logC"], j["eci"], 1)
+    sd = float((j["eci"] - (a + b * j["logC"])).std())
+    return float(a), float(b), sd, j
+
+
+def eci_vs_compute():
+    """Epoch's public ECI against Epoch's training-compute estimate for every model that has both,
+    with the pooled log-linear fit and its one-sigma band; models with a card in this collection are
+    named. This is the mapping used for the compute axis on the uplift figure."""
+    plots.style()
+    a, b, sd, j = eci_compute_fit()
+    fig, ax = plt.subplots(figsize=(8.5, 5.4))
+    years = pd.to_datetime(j["date"]).dt.year
+    cmap = {2023: "#a9c8ee", 2024: "#6fa0e0", 2025: "#2a78d6", 2026: "#4a3aa7"}
+    for y, g in j.groupby(years):
+        ax.scatter(g["logC"], g["eci"], s=26, c=cmap.get(y, plots.MUTED), edgecolors=plots.SURFACE, linewidths=0.8, zorder=3, label=str(y))
+    xs = np.linspace(j["logC"].min() - 0.2, j["logC"].max() + 0.4, 50)
+    ax.plot(xs, a + b * xs, color=plots.INK2, lw=1.4, zorder=2)
+    ax.fill_between(xs, a + b * xs - sd, a + b * xs + sd, color=plots.INK2, alpha=0.08, zorder=1)
+    named = j[j["Model"].str.contains("Claude|GPT-5|GPT-4.5|Grok 4|DeepSeek-V4-Pro|Kimi K3", regex=True)]
+    for _, r in named.iterrows():
+        ax.annotate(r["Model"], (r["logC"], r["eci"]), xytext=(4, 3), textcoords="offset points", fontsize=6.5, color=plots.INK2)
+    ax.set_xlabel("training compute, log10 FLOP (Epoch estimate)")
+    ax.set_ylabel("Epoch Capabilities Index")
+    ax.xaxis.set_major_formatter(plt.matplotlib.ticker.FuncFormatter(lambda v, _p: f"1e{v:g}"))
+    ax.legend(title="release year", fontsize=8, title_fontsize=8, loc="lower right")
+    ax.set_title(f"ECI against training compute: ECI = {a:.0f} + {b:.1f} log10(FLOP), scatter ±{sd:.0f} points (n={len(j)})", pad=10, fontsize=11)
+    fig.tight_layout()
+    return fig
+
+
+def uplift_vs_capability():
+    """Anthropic's self-reported researcher uplift against the model's capability index. Left: the
+    productivity multiple staff reported (median, with the reported range or mean), on a log axis,
+    against the Anthropic ECI; the top axis converts AECI to the training compute of models at that
+    ECI (AECI to public ECI by the mean offset over the eight models that have both, then the Epoch
+    fit). Right: the share of surveyed staff who said the model could already replace an entry-level
+    researcher, with the RSP rule-out line at one half."""
+    plots.style()
+    ae = pd.read_csv(DATA / "ai_rd_aeci.csv")
+    up = pd.read_csv(DATA / "ai_rd_uplift.csv")
+    d = up.merge(ae[["model", "aeci", "aeci_source", "eci_public"]], on="model", how="left")
+    both = ae.dropna(subset=["eci_public"])
+    offset = float((both["eci_public"] - both["aeci"]).mean())
+    a, b, sd, _ = eci_compute_fit()
+    fig, (ax, ax2) = plt.subplots(1, 2, figsize=(11, 5.2), gridspec_kw={"width_ratios": [1.35, 1]})
+    c = LAB_COLORS["anthropic"]
+    # left: uplift multiple
+    q = d[d["uplift_multiple"].notna()].sort_values("aeci")
+    ax.plot(q["aeci"], q["uplift_multiple"], color=c, lw=1.4, alpha=0.6, zorder=2)
+    for i, (_, r) in enumerate(q.iterrows()):
+        lo = r["uplift_low"] if pd.notna(r["uplift_low"]) else r["uplift_multiple"]
+        hi = r["uplift_high"] if pd.notna(r["uplift_high"]) else r["uplift_multiple"]
+        if hi > lo:
+            ax.plot([r["aeci"], r["aeci"]], [lo, hi], color=c, lw=1, alpha=0.5, zorder=1)
+        if pd.notna(r["uplift_mean"]):
+            ax.scatter([r["aeci"]], [r["uplift_mean"]], s=30, marker="_", c=c, linewidths=1.5, zorder=3)
+        hollow = "read off" in str(r["aeci_source"])
+        ax.scatter([r["aeci"]], [r["uplift_multiple"]], s=48, facecolors=plots.SURFACE if hollow else c, edgecolors=c, linewidths=1.4, zorder=4)
+        label = f"{_short(r['model'])}\n{r['uplift_measure'].split(' (')[0]}, n={int(r['n'])}" if pd.notna(r["n"]) else _short(r["model"])
+        below = i % 2 == 0                                   # alternate so neighbours at the same multiple do not collide
+        ax.annotate(label, (r["aeci"], r["uplift_multiple"]), xytext=(7, -4 if below else 4), textcoords="offset points", fontsize=6.5,
+                    color=plots.INK2, va="top" if below else "bottom")
+    # qualitative newest point: METR's 'likely higher than Mythos Preview'
+    f51 = d[d["model"].str.startswith("Claude Fable 5.1")].iloc[0]
+    mp = q[q["model"] == "Claude Mythos Preview"].iloc[0]
+    ax.annotate("", (f51["aeci"], mp["uplift_multiple"] * 1.5), (f51["aeci"], mp["uplift_multiple"]), arrowprops=dict(arrowstyle="-|>", color=c, lw=1.2))
+    ax.scatter([f51["aeci"]], [mp["uplift_multiple"]], s=48, facecolors=plots.SURFACE, edgecolors=c, linewidths=1.4, zorder=4)
+    ax.annotate("Fable 5.1 / Mythos 5.1\nno survey; METR: 'likely a higher\nuplift than Mythos Preview'", (f51["aeci"], mp["uplift_multiple"] * 1.5), xytext=(-4, 4),
+                textcoords="offset points", fontsize=6.5, color=plots.INK2, ha="right", va="bottom")
+    ax.axhline(3, color=plots.MUTED, ls=(0, (4, 3)), lw=1, zorder=1)
+    ax.annotate("RSP rule-out used in 2025: median boost below 3×", (0.02, 3), xycoords=("axes fraction", "data"), xytext=(0, 3), textcoords="offset points",
+                fontsize=6.5, color=plots.MUTED, va="bottom")
+    ax.axhline(1, color=plots.AXIS, lw=0.8, zorder=1)
+    ax.set_yscale("log"); ax.set_ylim(0.8, 12)
+    ax.yaxis.set_major_locator(plt.matplotlib.ticker.FixedLocator([1, 1.5, 2, 3, 4, 6, 10]))
+    ax.yaxis.set_major_formatter(plt.matplotlib.ticker.FuncFormatter(_multiple)); ax.yaxis.set_minor_formatter(plt.matplotlib.ticker.NullFormatter())
+    ax.set_xlabel("Anthropic ECI (AECI) of the model; hollow = read off the card's chart")
+    ax.set_ylabel("self-reported productivity uplift (multiple, log)")
+    ax.set_xlim(143, 166)
+    ax.set_title("Researcher-reported uplift against capability", fontsize=10)
+    top = ax.secondary_xaxis("top", functions=(lambda x: (x + offset - a) / b, lambda z: b * z + a - offset))
+    top.set_xlabel(f"training compute of models at this ECI, log10 FLOP (Epoch fit, ±{sd / b:.1f} orders of magnitude)", fontsize=7.5, color=plots.MUTED)
+    top.tick_params(labelsize=7.5, colors=plots.MUTED)
+    # right: drop-in replacement share
+    r2 = d[d["drop_in_n"].notna()].sort_values("aeci")
+    share = r2["drop_in_yes"] / r2["drop_in_n"]
+    z = 1.96
+    lo = (share + z * z / (2 * r2["drop_in_n"]) - z * np.sqrt(share * (1 - share) / r2["drop_in_n"] + z * z / (4 * r2["drop_in_n"] ** 2))) / (1 + z * z / r2["drop_in_n"])
+    hi = (share + z * z / (2 * r2["drop_in_n"]) + z * np.sqrt(share * (1 - share) / r2["drop_in_n"] + z * z / (4 * r2["drop_in_n"] ** 2))) / (1 + z * z / r2["drop_in_n"])
+    ax2.vlines(r2["aeci"], lo * 100, hi * 100, color=c, lw=1, alpha=0.5, zorder=1)
+    ax2.plot(r2["aeci"], share * 100, color=c, lw=1.4, alpha=0.6, zorder=2)
+    for i, ((_, r), sh) in enumerate(zip(r2.iterrows(), share)):
+        hollow = "read off" in str(r["aeci_source"])
+        ax2.scatter([r["aeci"]], [sh * 100], s=48, facecolors=plots.SURFACE if hollow else c, edgecolors=c, linewidths=1.4, zorder=4)
+        ax2.annotate(f"{_short(r['model'])}\n{int(r['drop_in_yes'])}/{int(r['drop_in_n'])}", (r["aeci"], sh * 100), xytext=(0, 9 + 16 * (i % 2)),
+                     textcoords="offset points", fontsize=6.5, color=plots.INK2, ha="center", va="bottom")
+    ax2.axhline(50, color=plots.MUTED, ls=(0, (4, 3)), lw=1, zorder=1)
+    ax2.annotate("RSP rule-out: under half say yes", (0.02, 50), xycoords=("axes fraction", "data"), xytext=(0, 3), textcoords="offset points", fontsize=6.5, color=plots.MUTED)
+    ax2.set_ylim(0, 60); ax2.set_xlim(140, 160)
+    ax2.set_xlabel("Anthropic ECI (AECI) of the model")
+    ax2.set_ylabel("share of surveyed staff: 'could already replace an entry-level researcher' (%)", fontsize=8)
+    ax2.set_title("Drop-in replacement for an entry-level researcher", fontsize=10)
+    fig.suptitle("Anthropic: what staff report about the model, against the Anthropic ECI", x=0.01, ha="left", fontsize=12, fontweight="bold")
+    fig.tight_layout(rect=(0, 0, 1, 0.95))
+    return fig

@@ -55,6 +55,14 @@ def show_rebench_tasks():
     benchmarks.rebench_tasks(); plt.show()
 
 
+def show_uplift():
+    benchmarks.uplift_vs_capability(); plt.show()
+
+
+def show_eci_compute():
+    benchmarks.eci_vs_compute(); plt.show()
+
+
 def show_cards(lab):
     t = benchmarks.cards(benchmarks.load_frontier(lab))
     t["card"] = t.apply(lambda r: f"[{r['card_title']}]({r['card_url']})" if r["card_url"] else r["card_title"], axis=1)

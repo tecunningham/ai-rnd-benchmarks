@@ -1,0 +1,13 @@
+model,aeci,aeci_read_from_chart,aeci_source,eci_public,eci_public_ci_low,eci_public_ci_high,source_file,page
+Claude 3 Opus,125.95,125.95,read off Figure 2.3.5.A,126.91,123.2,130.09,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude 3.5 Sonnet,130.0,130.0,printed in the card,130.0,nan,nan,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude 3.5 Sonnet (Oct 2024),133.48,133.48,read off Figure 2.3.5.A,133.55,129.7,138.29,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude 3.7 Sonnet,139.67,139.67,read off Figure 2.3.5.A,141.16,139.15,142.7,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Opus 4,142.16,142.16,read off Figure 2.3.5.A,142.68,140.74,144.27,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Sonnet 4.5,145.82,145.82,read off Figure 2.3.5.A,146.84,145.46,148.5,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Opus 4.5,148.14,148.14,read off Figure 2.3.5.A,150.11,148.12,152.85,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Opus 4.6,152.72,152.72,read off Figure 2.3.5.A,155.34,153.7,157.21,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Mythos Preview,157.75,157.75,read off Figure 2.3.5.A,,,,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Fable 5 / Mythos 5,159.46,159.66,printed in the card,163.27,160.54,167.1,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Opus 5,160.73,160.71,printed in the card,162.3,159.9,165.74,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39
+Claude Fable 5.1 / Mythos 5.1,161.98,161.98,printed in the card,164.47,161.36,168.28,cards/anthropic/claude-fable-5-1-claude-mythos-5-1-system-card.pdf,39

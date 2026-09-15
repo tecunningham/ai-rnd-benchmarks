@@ -18,6 +18,8 @@ website:
     contents:
       - text: "Across the labs"
         href: index.qmd
+      - text: "Capability vs uplift"
+        href: uplift.qmd
       - section: "Per lab"
         contents:
           - openai.qmd

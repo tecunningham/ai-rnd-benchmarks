@@ -1,0 +1,59 @@
+---
+title: "Capability vs self-reported uplift"
+---
+
+The closed labs' cards give two kinds of evidence about AI acceleration of AI R&D: benchmark scores,
+and what their own researchers say the model does for their work. Anthropic is the only lab that
+publishes the second kind with numbers, as staff surveys in the Sonnet 4.5, Opus 4.5, Opus 4.6 and
+Mythos Preview cards, and it also publishes a capability index for its models, the Anthropic ECI
+(AECI), its fork of Epoch AI's Epoch Capabilities Index. This page puts the two together, and then
+maps the capability index onto training compute using Epoch's public data.
+
+```{python}
+#| echo: false
+from src.site import *  # noqa
+```
+
+## Uplift against the Anthropic ECI
+
+```{python}
+#| fig-cap: "Left: the productivity multiple Anthropic staff reported for each model, against the model's Anthropic ECI. The point is the median (Sonnet 4.5: median of the six numeric estimates; Mythos Preview: the geometric mean of an informal poll of about 130 staff, asked relative to zero AI assistance rather than relative to earlier Claude models, so it is not on the same footing). Tick marks are the reported mean, vertical lines the reported range. The newest card has no survey; the arrow marks METR's judgement that Mythos 5.1 'likely provides a higher productivity uplift than Mythos Preview'. The grey line is the rule-out Anthropic used in 2025, a median boost below 3x. Right: the share of surveyed staff who said the model could already replace an entry-level researcher, with 95 percent intervals. AECI values other than the three the card prints are read off the card's chart (hollow). The top axis converts AECI to the training compute of models at that capability, via the fit in the next figure; it is indicative only."
+show_uplift()
+```
+
+Read across the four surveys, the reported median uplift roughly doubles for every 8 to 10 AECI
+points, from 1.25x at Sonnet 4.5 to 2x at Opus 4.5 and 4.6 and about 4x at Mythos Preview, while the
+share of staff who think the model could replace an entry-level researcher stays near zero until
+Mythos Preview, where 1 of 18 said so and 4 of 18 gave even odds within three months. Anthropic's own
+reading is that uplift does not translate one for one into research progress: the Mythos Preview card
+puts the overall progress multiplier below 2x and says reaching 2x through this channel "would
+require uplift roughly an order of magnitude larger than what we observe". After Mythos Preview the
+cards stop surveying staff and rely on internal usage data, the AECI trend and CoBench instead, so the
+series ends there. The surveys also differ in who was asked and how, so the slope is suggestive, not a
+measurement.
+
+## Mapping the capability index to compute
+
+```{python}
+#| fig-cap: "Epoch's public ECI against Epoch's training-compute estimate for the 46 models that have both, coloured by release year, with the pooled log-linear fit and its one-sigma band. The fit is cross-sectional across 2023 to 2026, so the scatter of about 12 ECI points (1.3 orders of magnitude of compute) is mostly algorithmic progress: a 2026 model reaches a given ECI with far less compute than a 2023 model. Named points are models with a card in this collection or the largest compute estimates."
+show_eci_compute()
+```
+
+Two conversions follow from Epoch's data, and they disagree by a factor of two, which is the honest
+width of the mapping:
+
+- **Pooled across years**, ECI rises about 9 points per tenfold of training compute (the fit above).
+  On that scale Anthropic's frontier trend of 13.5 AECI per year corresponds to about 1.5 orders of
+  magnitude of compute-equivalent per year, and the RSP's "notably more capable" step of 4x effective
+  compute to about 5 ECI points.
+- **Controlling for release date** (adding a linear time term to the same fit), the compute slope falls
+  to about 4.5 points per tenfold and the time term absorbs about 11 points per year. On that reading
+  a tenfold of compute at fixed algorithms buys half as much ECI, and most of the year-on-year gain is
+  algorithmic.
+
+Epoch's own analysis of the ECI trend finds frontier progress of about 8 points per year before April
+2024 and about 15 points per year after, which brackets Anthropic's 13.5 AECI per year. The AECI and
+the public ECI are on nearly the same scale for the eight Claude models that have both: the public
+ECI is higher by 1.7 points on average, with a spread of 1.1, and that offset is applied before the
+compute conversion. Data: `data/ai_rd_aeci.csv`, `data/ai_rd_uplift.csv`, and Epoch's files under
+`data/external/` (CC-BY, fetched 2026-09-15).

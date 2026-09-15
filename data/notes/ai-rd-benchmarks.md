@@ -622,3 +622,20 @@ row that said 'values in figure only' now carries 57.6 and the two comparison va
 rows sourced to that card. The Claude 3.7 Sonnet card's Suite 1 figures (21 to 23) are histograms and
 box plots whose headline numbers (single run above 7x; RE-Bench subset average 0.2386) are already in
 the table.
+
+# Capability index versus self-reported uplift (2026-09-15)
+
+AECI per Claude model: the Fable 5.1 card's Figure 2.3.5.A (p39) prints Mythos 5 159.46, Opus 5 160.73
+and Mythos 5.1 161.98 and anchors Claude 3.5 Sonnet at 130; the other dots were read off the chart by
+`scripts/digitize_aeci.py`, calibrated on the 130 and 161.98 points (the read values of the printed
+points come out at 159.66 and 160.71, so the reading error is about 0.2). Earlier cards give slightly
+different AECI values for the same model (Opus 4.8 card: Opus 4.7 154.1, Opus 4.8 155.5, Mythos Preview
+158.3) because each card refits the index; the Fable 5.1 figure is used as one consistent snapshot.
+Public Epoch ECI (eci_scores.csv, fetched 2026-09-15) exists for eight of the twelve models; it is
+higher than AECI by 1.65 on average (sd 1.12). Uplift: Sonnet 4.5 card 9.3.5 (six numeric estimates
+100/40/30/20/20/15 percent, one qualitative; median 25 percent taken as 1.25x), Opus 4.5 card (n=18,
+median 100 percent, mean 220 percent), Opus 4.6 card (n=16, mean 152 percent, median 100 percent,
+range 30 to 700 percent), Mythos Preview card 2.3.6 (informal Slack poll, about 130 respondents,
+geometric mean about 4x, relative to zero AI assistance). ECI-to-compute: pooled fit over 46 Epoch
+models with compute estimates, ECI = -84 + 8.8 log10(FLOP), residual sd 11.6; with a linear time term
+the compute slope is 4.5 to 4.6 per tenfold and the time term 11.5 per year.
