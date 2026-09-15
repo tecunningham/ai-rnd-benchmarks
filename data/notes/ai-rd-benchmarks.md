@@ -631,8 +631,8 @@ and Mythos 5.1 161.98 and anchors Claude 3.5 Sonnet at 130; the other dots were 
 points come out at 159.66 and 160.71, so the reading error is about 0.2). Earlier cards give slightly
 different AECI values for the same model (Opus 4.8 card: Opus 4.7 154.1, Opus 4.8 155.5, Mythos Preview
 158.3) because each card refits the index; the Fable 5.1 figure is used as one consistent snapshot.
-Public Epoch ECI (eci_scores.csv, fetched 2026-09-15) exists for eight of the twelve models; it is
-higher than AECI by 1.65 on average (sd 1.12). Uplift: Sonnet 4.5 card 9.3.5 (six numeric estimates
+Public Epoch ECI (eci_scores.csv, fetched 2026-09-15) exists for eleven of the twelve models; it is
+higher than AECI by 1.5 on average (sd 1.17); Claude 3.5 Sonnet (October 2024) reads 133.48 against a public 133.55. Uplift: Sonnet 4.5 card 9.3.5 (six numeric estimates
 100/40/30/20/20/15 percent, one qualitative; median 25 percent taken as 1.25x), Opus 4.5 card (n=18,
 median 100 percent, mean 220 percent), Opus 4.6 card (n=16, mean 152 percent, median 100 percent,
 range 30 to 700 percent), Mythos Preview card 2.3.6 (informal Slack poll, about 130 respondents,

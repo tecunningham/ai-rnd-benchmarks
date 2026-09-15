@@ -1026,7 +1026,7 @@ def uplift_vs_capability():
     """Anthropic's self-reported researcher uplift against the model's capability index. Left: the
     productivity multiple staff reported (median, with the reported range or mean), on a log axis,
     against the Anthropic ECI; the top axis converts AECI to the training compute of models at that
-    ECI (AECI to public ECI by the mean offset over the eight models that have both, then the Epoch
+    ECI (AECI to public ECI by the mean offset over the Claude models that have both, then the Epoch
     fit). Right: the share of surveyed staff who said the model could already replace an entry-level
     researcher, with the RSP rule-out line at one half."""
     plots.style()
