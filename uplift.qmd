@@ -54,6 +54,6 @@ width of the mapping:
 Epoch's own analysis of the ECI trend finds frontier progress of about 8 points per year before April
 2024 and about 15 points per year after, which brackets Anthropic's 13.5 AECI per year. The AECI and
 the public ECI are on nearly the same scale for the Claude models that have both: the public
-ECI is higher by 1.7 points on average, with a spread of 1.1, and that offset is applied before the
-compute conversion. Data: `data/ai_rd_aeci.csv`, `data/ai_rd_uplift.csv`, and Epoch's files under
+ECI is higher by 1.5 points on average, with a spread of 1.2 (eleven Claude models have both), and that
+offset is applied before the compute conversion. Data: `data/ai_rd_aeci.csv`, `data/ai_rd_uplift.csv`, and Epoch's files under
 `data/external/` (CC-BY, fetched 2026-09-15).
